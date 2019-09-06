@@ -33,7 +33,7 @@ class CreateLinksTable extends Migration
         });
 
 		Schema::table('projects', function(Blueprint $table) {
-			$table->foreign('link_id')->references('id')->on('links')->onDelete('set null');
+			$table->foreign('default_link_id')->references('id')->on('links')->onDelete('set null');
 		});
 
 		DB::statement('ALTER TABLE links AUTO_INCREMENT = 101');
