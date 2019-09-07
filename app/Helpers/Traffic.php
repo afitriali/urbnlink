@@ -23,8 +23,10 @@ class Traffic
 			"ip" => $ip
 		);
 
-		$json = Traffic::curl_post_request("https://neutrinoapi.com/ip-info", $postData); 
-		$result = json_decode($json, true);
+		//$json = Traffic::curl_post_request("https://neutrinoapi.com/ip-info", $postData); 
+		//$result = json_decode($json, true);
+		$result['country'] = 'Brunei';
+
 		return $result['country'];
 	}
 }
