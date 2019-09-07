@@ -19,7 +19,16 @@ class ForwardingTest extends TestCase
     public function testLoadRegularLink()
     {
         $link = new \App\Link\Link;
-        $link->generate('https://github.com', env('DEFAULT_DOMAIN', 'ur.bn'), 10, 'git');
+		$link->create([
+			'name' => 'git',
+			'domain' => env('SHORT_DOMAIN', 'ur.bn'),
+			'url' => 'https://github.com',
+			'link_type_id' => 10
+		]);
+
         $this->assertDatabaseHas('links', ['name' => 'git']);
+
+        $response = $this->get('https://'.$link->domain.'/'.$link->name);
+        $response->assertLocation($link->url);
     }
 }

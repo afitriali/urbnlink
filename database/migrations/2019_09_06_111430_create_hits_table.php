@@ -16,8 +16,8 @@ class CreateHitsTable extends Migration
         Schema::create('hits', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->char('country', 40)->nullable();
-			$table->string('agent', 40)->nullable();
-			$table->string('referrer', 40)->nullable();
+			$table->string('agent')->nullable();
+			$table->string('referrer')->nullable();
 			$table->string('page')->nullable();
 			$table->unsignedBigInteger('link_id');
             $table->timestamps();

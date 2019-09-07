@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Generate;
-use App\Helpers\Location;
+use App\Helpers\Traffic;
 use App\Project;
 use Carbon\Carbon;
 

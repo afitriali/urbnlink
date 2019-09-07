@@ -19,35 +19,38 @@ class ConditionalForwardingTest extends TestCase
     public function testLoadConditionalLink()
     {
         $link = new \App\Link\Link;
-        $link->generate('https://fitri.co', env('DEFAULT_DOMAIN', 'ur.bn'), 10, 'fit');
+		$link->create([
+			'name' => 'fit',
+			'domain' => env('SHORT_DOMAIN', 'ur.bn'),
+			'url' => 'https://fitriali.com',
+			'link_type' => 10,
+		]);
 
         $link = \App\Link\Link::hasName('fit')->first();
         $link->toggleConditional();
 
-        $condition_set = $link->conditionSets()->create([
+        $alternative_link = $link->alternativeLinks()->create([
+			'url' => 'https://dev.to/fitri',
+			'link_type' => 10,
             'name' => 'Limit Visitors',
             'priority' => 0
         ]);
 
-        $alternative = $condition_set->alternativeLink()->create([
-            'url' => 'https://dev.to/fitri'
-        ]);
-
-        $condition_set->conditions()->create([
+        $alternative_link->conditions()->create([
             'condition_type_id' => 110,
             'amount' => 2
         ]);
 
-        $response = $this->get(env('APP_URL').'/'.$link->name);
-        $response->assertRedirect($alternative->url);
-        $response = $this->get(env('APP_URL').'/'.$link->name);
-        $response->assertRedirect($alternative->url);
-        $response = $this->get(env('APP_URL').'/'.$link->name);
-        $response->assertRedirect($link->url);
+        $response = $this->get('https://'.$link->domain.'/'.$link->name);
+        $response->assertLocation($alternative_link->url);
+        $response = $this->get('https://'.$link->domain.'/'.$link->name);
+        $response->assertLocation($alternative_link->url);
+        $response = $this->get('https://'.$link->domain.'/'.$link->name);
+        $response->assertLocation($link->url);
 
         $link->toggleActive();
 
-        $response = $this->get(env('APP_URL').'/'.$link->name);
+        $response = $this->get('https://'.$link->domain.'/'.$link->name);
         $response->assertStatus(404);
     }
 }

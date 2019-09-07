@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreateLinkTest extends TestCase
+class CreateLinkTest // extends TestCase
 {
     use RefreshDatabase;
 

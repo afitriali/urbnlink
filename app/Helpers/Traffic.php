@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class Traffic
 {
-	private function curl_post_request($url, $data) 
+	private static function curl_post_request($url, $data) 
 	{
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -23,7 +23,7 @@ class Traffic
 			"ip" => $ip
 		);
 
-		$json = $this->curl_post_request("https://neutrinoapi.com/ip-info", $postData); 
+		$json = Traffic::curl_post_request("https://neutrinoapi.com/ip-info", $postData); 
 		$result = json_decode($json, true);
 		return $result['country'];
 	}
