@@ -4,15 +4,27 @@ namespace App\Helpers;
 
 class Traffic
 {
+	private function curl_post_request($url, $data) 
+	{
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$content = curl_exec($ch);
+		curl_close($ch);
+		return $content;
+	}
+
 	public static function locationCountry($ip)
 	{
-		$access_key = env('IP_STACK_API_KEY');
-		$curl = curl_init('http://api.ipstack.com/'. $ip .'?access_key='. $access_key); 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		$json = curl_exec($curl);
-		$json = json_decode($json, true);
-		curl_close($curl);
+		$postData = array(
+			"user-id" => env('NEUTRINO_USER_ID'),
+			"api-key" => env('NEUTRINO_API_KEY'),
+			"ip" => $ip
+		);
 
-		return $json['country_name'];
+		$json = $this->curl_post_request("https://neutrinoapi.com/ip-info", $postData); 
+		$result = json_decode($json, true);
+		return $result['country'];
 	}
 }

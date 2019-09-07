@@ -25,6 +25,7 @@ class CreateLinksTable extends Migration
 			$table->unsignedBigInteger('link_type_id')->default(10)->nullable();
 			$table->unsignedBigInteger('project_id')->nullable();
             $table->timestamps();
+			$table->softDeletes();
 
 			$table->collation = 'utf8mb4_0900_as_cs';
 

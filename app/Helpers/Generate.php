@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Helpers;
-
+use Illuminate\Support\Str;
 use Exception;
 
 class Generate
@@ -9,7 +9,7 @@ class Generate
     public static function sprinkleRandomChar(string $str)
     {
         if (strlen($str) >= 2) {
-            return str_random(2) . substr($str, 0, -1) . str_random(1) . substr($str, -1);
+            return Str::random(2) . substr($str, 0, -1) . Str::random(1) . substr($str, -1);
         }
         return $str;
     }
