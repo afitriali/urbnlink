@@ -21,7 +21,7 @@ class ForwardingTest extends TestCase
         $link = new \App\Link\Link;
 		$link->create([
 			'name' => 'git',
-			'domain' => env('SHORT_DOMAIN', 'ur.bn'),
+			'domain' => env('DEFAULT_SHORT_DOMAIN', 'ur.bn'),
 			'url' => 'https://github.com',
 			'link_type_id' => 10
 		]);

@@ -6,6 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+	protected $fillable = ['name', 'description'];
+
+	public function inviteMember(User $user) {
+		$this->ProjectMembers()->create([
+			'user_id' => $user->id
+		]);
+
+		return $this;
+	}
+
+	public function leaveProject(User $user) {
+		if ($this->admin() != $user) {
+			return $this->ProjectMembers()->delete($user);
+		}
+
+		return $this;
+	}
+
+	public function changeAdmin(User $user) {
+		$this->admin()->associate($user);
+		$this->save();
+
+		return $this;
+	}
+
 	public function admin()
 	{
 		return $this->belongsTo(User::class);

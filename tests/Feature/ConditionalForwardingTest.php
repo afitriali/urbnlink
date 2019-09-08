@@ -21,7 +21,7 @@ class ConditionalForwardingTest extends TestCase
         $link = new \App\Link\Link;
 		$link->create([
 			'name' => 'fit',
-			'domain' => env('SHORT_DOMAIN', 'ur.bn'),
+			'domain' => env('DEFAULT_SHORT_DOMAIN', 'ur.bn'),
 			'url' => 'https://fitriali.com',
 			'link_type' => 10,
 		]);

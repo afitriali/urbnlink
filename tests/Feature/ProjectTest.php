@@ -1,0 +1,97 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Faker\Generator as Faker;
+
+class ProjectTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function setUp() : void
+    {
+        parent::setUp();
+        $this->artisan('db:seed');
+    }
+
+    public function testCreateProject()
+    {
+		$admin = factory(\App\User::class)->create();
+
+		$admin->projects()->create([
+            'name' => 'Project One',
+            'description' => 'Project One'
+        ]);
+
+        $this->assertDatabaseHas('projects', [
+            'name' => 'Project One',
+            'description' => 'Project One'
+        ]);
+    }
+
+    public function testJoinProject()
+    {
+		$admin = factory(\App\User::class)->create();
+
+		$project = $admin->projects()->create([
+            'name' => 'Project One',
+            'description' => 'Project One'
+        ]);
+
+		$user = factory(\App\User::class)->create();
+
+		$this->assertDatabaseHas('users', ['name' => $user->name]);
+
+		$project->inviteMember($user);
+
+		$this->assertDatabaseHas('project_members', [
+			'project_id' => $project->id,
+			'user_id' => $user->id
+		]);
+    }
+
+    public function testLeaveProject()
+    {
+		$admin = factory(\App\User::class)->create();
+
+        $project = $admin->projects()->create([
+            'name' => 'Project One',
+            'description' => 'Project One'
+        ]);
+
+		$user = factory(\App\User::class)->create();
+
+		$this->assertDatabaseHas('users', ['name' => $user->name]);
+
+		$project->inviteMember($user);
+
+		$project->leaveProject($user);
+
+		$this->assertDatabaseMissing('project_members', [
+			'user_id' => $user->id,
+		]);
+    }
+
+    public function testMakeAdmin()
+    {
+		$admin = factory(\App\User::class)->create();
+
+        $project = $admin->projects()->create([
+            'name' => 'Project One',
+            'description' => 'Project One'
+        ]);
+
+		$user = factory(\App\User::class)->create();
+
+		$project->inviteMember($user);
+
+		$project->changeAdmin($user);
+
+		$this->assertDatabaseHas('projects', [
+			'id' => $project->id,
+			'admin_id' => $user->id
+		]);
+    }
+}
