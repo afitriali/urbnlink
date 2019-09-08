@@ -71,4 +71,9 @@ class LinkController extends Controller
 
 		return response()->json(['created' => true]);
 	}
+
+	public function getStatistics($domain, $name)
+	{
+		return Link::hasName($name)->hasDomain($domain)->first()->getStatistics(); 
+	}
 }

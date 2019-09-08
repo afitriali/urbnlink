@@ -22,7 +22,6 @@ Route::domain(env('HOME_DOMAIN', 'urbn.link'))->group(function () {
 
 Route::domain(env('DASHBOARD_DOMAIN', 'dashboard.urbn.link'))->group(function () {
 	Route::get('/home', 'HomeController@index')->name('home');
-	Route::post('/link/statistics', 'LinkController@showStatistics');
 	Route::get('/{any}', function () {
 		return view('dashboard');
 	})->where('any', '.*')->middleware(['auth', 'verified']);
@@ -33,7 +32,6 @@ Route::domain(env('API_DOMAIN', 'api.urbn.link'))->group(function () {
 	Route::post('/check/url', 'LinkController@checkUrl');
 	Route::post('/link/create', 'LinkController@create');
 	Route::post('/link/delete', 'LinkController@delete');
-	Route::post('/link/statistics', 'LinkController@showStatistics');
 });
 
 Route::domain(env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))->group(function () {
@@ -46,5 +44,6 @@ Route::domain('{domain}')->group(function () {
 	Route::get('/', function () {
     	return view('welcome');
 	});
+	Route::get('{name}+', 'LinkController@getStatistics');
 	Route::get('{name}', 'ForwardController@forward');
 });
