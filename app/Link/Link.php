@@ -23,6 +23,7 @@ class Link extends Model
 		$link = static::query()->create($attributes);
 		$link->slug = Generate::slug($link->id);
 		$link->name = $link->name ?? $link->slug;
+		$link->domain = $link->domain ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn');
 		$link->save();
 
 		return $link;

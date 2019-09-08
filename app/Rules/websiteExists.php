@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class websiteExists implements Rule
+class WebsiteExists implements Rule
 {
     /**
      * Create a new rule instance.
