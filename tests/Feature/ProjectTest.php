@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Faker\Generator as Faker;
 
 class ProjectTest extends TestCase
 {

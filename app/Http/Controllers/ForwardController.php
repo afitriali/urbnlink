@@ -19,13 +19,13 @@ class ForwardController extends Controller
 	public function forward($domain, $name)
 	{
 		$link = Link::hasName($name)->hasDomain($domain)->isActive()->isNotBlocked()->first() ?? abort(404);
-		$link->registerHit(request()); // TO BE MOVED
 
 		if ($link->is_conditional)
 		{
 			return $this->checkAlternativeLinks($link);
 		}
 
+		$link->registerHit(request());
 		return $this->{$link->linkType->function}($link->url);
 	}
 
@@ -35,11 +35,13 @@ class ForwardController extends Controller
 		{
 			if ($this->checkConditions($alternative_link))
 			{
-				$link = $alternative_link ?? $link;
+				$link->url = $alternative_link->url ?? $link->url;
+				$link->link_type_id = $alternative_link->link_type_id ?? $link->link_type_id;
 				break;
 			}
 		}
 
+		$link->registerHit(request());
 		return $this->{$link->linkType->function}($link->url);
 	}
 
@@ -60,7 +62,7 @@ class ForwardController extends Controller
 	
 	private function isBelowVisitorLimit(Condition $condition)
 	{
-		return $condition->alternativeLink->link->hits->count() <= $condition->amount;
+		return $condition->alternativeLink->link->hits->count() < $condition->amount;
 	}
 
 	// LinkType functions

@@ -10,7 +10,7 @@ class Hit extends Model
 		'country',
 		'agent',
 		'referrer',
-		'url'
+		'page'
 	];
 
 	public function link()

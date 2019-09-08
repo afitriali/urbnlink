@@ -4,11 +4,9 @@ namespace App\Link;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 use App\Helpers\Generate;
 use App\Helpers\Traffic;
-use App\Project;
-use Carbon\Carbon;
+use App\Helpers\Statistics;
 
 class Link extends Model
 {
@@ -20,17 +18,11 @@ class Link extends Model
 
 	protected $hidden = ['id'];
 
-	public static function create(array $attributes = [], Project $project = null)
+	public static function create(array $attributes = [])
 	{
 		$link = static::query()->create($attributes);
-		$link->slug = Generate::sprinkleRandomChar(Generate::decimalToBase($link->id, 62));
+		$link->slug = Generate::slug($link->id);
 		$link->name = $link->name ?? $link->slug;
-
-		if ($project)
-		{
-			$link->project()->associate->project($project);
-		}
-
 		$link->save();
 
 		return $link;
@@ -40,12 +32,16 @@ class Link extends Model
 	{
 		$this->is_active = !$this->is_active;
 		$this->save();
+
+		return $this->is_active;
 	}
 
 	public function toggleConditional()
 	{
 		$this->is_conditional = !$this->is_conditional;
 		$this->save();
+
+		return $this->is_conditional;
 	}
 
 	public function registerHit($request)
@@ -58,52 +54,10 @@ class Link extends Model
 		]);
 	}
 
-	public function statistics()
+	public function getStatistics()
 	{
+		$stats = Statistics::link($this->id);
 		$stats['total'] = $this->hits->count();
-
-		$hits = DB::table('hits')
-			->select(DB::raw('count(*) as count, DATE(created_at) as created'))
-			->where('link_id', $this->id)
-			->whereRaw('DATE(created_at) > DATE_SUB(CURDATE, INTERVAL 30 DAY)')
-			->groupBy('created')
-			->get();
-
-		foreach ($hits as $day)
-		{
-			$days[$day->created] = $day->count;
-		}
-
-		$day = Carbon::now()->subDay(29);
-
-		while ($day <= Carbon::now())
-		{
-			$stats['hits'][$day->format('jS F Y')] = $days[$day->format('Y-m-d')] ?? 0;
-			$day->addDay();
-		}
-
-		$stats['week'] = DB::table('hits')
-			->where('link_id', $this->id)
-			->whereRaw('DATE(created_at) > DATE_SUB(CURDATE(), INTERVAL 7 DAY)')
-			->count();
-
-		$stats['today'] = DB::table('hits')
-			->where('link_id', $this->id)
-			->whereRaw('DATE(created_at) = CURDATE()')
-			->count();
-
-		$referrers = DB::table('hits')
-			->select(DB::raw('count(*) as count, referrer'))
-			->where('link_id', $this->id)
-			->groupBy('referrer')
-			->orderBy('count', 'desc')
-			->take(10)
-			->get();
-
-		foreach ($referrers as $referrer)
-		{
-			$stats['referrers'][$referrer->referrer] = $referrer->count;
-		}
 
 		return $stats;
 	}
