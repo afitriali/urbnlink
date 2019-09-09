@@ -32,6 +32,7 @@ Route::domain(env('API_DOMAIN', 'api.urbn.link'))->group(function () {
 	Route::post('/check/url', 'LinkController@checkUrl');
 	Route::post('/link/create', 'LinkController@create');
 	Route::post('/link/delete', 'LinkController@delete');
+	Route::post('/project/invite', 'ProjectController@inviteMember');
 });
 
 Route::domain(env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))->group(function () {

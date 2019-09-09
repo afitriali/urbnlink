@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectMember extends Model
 {
-	protected $fillable = ['user_id'];
+	protected $fillable = ['user_id', 'project_id'];
 
 	public function user()
 	{

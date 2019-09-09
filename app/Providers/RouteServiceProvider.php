@@ -26,10 +26,6 @@ class RouteServiceProvider extends ServiceProvider
 		Route::pattern('domain', '[a-zA-Z0-9.\-]+');
 
         parent::boot();
-
-		Route::bind('link', function ($value) {
-			return \App\Link\Link::hasSlug($value)->first() ?? abort(404);
-		});
     }
 
     /**
