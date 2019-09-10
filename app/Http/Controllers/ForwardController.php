@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Domain;
 use App\Link\Link;
 use App\Link\LinkType;
 use App\Link\AlternativeLink;
@@ -11,6 +12,17 @@ use App\Link\Condition;
 
 class ForwardController extends Controller
 {
+	public function index($domain)
+	{
+		$domain = Domain::hasName($domain)->first();
+
+		if ($domain == null || $domain->defaultLink() == null) {
+			return redirect()->away(env('APP_URL'));
+		}
+
+		return $this->forward($domain->defaultLink->domain, $domain->defaultLink->name);
+	}
+
 	/**
 	 * Forward short URL to original address
 	 * @param string
@@ -20,8 +32,7 @@ class ForwardController extends Controller
 	{
 		$link = Link::hasName($name)->hasDomain($domain)->isActive()->isNotBlocked()->first() ?? abort(404);
 
-		if ($link->is_conditional)
-		{
+		if ($link->is_conditional) {
 			return $this->checkAlternativeLinks($link);
 		}
 
@@ -31,10 +42,8 @@ class ForwardController extends Controller
 
 	private function checkAlternativeLinks(Link $link)
 	{
-		foreach ($link->alternativeLinks as $alternative_link)
-		{
-			if ($this->checkConditions($alternative_link))
-			{
+		foreach ($link->alternativeLinks as $alternative_link) {
+			if ($this->checkConditions($alternative_link)) {
 				$link->url = $alternative_link->url ?? $link->url;
 				$link->link_type_id = $alternative_link->link_type_id ?? $link->link_type_id;
 				break;
@@ -47,10 +56,8 @@ class ForwardController extends Controller
 
 	private function checkConditions(AlternativeLink $alternative_link)
 	{
-		foreach ($alternative_link->conditions as $condition)
-		{
-			if(!($this->{$condition->conditionType->function}($condition)))
-			{
+		foreach ($alternative_link->conditions as $condition) {
+			if (!($this->{$condition->conditionType->function}($condition))) {
 				return false;
 			}
 		}
@@ -59,14 +66,14 @@ class ForwardController extends Controller
 	}
 
 	// ConditionType functions
-	
+
 	private function isBelowVisitorLimit(Condition $condition)
 	{
 		return $condition->alternativeLink->link->hits->count() < $condition->amount;
 	}
 
 	// LinkType functions
-	
+
 	private function forwardToUrl($url)
 	{
 		return redirect()->away($url);

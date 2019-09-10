@@ -19,7 +19,6 @@ class CreateProjectsTable extends Migration
 			$table->char('name', 40);
 			$table->char('description', 160)->nullable();
 			$table->unsignedBigInteger('admin_id');
-			$table->unsignedBigInteger('default_link_id')->nullable();
 			$table->boolean('is_blocked')->default(false);
             $table->timestamps();
 

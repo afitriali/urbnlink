@@ -43,24 +43,20 @@ class Statistics
 			->get();
 
 		$day = Carbon::now()->subDay(29);
-		while ($day <= Carbon::now())
-		{
+		while ($day <= Carbon::now()) {
 			$stats['hits'][$day->format('jS F Y')] = $days[$day->format('Y-m-d')] ?? 0;
 			$day->addDay();
 		}
 
-		foreach ($hits as $day)
-		{
+		foreach ($hits as $day) {
 			$days[$day->created] = $day->count;
 		}
 
-		foreach ($referrers as $referrer)
-		{
+		foreach ($referrers as $referrer) {
 			$stats['referrers'][$referrer->referrer] = $referrer->count;
 		}
 
-		foreach ($countries as $country)
-		{
+		foreach ($countries as $country) {
 			$stats['country'][$country->country] = $country->count;
 		}
 
