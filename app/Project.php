@@ -55,7 +55,7 @@ class Project extends Model
 	
 	public function links()
 	{
-		return $this->hasMany(Link::class);
+		return $this->hasMany(Link\Link::class);
 	}
 
 	public function projectMembers()
@@ -75,6 +75,6 @@ class Project extends Model
 
 	public function pages()
 	{
-		return $this->hasMany(Page::class);
+		return $this->hasMany(Page\Page::class);
 	}
 }

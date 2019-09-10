@@ -15,8 +15,7 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->char('slug', 40)->unique()->nullable();
-			$table->char('name', 40);
+			$table->char('name', 40)->unique();
 			$table->char('description', 160)->nullable();
 			$table->unsignedBigInteger('admin_id');
 			$table->boolean('is_blocked')->default(false);

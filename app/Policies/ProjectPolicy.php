@@ -10,27 +10,19 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
     
-    /**
-     * Determine whether the user can view the project.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Project  $project
-     * @return mixed
-     */
     public function view(User $user, Project $project)
     {
-        return $project->ProjectMembers()->exists();
+        return $project->ProjectMembers()->where('user_id', $user->id)->exists();
     }
 
-    /**
-     * Determine whether the user can update the project.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Project  $project
-     * @return mixed
-     */
+    public function create(User $user)
+    {
+        return ($user->projects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
+    }
+
     public function update(User $user, Project $project)
     {
-        return $project->admin_id == $user->id;
+        return $project->admin_id === $user->id && 
+            ($user->projects()-count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
     }
 }

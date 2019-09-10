@@ -26,6 +26,10 @@ class RouteServiceProvider extends ServiceProvider
 		Route::pattern('domain', '[a-zA-Z0-9.\-]+');
 
         parent::boot();
+
+		Route::bind('project', function ($name) {
+			return \App\Project::where('name', $name)->first() ?? abort(404);
+		});
     }
 
     /**

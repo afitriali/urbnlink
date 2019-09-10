@@ -14,7 +14,38 @@ class ProjectController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-	public function store(Request $request) {
+	public function index()
+	{
+		$data['projects'] = auth()->user()->projects()->get();
+
+		return view('project/index', compact('data'));
+	}
+
+	public function create()
+	{
+		return view('project/create');
+	}
+
+	public function store(Request $request)
+	{
+		$this->authorize('create', new Project);
+
+		$validator = Validator::make($request->all(), [
+			'name' => [
+				'required',
+				'max:40',
+				'alpha_dash',
+				'unique:projects,name'
+			],
+			'description' => [
+				'max:160',
+			]
+		]);
+		
+		if ($validator->fails()) {
+			return back()->withInput();
+		}
+
 		$project = auth()->user()->Projects()->create([
 			'name' => $request->input('name'),
 			'description' => $request->input('description')
@@ -22,12 +53,21 @@ class ProjectController extends Controller
 
 		$project->addMember(auth()->user());
 
-		return view('success', $data);
+		$success = '🎉 You created '.$project->name.'!';
+		return redirect($project->name)->with('success', $success);
+	}
+
+	public function show(Project $project)
+	{
+		$this->authorize('view', $project);
+
+		$data['links'] = $project->links()->get();
+
+		return view('project/show', compact('data'));
 	}
 	
-    public function addMember(Request $request) {
-		$this->authorize('update', $this);
-
+	public function addMember(Request $request)
+	{
 		$project = Project::find($request->input('project'));
 		$user = User::where('email', $request->input('email'))->first();
 
@@ -48,6 +88,7 @@ class ProjectController extends Controller
 		} else if ($user == null) {
 			// $project->createInvitation($request->input('email');
 		} else {
+			$this->authorize('update', $project);
 			$project->addMember($user);
 		}
 

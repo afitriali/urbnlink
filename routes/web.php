@@ -21,31 +21,31 @@ Route::domain(env('HOME_DOMAIN', 'urbn.link'))->group(function () {
 Route::domain(env('DASHBOARD_DOMAIN', 'api.urbn.link'))->group(function () {
 	Auth::routes(['verify' => true]);
 	// PROJECTS
-	Route::get('/projects', 'ProjectController@index')->name('home');
-	Route::get('/projects/create', 'ProjectController@create');
-	Route::post('/projects', 'ProjectController@store');
+	Route::get('/', 'ProjectController@index')->name('home');
+	Route::get('/project/create', 'ProjectController@create');
+	Route::post('/project', 'ProjectController@store');
 	Route::get('/{project}', 'ProjectController@show');
 	Route::get('/{project}/edit', 'ProjectController@edit');
 	Route::put('/{project}', 'ProjectController@update');
 	Route::delete('/{project}', 'ProjectController@delete');
 	// LINKS
 	Route::get('/{project}/links', 'LinkController@index');
-	Route::get('/{project}/links/create', 'LinkController@create');
-	Route::post('/{project}/links', 'LinkController@store');
+	Route::get('/{project}/link/create', 'LinkController@create');
+	Route::post('/{project}/link', 'LinkController@store');
 	Route::get('/{project}/{link}', 'LinkController@show');
 	Route::delete('/{project}/{link}', 'LinkController@delete');
 	// Domain
 	Route::get('/{project}/domains', 'DomainController@index');
-	Route::get('/{project}/domains/add', 'DomainController@create');
-	Route::post('/{project}/domains', 'DomainController@store');
+	Route::get('/{project}/domain/add', 'DomainController@create');
+	Route::post('/{project}/domain', 'DomainController@store');
 	Route::get('/{project}/{domain}', 'DomainController@show');
 	Route::get('/{project}/{domain}/edit', 'DomainController@edit');
 	Route::put('/{project}/{domain}', 'DomainController@update');
 	Route::delete('/{project}/{domain}', 'DomainController@delete');
 	// PAGES
 	Route::get('/{project}/pages', 'PageController@index');
-	Route::get('/{project}/pages/create', 'PageController@create');
-	Route::post('/{project}/pages', 'PageController@store');
+	Route::get('/{project}/page/create', 'PageController@create');
+	Route::post('/{project}/page', 'PageController@store');
 	Route::get('/{project}/{page}', 'PageController@show');
 	Route::get('/{project}/{page}/edit', 'PageController@edit');
 	Route::put('/{project}/{page}', 'PageController@update');

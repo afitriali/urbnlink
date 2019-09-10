@@ -33,7 +33,7 @@ class ProjectTest extends TestCase
 
     public function testCreateProjectRoute()
     {
-        $response = $this->json('POST', env('DASHBOARD_URL').'/projects', [
+        $response = $this->json('POST', env('DASHBOARD_URL').'/project', [
             'name' => 'Anyonymous',
         ]);
 		
@@ -41,7 +41,7 @@ class ProjectTest extends TestCase
 
 		$user = factory(\App\User::class)->create();
 
-        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL').'/projects', [
+        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL').'/project', [
             'name' => 'Anonymous',
         ]);
 
