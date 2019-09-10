@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect(env('DASHBOARD_URL', 'https://dashboard.urbn.link'));
+        return view('home');
     }
 }

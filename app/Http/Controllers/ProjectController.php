@@ -9,15 +9,12 @@ use Validator;
 
 class ProjectController extends Controller
 {
-	public function respondWithError($action, $errors)
-	{
-		return response()->json([
-			$action => false,
-			'errors' => !is_string($errors) ? $errors->toArray() : $errors
-		]);
-	}
-	
-	public function create(Request $request) {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
+	public function store(Request $request) {
 		$project = auth()->user()->Projects()->create([
 			'name' => $request->input('name'),
 			'description' => $request->input('description')
@@ -25,9 +22,7 @@ class ProjectController extends Controller
 
 		$project->addMember(auth()->user());
 
-		return response()->json(['created' => true, 'project' => $project->toArray()]);
-
-		return $project;
+		return view('success', $data);
 	}
 	
     public function addMember(Request $request) {
@@ -49,9 +44,8 @@ class ProjectController extends Controller
 		]);
 		
 		if ($validator->fails()) {
-			return $this->respondWithError('created', $validator->errors());
+			return back()->withInput();
 		} else if ($user == null) {
-			return response()->json(['invited' => false]);
 			// $project->createInvitation($request->input('email');
 		} else {
 			$project->addMember($user);
@@ -61,6 +55,6 @@ class ProjectController extends Controller
 			new ProjectMemberAdded($project)
 		);
 
-		return response()->json(['invited' => true]);
+		return view('success', $data);
 	}
 }

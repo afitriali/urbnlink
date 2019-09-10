@@ -18,12 +18,39 @@ Route::domain(env('HOME_DOMAIN', 'urbn.link'))->group(function () {
 	});
 });
 
-Route::domain(env('DASHBOARD_DOMAIN', 'dashboard.urbn.link'))->group(function () {
+Route::domain(env('DASHBOARD_DOMAIN', 'api.urbn.link'))->group(function () {
 	Auth::routes(['verify' => true]);
-	Route::get('/home', 'HomeController@index')->name('home');
-	Route::get('/{any}', function () {
-		return view('dashboard');
-	})->where('any', '.*')->middleware(['auth', 'verified']);
+	// PROJECTS
+	Route::get('/projects', 'ProjectController@index')->name('home');
+	Route::get('/projects/create', 'ProjectController@create');
+	Route::post('/projects', 'ProjectController@store');
+	Route::get('/{project}', 'ProjectController@show');
+	Route::get('/{project}/edit', 'ProjectController@edit');
+	Route::put('/{project}', 'ProjectController@update');
+	Route::delete('/{project}', 'ProjectController@delete');
+	// LINKS
+	Route::get('/{project}/links', 'LinkController@index');
+	Route::get('/{project}/links/create', 'LinkController@create');
+	Route::post('/{project}/links', 'LinkController@store');
+	Route::get('/{project}/{link}', 'LinkController@show');
+	Route::delete('/{project}/{link}', 'LinkController@delete');
+	// Domain
+	Route::get('/{project}/domains', 'DomainController@index');
+	Route::get('/{project}/domains/add', 'DomainController@create');
+	Route::post('/{project}/domains', 'DomainController@store');
+	Route::get('/{project}/{domain}', 'DomainController@show');
+	Route::get('/{project}/{domain}/edit', 'DomainController@edit');
+	Route::put('/{project}/{domain}', 'DomainController@update');
+	Route::delete('/{project}/{domain}', 'DomainController@delete');
+	// PAGES
+	Route::get('/{project}/pages', 'PageController@index');
+	Route::get('/{project}/pages/create', 'PageController@create');
+	Route::post('/{project}/pages', 'PageController@store');
+	Route::get('/{project}/{page}', 'PageController@show');
+	Route::get('/{project}/{page}/edit', 'PageController@edit');
+	Route::put('/{project}/{page}', 'PageController@update');
+	Route::delete('/{project}/{page}', 'PageController@delete');
+
 });
 
 Route::domain(env('API_DOMAIN', 'api.urbn.link'))->group(function () {
@@ -33,10 +60,8 @@ Route::domain(env('API_DOMAIN', 'api.urbn.link'))->group(function () {
 });
 
 Route::domain(env('API_DOMAIN', 'api.urbn.link'))->middleware(['auth', 'verified'])->group(function () {
-	// Link
-	Route::post('/links', 'LinkController@list');
+	// LINKS
 	Route::post('/link/update', 'LinkController@update');
-	Route::post('/link/delete', 'LinkController@delete');
 	Route::post('/link/statistics', 'LinkController@getStatistics');
 	// Link - AlternativeLink
 	Route::post('/link/alternatives', 'LinkController@listAlternatives');
@@ -48,28 +73,12 @@ Route::domain(env('API_DOMAIN', 'api.urbn.link'))->middleware(['auth', 'verified
 	Route::post('/link/alternative/condition/create', 'LinkController@createCondition');
 	Route::post('/link/alternative/condition/update', 'LinkController@updateCondition');
 	Route::post('/link/alternative/condition/delete', 'LinkController@deleteCondition');
-	// Project
-	Route::post('/projects', 'ProjectController@list');
-	Route::post('/project/check/name', 'ProjectController@checkName');
-	Route::post('/project/create', 'ProjectController@create');
-	Route::post('/project/update', 'ProjectController@update');
-	Route::post('/project/delete', 'ProjectController@delete');
-	Route::post('/project/admin/change', 'ProjectController@changeAdmin');
 	// Project - ProjectMember / ProjectInvitation
+	Route::post('/project/admin/change', 'ProjectController@changeAdmin');
 	Route::post('/project/members', 'ProjectController@listMembers');
 	Route::post('/project/member/add', 'ProjectController@addMember');
 	Route::post('/project/member/remove', 'ProjectController@removeMember');
 	Route::post('/project/member/delete', 'ProjectController@deleteInvitation');
-	// Domain
-	Route::post('/domains', 'DomainController@list');
-	Route::post('/domain/create', 'DomainController@create');
-	Route::post('/domain/update', 'DomainController@update');
-	Route::post('/domain/delete', 'DomainController@delete');
-	// Page
-	Route::post('/pages', 'PageController@list');
-	Route::post('/page/create', 'PageController@create');
-	Route::post('/page/update', 'PageController@update');
-	Route::post('/page/delete', 'PageController@delete');
 });
 
 Route::domain('{domain}')->group(function () {

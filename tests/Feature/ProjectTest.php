@@ -33,7 +33,7 @@ class ProjectTest extends TestCase
 
     public function testCreateProjectRoute()
     {
-        $response = $this->json('POST', env('API_URL', 'https://api.urbn.link').'/project/create', [
+        $response = $this->json('POST', env('DASHBOARD_URL').'/projects', [
             'name' => 'Anyonymous',
         ]);
 		
@@ -41,11 +41,13 @@ class ProjectTest extends TestCase
 
 		$user = factory(\App\User::class)->create();
 
-        $response = $this->actingAs($user)->json('POST', env('API_URL', 'https://api.urbn.link').'/project/create', [
-            'name' => 'Anyonymous',
+        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL').'/projects', [
+            'name' => 'Anonymous',
         ]);
 
-        $response->assertJson(['created' => true]);
+        $this->assertDatabaseHas('projects', [
+            'name' => 'Anonymous',
+        ]);
 		
     }
 

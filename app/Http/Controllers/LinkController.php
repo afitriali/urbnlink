@@ -9,6 +9,11 @@ use App\Rules\WebsiteExists;
 
 class LinkController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'create']]);
+    }
+
 	/**
 	 * Forward error message to view
 	 *
