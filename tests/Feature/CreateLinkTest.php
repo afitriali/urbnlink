@@ -4,17 +4,17 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+// use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateLinkTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
-    public function setUp() : void
-    {
-        parent::setUp();
-        $this->artisan('db:seed');
-    }
+//    public function setUp() : void
+//    {
+//        parent::setUp();
+//        $this->artisan('db:seed');
+//    }
 
     public function testCreateValidLink()
     {
@@ -26,8 +26,8 @@ class CreateLinkTest extends TestCase
 
         // Valid URL and Name
         $response = $this->json('POST', env('API_URL', 'https://api.urbn.link').'/link/create', [
-            'url' => 'https://fitriali.com',
-            'name' => 'fit'
+            'url' => 'https://github.com',
+            'name' => 'git'
         ]);
         $response->assertJson(['created' => true]);
     }
@@ -38,11 +38,11 @@ class CreateLinkTest extends TestCase
         $link = new \App\Link\Link;
         $link->create([
             'url' => 'https://fitri.co',
-            'name' => 'fit'
+            'name' => 'fitri'
         ]);
         $response = $this->json('POST', env('API_URL', 'https://api.urbn.link').'/link/create', [
             'url' => 'https://fitri.co',
-            'name' => 'fit'
+            'name' => 'fitri'
         ]);
         $response->assertJson(['created' => false]);
 

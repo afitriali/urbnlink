@@ -8,7 +8,8 @@ class Project extends Model
 {
 	protected $fillable = ['name', 'description'];
 
-	public function inviteMember(User $user) {
+	public function addMember(User $user)
+	{
 		$this->ProjectMembers()->create([
 			'user_id' => $user->id
 		]);
@@ -16,10 +17,26 @@ class Project extends Model
 		return $this;
 	}
 
-	public function leaveProject(User $user) {
+	public function removeMember(User $user) {
 		if ($this->admin() != $user) {
 			return $this->ProjectMembers()->delete($user);
 		}
+
+		return $this;
+	}
+
+	public function createInvitation($email)
+	{
+		$this->ProjectInvitations()->create([
+			'email' => $email
+		]);
+
+		return $this;
+	}
+
+	public function deleteInvitation(ProjectInvitation $invitation)
+	{
+		$this->ProjectInvitations()->delete($invitation);
 
 		return $this;
 	}
@@ -49,6 +66,11 @@ class Project extends Model
 	public function projectMembers()
 	{
 		return $this->hasMany(ProjectMember::class);
+	}
+
+	public function projectInvitations()
+	{
+		return $this->hasMany(ProjectInvitation::class);
 	}
 
 	public function domains()

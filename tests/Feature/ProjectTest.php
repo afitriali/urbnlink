@@ -4,17 +4,17 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+// use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
-    public function setUp() : void
-    {
-        parent::setUp();
-        $this->artisan('db:seed');
-    }
+//    public function setUp() : void
+//    {
+//        parent::setUp();
+//        $this->artisan('db:seed');
+//    }
 
     public function testCreateProject()
     {
@@ -44,7 +44,7 @@ class ProjectTest extends TestCase
 
 		$this->assertDatabaseHas('users', ['name' => $user->name]);
 
-		$project->inviteMember($user);
+		$project->addMember($user);
 
 		$this->assertDatabaseHas('project_members', [
 			'project_id' => $project->id,
@@ -65,9 +65,9 @@ class ProjectTest extends TestCase
 
 		$this->assertDatabaseHas('users', ['name' => $user->name]);
 
-		$project->inviteMember($user);
+		$project->addMember($user);
 
-		$project->leaveProject($user);
+		$project->removeMember($user);
 
 		$this->assertDatabaseMissing('project_members', [
 			'user_id' => $user->id,
@@ -85,7 +85,7 @@ class ProjectTest extends TestCase
 
 		$user = factory(\App\User::class)->create();
 
-		$project->inviteMember($user);
+		$project->addMember($user);
 
 		$project->changeAdmin($user);
 

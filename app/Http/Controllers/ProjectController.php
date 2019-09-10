@@ -19,42 +19,38 @@ class ProjectController extends Controller
 	}
 	
 	public function create(Request $request) {
-		Auth::User()->Projects()->create([
+		$project = Auth::User()->Projects()->create([
 			'name' => $request->input('name'),
 			'description' => $request->input('description')
 		]);
+
+		$project->addMember(Auth::User());
 	}
 	
-    public function inviteMember(Request $request) {
-		// Only project owner can add member
-		// Verify Member is not Owner
+    public function addMember(Request $request) {
 		$project = Project::find($request->input('project'));
-		$user = User::where('email', $request->input('user'))->first();
-
-		if ($user == null || $user->id == $project->admin_id) {
-			return $this->respondWithError('created', 'User is Invalid');
-		}
+		$user = User::where('email', $request->input('email'))->first();
 
 		$validator = Validator::make($request->all(), [
 			'project' => [
 				'required',
 				'exists:projects,id',
-				'unique:project_members,project_id,NULL,project_members,user_id,'.$user->id
+				'unique:project_members,project_id,NULL,project_members,user_id,'.($user == null ? null : $user->id)
 			],
-			'user' => [
+			'email' => [
 				'required',
-				'email',
-				'exists:users,email'
+				'email'
 			]
 		]);
 		
 		if ($validator->fails()) {
 			return $this->respondWithError('created', $validator->errors());
+		} else if ($user == null) {
+			return response()->json(['invited' => false]);
+			// $project->createInvitation($request->input('email');
+		} else {
+			$project->addMember($user);
 		}
-		
-		$project->inviteMember($user);
-
-		$data['project-name'] = $project->name;
 
 		\Mail::to($user->email)->send(
 			new ProjectMemberAdded()
