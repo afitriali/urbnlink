@@ -4,17 +4,17 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
-//    public function setUp() : void
-//    {
-//        parent::setUp();
-//        $this->artisan('db:seed');
-//    }
+    public function setUp() : void
+    {
+        parent::setUp();
+        $this->artisan('db:seed');
+    }
 
     public function testCreateProject()
     {

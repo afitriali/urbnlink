@@ -34,7 +34,7 @@ class CreateLinksTable extends Migration
 			$table->foreign('project_id')->references('id')->on('projects')->onDelete('set null');
         });
 
-		DB::statement('ALTER TABLE links AUTO_INCREMENT = 101');
+		// DB::statement('ALTER TABLE links AUTO_INCREMENT = 101');
     }
 
     /**
