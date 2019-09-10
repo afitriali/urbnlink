@@ -1,5 +1,5 @@
 @component('mail::message')
-# You have been added to a project
+# You have been added to a project {{ $project->name }}
 
 You have been added to project.
 

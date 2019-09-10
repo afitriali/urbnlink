@@ -53,7 +53,7 @@ class ProjectController extends Controller
 		}
 
 		\Mail::to($user->email)->send(
-			new ProjectMemberAdded()
+			new ProjectMemberAdded($project)
 		);
 
 		return response()->json(['invited' => true]);
