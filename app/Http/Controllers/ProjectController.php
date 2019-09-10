@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Mail\ProjectMemberAdded;
 use App\Project;
 use App\User;
@@ -19,15 +18,21 @@ class ProjectController extends Controller
 	}
 	
 	public function create(Request $request) {
-		$project = Auth::User()->Projects()->create([
+		$project = auth()->user()->Projects()->create([
 			'name' => $request->input('name'),
 			'description' => $request->input('description')
 		]);
 
-		$project->addMember(Auth::User());
+		$project->addMember(auth()->user());
+
+		return response()->json(['created' => true, 'project' => $project->toArray()]);
+
+		return $project;
 	}
 	
     public function addMember(Request $request) {
+		$this->authorize('update', $this);
+
 		$project = Project::find($request->input('project'));
 		$user = User::where('email', $request->input('email'))->first();
 

@@ -11,15 +11,15 @@
 |
 */
 
-Auth::routes(['verify' => true]);
-
 Route::domain(env('HOME_DOMAIN', 'urbn.link'))->group(function () {
+	Auth::routes(['verify' => true]);
 	Route::get('/', function () {
     	return view('welcome');
 	});
 });
 
 Route::domain(env('DASHBOARD_DOMAIN', 'dashboard.urbn.link'))->group(function () {
+	Auth::routes(['verify' => true]);
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/{any}', function () {
 		return view('dashboard');
@@ -27,11 +27,14 @@ Route::domain(env('DASHBOARD_DOMAIN', 'dashboard.urbn.link'))->group(function ()
 });
 
 Route::domain(env('API_DOMAIN', 'api.urbn.link'))->group(function () {
-	// Link
-	Route::post('/links', 'LinkController@list');
 	Route::post('/link/check/name', 'LinkController@checkName');
 	Route::post('/link/check/url', 'LinkController@checkUrl');
 	Route::post('/link/create', 'LinkController@create');
+});
+
+Route::domain(env('API_DOMAIN', 'api.urbn.link'))->middleware(['auth', 'verified'])->group(function () {
+	// Link
+	Route::post('/links', 'LinkController@list');
 	Route::post('/link/update', 'LinkController@update');
 	Route::post('/link/delete', 'LinkController@delete');
 	Route::post('/link/statistics', 'LinkController@getStatistics');

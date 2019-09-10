@@ -31,6 +31,24 @@ class ProjectTest extends TestCase
         ]);
     }
 
+    public function testCreateProjectRoute()
+    {
+        $response = $this->json('POST', env('API_URL', 'https://api.urbn.link').'/project/create', [
+            'name' => 'Anyonymous',
+        ]);
+		
+        $response->assertJson(['message' => 'Unauthenticated.']);
+
+		$user = factory(\App\User::class)->create();
+
+        $response = $this->actingAs($user)->json('POST', env('API_URL', 'https://api.urbn.link').'/project/create', [
+            'name' => 'Anyonymous',
+        ]);
+
+        $response->assertJson(['created' => true]);
+		
+    }
+
     public function testJoinProject()
     {
 		$admin = factory(\App\User::class)->create();
