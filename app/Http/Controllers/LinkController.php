@@ -66,14 +66,19 @@ class LinkController extends Controller
 
 	public function store(Project $project, Request $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'name' => ['min:3', 'max:40', 'alpha_num', 'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))],
-			'url' => ['required', 'regex:/^(http|https):\/\//', new WebsiteExists]
+		$data = $request->validate([
+			'name' => [
+				'min:3',
+				'max:40',
+				'alpha_num',
+				'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))
+			],
+			'url' => [
+				'required',
+				'regex:/^(http|https):\/\//',
+				new WebsiteExists
+			]
 		]);
-
-		if ($validator->fails()) {
-			return back()->withInput();
-		}
 
 		$link = $project->links()->create([
 			'name' => $request->input('name'),
@@ -82,7 +87,7 @@ class LinkController extends Controller
 			'link_type_id' => $request->input('link_type_id') ?? 10
 		]);
 
-		$success = '🎉 You created '.$link->domain.'/'.$link->name.'!';
+		$success = '🎉 You created a nice link!';
 		return redirect($project->name.'/link/'.$link->domain.'/'.$link->name)->with('success', $success);
 	}
 

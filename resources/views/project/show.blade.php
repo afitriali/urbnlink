@@ -1,8 +1,18 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<span class="text-xs text-gray-500 uppercase">Project</span>
-<h2 class="text-xl font-bold mb-4 -mt-1">{{ $project->name }}</h2>
+
+@component('components.header')
+@slot('breadcrumb')
+<a href="{{ url('/') }}">🏠</a> → Project
+@endslot
+@slot('title')
+{{ $project->name }}
+@endslot
+@endcomponent
+
+<p class="-mt-4 italic text-sm text-gray-400 mb-6 truncate">{{ $project->description }}</p>
+
 <a href="{{ url()->current() }}/link/create" class="btn">Create Link</a></li>
 <ul>
     @foreach ($project->links()->get() as $link)

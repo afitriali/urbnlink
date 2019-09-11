@@ -10,28 +10,33 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="text-gray-900 break-words">
         <div class="max-w-sm mx-auto px-4">
-            <a href="{{ url('/') }}"><h1 class="text-lg font-semibold my-4">{{ config('app.name', 'Laravel') }}</h1></a>
-            @auth
-            {{ Auth::user()->name }}</br>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
+            <div class="flex mt-4 mb-8">
+                <div class="flex-auto">
+                    <a href="{{ url('/') }}"><h1 class="inline text-lg font-semibold tracking-wider border-b-2">{{ config('app.name') }}</h1></a>
+                </div>
+                <div class="flex-none">
+                    @auth
+                    <div class="flex-none rounded-full overflow-hidden w-8 h-8 mr-0 shadow" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <img src="{{ Auth::user()->gravatar }}?d=identicon" />
+                    </div>
+                    <div class="hidden">
+                        Hi, {{ Auth::user()->name }}</br>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-
-            <br>
-            @if ($site_parameters['parent_url'])
-            <a href="{{ $site_parameters['parent_url'] }}" class="block my-4">←</a>
-            @endif
-
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </div>
             @endauth
 
             @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="bg-green-100 text-green-400 rounded-lg mb-6 p-3">{{ session('success') }}</div>
             @endif
             @if (session('message'))
             <div class="alert alert-info">{{ session('message') }}</div>
@@ -42,10 +47,10 @@
             </div>
             @endif
             @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
+            <div class="bg-red-100 text-red-400 rounded-lg mb-6 p-3">
+                <ul class="list-disc pl-4">
                     @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li class="mb-2">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
