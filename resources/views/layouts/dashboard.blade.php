@@ -37,6 +37,10 @@
         @endguest
 
         <h1>{{ config('app.name', 'Laravel') }}</h1>
+        
+        @if ($site_parameters['parent_url'])
+        <a href="{{ $site_parameters['parent_url'] }}">←</a>
+        @endif
 
         @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

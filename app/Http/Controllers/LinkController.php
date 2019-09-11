@@ -11,7 +11,10 @@ class LinkController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'create']]);
+        $this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'store']]);
+		\View::share('site_parameters', [
+			'parent_url' => url()->previous()
+		]);
     }
 
 	/**
@@ -55,7 +58,11 @@ class LinkController extends Controller
 		return response()->json(['available' => true]);
 	}
 
-	public function create(Request $request)
+	public function create() {
+		return view('link/create');
+	}
+
+	public function store(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
 			'name' => ['min:3', 'max:40', 'alpha_num', 'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))],

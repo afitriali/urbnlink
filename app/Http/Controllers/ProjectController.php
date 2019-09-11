@@ -12,6 +12,9 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+		\View::share('site_parameters', [
+			'parent_url' => url('/')
+		]);
     }
 
 	public function index()
@@ -23,6 +26,8 @@ class ProjectController extends Controller
 
 	public function create()
 	{
+		$this->authorize('create', new Project);
+
 		return view('project/create');
 	}
 

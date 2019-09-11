@@ -56,7 +56,7 @@ Route::domain(env('DASHBOARD_DOMAIN', 'api.urbn.link'))->group(function () {
 Route::domain(env('API_DOMAIN', 'api.urbn.link'))->group(function () {
 	Route::post('/link/check/name', 'LinkController@checkName');
 	Route::post('/link/check/url', 'LinkController@checkUrl');
-	Route::post('/link/create', 'LinkController@create');
+	Route::post('/link/create', 'LinkController@store');
 });
 
 Route::domain(env('API_DOMAIN', 'api.urbn.link'))->middleware(['auth', 'verified'])->group(function () {
