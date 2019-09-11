@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Link\Link;
+use App\Domain;
+use App\Project;
 use App\Rules\WebsiteExists;
 
 class LinkController extends Controller
@@ -58,11 +60,11 @@ class LinkController extends Controller
 		return response()->json(['available' => true]);
 	}
 
-	public function create() {
-		return view('link/create');
+	public function create(Project $project) {
+		return view('link/create', compact('project'));
 	}
 
-	public function store(Request $request)
+	public function store(Project $project, Request $request)
 	{
 		$validator = Validator::make($request->all(), [
 			'name' => ['min:3', 'max:40', 'alpha_num', 'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))],
@@ -70,20 +72,27 @@ class LinkController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			return $this->respondWithError('created', $validator->errors());
+			return back()->withInput();
 		}
 
-		$created = Link::create([
+		$link = $project->links()->create([
 			'name' => $request->input('name'),
-			'domain' => $request->input('domain'),
+			'domain' => $request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN'),
 			'url' => $request->input('url'),
-			'link_type_id' => $request->input('link_type_id')
+			'link_type_id' => $request->input('link_type_id') ?? 10
 		]);
-		$created->date = $created->created_at->format('jS F Y, g:i a');
 
-		return response()->json(['created' => true]);
+		$success = '🎉 You created '.$link->domain.'/'.$link->name.'!';
+		return redirect($project->name.'/link/'.$link->domain.'/'.$link->name)->with('success', $success);
 	}
 
+	public function show(Project $project, $domain, Link $link)
+	{
+		$this->authorize('view', $project);
+
+		return view('link/show', compact('link', 'project'));
+	}
+	
 	public function getStatistics($domain, $name)
 	{
 		return Link::hasName($name)->hasDomain($domain)->first()->getStatistics(); 

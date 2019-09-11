@@ -11,9 +11,7 @@
     </head>
 
     <body>
-        <div class="max-w-sm mx-auto px-4">
-            <a href="{{ url('/') }}"><h1 class="text-lg font-semibold my-4">{{ config('app.name', 'Laravel') }}</h1></a>
-            @auth
+        <div class="max-w-md mx-auto px-4 bg-teal-100">
             {{ Auth::user()->name }}</br>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}
@@ -23,12 +21,11 @@
                 @csrf
             </form>
 
-            <br>
-            @if ($site_parameters['parent_url'])
-            <a href="{{ $site_parameters['parent_url'] }}" class="block my-4">←</a>
-            @endif
+            <h1>{{ config('app.name', 'Laravel') }}</h1>
 
-            @endauth
+            @if ($site_parameters['parent_url'])
+            <a href="{{ $site_parameters['parent_url'] }}">←</a>
+            @endif
 
             @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

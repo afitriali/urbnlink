@@ -3,6 +3,10 @@
 /public/storage
 /storage/*.key
 /vendor
+/Z-Controllers
+/Z-Policies
+/Z-Routes
+/Z-Views
 .env
 .env.backup
 .env.testing

@@ -66,9 +66,7 @@ class ProjectController extends Controller
 	{
 		$this->authorize('view', $project);
 
-		$data['links'] = $project->links()->get();
-
-		return view('project/show', compact('data'));
+		return view('project/show', compact('project'));
 	}
 	
 	public function addMember(Request $request)
