@@ -11,7 +11,7 @@
 @endslot
 @endcomponent
 
-<p class="-mt-4 italic text-sm text-gray-400 mb-6 truncate">{{ $project->description }}</p>
+<p class="-mt-4 italic text-sm text-gray-400 mb-6">{{ $project->description }}</p>
 
 <a href="{{ url()->current() }}/link/create" class="btn">Create Link</a></li>
 <ul>

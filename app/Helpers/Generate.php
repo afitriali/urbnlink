@@ -6,7 +6,7 @@ use Exception;
 
 class Generate
 {
-    public static function sprinkleRandomChar(string $str)
+    private static function sprinkleRandomChar(string $str)
     {
         if (strlen($str) >= 2) {
             return Str::random(2) . substr($str, 0, -1) . Str::random(1) . substr($str, -1);

@@ -9,13 +9,11 @@ class DomainsTableSeeder extends Seeder
     {
         Domain::create([
             'name' => env('DEFAULT_SHORT_DOMAIN'),
-            'verification_token' => 'FairuzNailaaZiya',
             'verified_at' => now()
         ]);
 
         Domain::create([
             'name' => env('PROJECT_DOMAIN'),
-            'verification_token' => 'FairuzNailaaZiya',
             'verified_at' => now()
         ]);
     }

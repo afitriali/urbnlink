@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\ProjectMemberAdded;
+use App\Helpers\DomainManager;
 use App\Project;
 use App\User;
 use Validator;
@@ -57,6 +58,13 @@ class ProjectController extends Controller
 		]);
 
 		$project->addMember(auth()->user());
+
+		$domain = $project->domains()->create([
+			'name' => strtolower($project->name.'.'.env('PROJECT_DOMAIN')),
+			'verified_at' => now()
+		]);	
+
+		DomainManager::createRecord($domain);
 
 		$success = '🎉 You created '.$project->name.'!';
 		return redirect($project->name)->with('success', $success);

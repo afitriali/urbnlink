@@ -12,7 +12,7 @@ class ProjectPolicy
     
     public function view(User $user, Project $project)
     {
-        return $project->ProjectMembers()->where('user_id', $user->id)->exists();
+        return $project->projectMembers()->where('user_id', $user->id)->exists();
     }
 
     public function create(User $user)

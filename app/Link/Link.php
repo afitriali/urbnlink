@@ -4,7 +4,6 @@ namespace App\Link;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Helpers\Generate;
 use App\Helpers\Traffic;
 use App\Helpers\Statistics;
 
@@ -17,18 +16,6 @@ class Link extends Model
 	protected $fillable = ['name', 'domain', 'url', 'is_active', 'is_conditional', 'link_type_id'];
 
 	protected $hidden = ['id'];
-
-	public static function create(array $attributes = [])
-	{
-		$link = static::query()->create($attributes);
-		$link->slug = Generate::slug($link->id);
-		$link->name = $link->name ?? $link->slug;
-		$link->domain = $link->domain ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn');
-		$link->link_type_id = $link->link_type_id ?? 10;
-		$link->save();
-
-		return $link;
-	}
 
 	public function toggleActive()
 	{
@@ -79,14 +66,14 @@ class Link extends Model
 		return $query->where('domain', $domain);
 	}
 
-	public function scopeIsActive($query, $bool = true)
+	public function scopeIsActive($query)
 	{
-		return $query->where('is_active', $bool);
+		return $query->where('is_active', true);
 	}
 
-	public function scopeIsNotBlocked($query, $bool = false)
+	public function scopeIsNotBlocked($query)
 	{
-		return $query->where('is_blocked', $bool);
+		return $query->where('is_blocked', false);
 	}
 
 	public function alternativeLinks()

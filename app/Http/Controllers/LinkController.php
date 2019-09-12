@@ -61,13 +61,27 @@ class LinkController extends Controller
 	}
 
 	public function create(Project $project) {
-		return view('link/create', compact('project'));
+		$domains = $project->domains()->get();
+
+		return view('link/create', compact('project', 'domains'));
 	}
 
 	public function store(Project $project, Request $request)
 	{
+		// Validate and check permission for domain
+		$domain = $request->input('domain');
+		if ($domain !== null) {
+			$d = Domain::hasName($domain)->isVerified()->first();
+			if ($d) {
+				$this->authorize('useDomain', $d);
+			} else {
+				abort(403);
+			}
+		}
+
 		$data = $request->validate([
 			'name' => [
+				'nullable',
 				'min:3',
 				'max:40',
 				'alpha_num',
@@ -82,9 +96,9 @@ class LinkController extends Controller
 
 		$link = $project->links()->create([
 			'name' => $request->input('name'),
-			'domain' => $request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN'),
+			'domain' => $request->input('domain'),
 			'url' => $request->input('url'),
-			'link_type_id' => $request->input('link_type_id') ?? 10
+			'link_type_id' => $request->input('link_type_id')
 		]);
 
 		$success = '🎉 You created a nice link!';

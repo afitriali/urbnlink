@@ -1,6 +1,6 @@
-<form action="{{ $action }}" method="POST">
+<form action="{{ $action }}" method="POST" class="w-full max-w-lg">
     @method($method)
     @csrf
     {{ $slot }}
-    <br><button type="submit" class="btn my-8 clear-left">Create</button>
+    <button type="submit" class="btn my-6">Create</button>
 </form>

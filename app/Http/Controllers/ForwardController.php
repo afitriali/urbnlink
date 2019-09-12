@@ -14,13 +14,13 @@ class ForwardController extends Controller
 {
 	public function index($domain)
 	{
-		$domain = Domain::hasName($domain)->first();
+		$domain = Domain::hasName($domain)->isVerified()->first();
 
-		if ($domain == null || $domain->defaultLink() == null) {
+		if ($domain == null || $domain->defaultLink()->first() == null) {
 			return redirect()->away(env('APP_URL'));
 		}
 
-		return $this->forward($domain->defaultLink->domain, $domain->defaultLink->name);
+		return $this->forward($domain->defaultLink()->domain, $domain->defaultLink()->name);
 	}
 
 	/**

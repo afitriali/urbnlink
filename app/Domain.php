@@ -7,9 +7,16 @@ use App\Project;
 
 class Domain extends Model
 {
+	protected $fillable = ['name', 'verified_at'];
+
 	public function scopeHasName($query, $name)
 	{
 		return $query->where('name', $name);
+	}
+
+	public function scopeIsVerified($query)
+	{
+		return $query->whereNotNull('verified_at');
 	}
 	
 	public function project()
@@ -19,6 +26,6 @@ class Domain extends Model
 
 	public function defaultLink()
 	{
-		return $this->belongsTo(Link::class);
+		return $this->belongsTo(Link\Link::class);
 	}
 }
