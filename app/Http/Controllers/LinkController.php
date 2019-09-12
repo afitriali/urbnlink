@@ -79,7 +79,7 @@ class LinkController extends Controller
 			}
 		}
 
-		$data = $request->validate([
+		$request->validate([
 			'name' => [
 				'nullable',
 				'min:3',
@@ -101,7 +101,7 @@ class LinkController extends Controller
 			'link_type_id' => $request->input('link_type_id')
 		]);
 
-		$success = '🎉 You created a nice link!';
+		$success = '👍 You created a nice link!';
 		return redirect($project->name.'/link/'.$link->domain.'/'.$link->name)->with('success', $success);
 	}
 

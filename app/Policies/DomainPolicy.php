@@ -12,6 +12,6 @@ class DomainPolicy
     
     public function useDomain(User $user, Domain $domain)
     {
-        return $domain->project()->first()->projectMembers()->where('user_id', $user->id)->exists();
+        return $domain->project()->first()->members()->where('user_id', $user->id)->exists();
     }
 }

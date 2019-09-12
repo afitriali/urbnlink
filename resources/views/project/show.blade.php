@@ -1,29 +1,40 @@
 @extends('layouts.dashboard')
 
-@section('content')
+@section('navigation')
+@component('components.breadcrumbs')
+Project
+@endcomponent
+@endsection
 
+@section('content')
 @component('components.header')
-@slot('breadcrumb')
-<a href="{{ url('/') }}">🏠</a> → Project
-@endslot
 @slot('title')
 {{ $project->name }}
 @endslot
+@slot('sub_title')
+{{ $project->description }}
+@endslot
 @endcomponent
 
-<p class="-mt-4 italic text-sm text-gray-400 mb-6">{{ $project->description }}</p>
-
-<a href="{{ url()->current() }}/link/create" class="btn">Create Link</a></li>
+@isset($links[0])
+<a href="{{ url()->current() }}/link/create" class="btn mb-8">Create a New Link</a>
 <ul>
-    @foreach ($project->links()->get() as $link)
-    <a href="{{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}">
-        <li class="block my-2 p-2 shadow-md rounded">
-            <h3 class="text-lg font-semibold">{{ $link->domain.'/'.$link->name }}</h3>
-            <p class="text-xs text-gray-500 uppercase">
-            <b>{{ $link->hits()->count() }}</b> hits
-            </p>
-        </li>
-    </a>
+    @foreach ($links as $link)
+    @component('components.card')
+    @slot('url')
+    {{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}
+    @endslot
+    @slot('name')
+    {{ $link->domain.'/'.$link->name }}
+    @endslot
+    @slot('description')
+    {{ $link->url }}
+    @endslot
+    {{ $link->hits()->count() }} hits
+    @endcomponent
     @endforeach
 </ul>
+@else
+<a href="{{ url()->current() }}/link/create" class="btn mb-8">Let's Create Your First Link</a>
+@endisset
 @endsection

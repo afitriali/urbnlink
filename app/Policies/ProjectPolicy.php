@@ -12,17 +12,17 @@ class ProjectPolicy
     
     public function view(User $user, Project $project)
     {
-        return $project->projectMembers()->where('user_id', $user->id)->exists();
+        return $project->members()->where('user_id', $user->id)->exists();
     }
 
     public function create(User $user)
     {
-        return ($user->projects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
+        return ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
     }
 
     public function update(User $user, Project $project)
     {
         return $project->admin_id === $user->id && 
-            ($user->projects()-count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
+            ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
     }
 }

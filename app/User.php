@@ -43,8 +43,13 @@ class User extends Authenticatable implements MustVerifyEmail
 		return "http://www.gravatar.com/avatar/$hash";
 	}
 
-	public function projects()
+	public function ownProjects()
 	{
 		return $this->hasMany(Project::class, 'admin_id');
+	}
+
+	public function projects()
+	{
+		return $this->belongsToMany(Project::class, 'project_members')->orderBy('updated_at', 'desc');
 	}
 }

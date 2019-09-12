@@ -1,2 +1,2 @@
-<div class="text-xs text-indigo-300 uppercase">{{ $breadcrumb }}</div>
-<h2 class="text-xl font-bold mb-6 mt-2">{{ $title }}</h2>
+<h2 class="text-xl font-bold">{{ $title }}</h2>
+<p class="text-sm text-gray-500 mb-8 pb-2 border-b-2">{{ isset($sub_title) ? $sub_title : '' }}</p>

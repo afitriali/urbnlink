@@ -58,9 +58,9 @@ class Project extends Model
 		return $this->hasMany(Link\Link::class);
 	}
 
-	public function projectMembers()
+	public function members()
 	{
-		return $this->hasMany(ProjectMember::class);
+		return $this->belongsToMany(User::class, 'project_members');
 	}
 
 	public function projectInvitations()

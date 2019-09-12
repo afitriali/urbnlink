@@ -2,10 +2,13 @@
 
 @section('content')
 
+@section('navigation')
+@component('components.breadcrumbs')
+<a href="{{ url($project->name) }}" class="inline-block bg-indigo-100 text-indigo-400 px-2 rounded">{{ $project->name }}</a> → Link
+@endcomponent
+@endsection
+
 @component('components.header')
-@slot('breadcrumb')
-<a href="{{ url('/') }}">🏠</a> → <a href="{{ url($project->name) }}" class="inline-block bg-indigo-100 text-indigo-400 px-2 rounded">{{ $project->name }}</a> → Link
-@endslot
 @slot('title')
 Create a New Link
 @endslot
@@ -24,10 +27,10 @@ POST
         Domain
     </label>
     <div class="relative">
-        <select class="block appearance-none w-full bg-indigo-100 border border-indigo-100 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-indigo-100" name="domain" value="{{ old('domain') }}">
+        <select class="block appearance-none w-full bg-indigo-100 border border-indigo-100 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-indigo-100" name="domain">
             <option value="" default>{{ env('DEFAULT_SHORT_DOMAIN') }}</option>
             @foreach ($domains as $domain)
-            <option value="{{ $domain->name }}">{{ $domain->name }}</option>
+            <option value="{{ $domain->name }}" <?= old('domain') === $domain->name ? 'selected="selected"' : '' ?>>{{ $domain->name }}</option>
             @endforeach
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
@@ -50,12 +53,10 @@ POST
     <label class="block uppercase tracking-wide text-gray-500 text-xs mb-2" for="url">
         URL
     </label>
-    <input class="appearance-none block w-full bg-indigo-100 border border-indigo-100 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" name="url" placeholder="Forward to this URL" value ="{{ old('url') }}">
+    <input class="appearance-none block w-full bg-indigo-100 border @error('url') border-red-400 @else border-indigo-100 @enderror rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" name="url" placeholder="Forward to this URL" value ="{{ old('url') }}">
     @error('url')
         <p class="text-red-400 text-xs italic mt-2">{{ $message }}</p>
     @enderror
 </div>
-
 @endcomponent
-
 @endsection

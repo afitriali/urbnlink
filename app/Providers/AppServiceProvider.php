@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 use App\Link\Link;
+use App\Project;
 use App\Observers\LinkObserver;
+use App\Observers\ProjectObserver;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Link::observe(LinkObserver::class);
+        Project::observe(ProjectObserver::class);
     }
 }

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <script src="{{ asset('js/app.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -13,8 +13,8 @@
     <body class="text-gray-900 break-words">
         <div class="max-w-sm mx-auto px-4">
             <div class="flex mt-4 mb-8">
-                <div class="flex-auto">
-                    <a href="{{ url('/') }}"><h1 class="inline text-lg font-semibold tracking-wider border-b-2">{{ config('app.name') }}</h1></a>
+                <div class="flex-auto mt-1 leading-relaxed">
+                    @yield('navigation')
                 </div>
                 <div class="flex-none">
                     @auth
@@ -36,15 +36,10 @@
             @endauth
 
             @if (session('success'))
-            <div class="bg-green-100 text-green-400 rounded-lg mb-6 p-3">{{ session('success') }}</div>
+            <div class="bg-green-100 text-green-400 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('success') }}</div>
             @endif
             @if (session('message'))
-            <div class="alert alert-info">{{ session('message') }}</div>
-            @endif
-            @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
+            <div class="bg-blue-100 text-blue-400 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('message') }}</div>
             @endif
 
             @yield('content')

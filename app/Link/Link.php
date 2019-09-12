@@ -17,6 +17,8 @@ class Link extends Model
 
 	protected $hidden = ['id'];
 
+	protected $touches = ['project'];
+
 	public function toggleActive()
 	{
 		$this->is_active = !$this->is_active;

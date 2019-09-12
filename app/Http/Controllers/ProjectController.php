@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\ProjectMemberAdded;
-use App\Helpers\DomainManager;
 use App\Project;
 use App\User;
 use Validator;
@@ -20,9 +19,9 @@ class ProjectController extends Controller
 
 	public function index()
 	{
-		$data['projects'] = auth()->user()->projects()->get();
+		$projects = auth()->user()->projects()->get();
 
-		return view('project/index', compact('data'));
+		return view('project/index', compact('projects'));
 	}
 
 	public function create()
@@ -36,7 +35,7 @@ class ProjectController extends Controller
 	{
 		$this->authorize('create', new Project);
 
-		$validator = Validator::make($request->all(), [
+		$request->validate([
 			'name' => [
 				'required',
 				'max:40',
@@ -48,25 +47,12 @@ class ProjectController extends Controller
 			]
 		]);
 		
-		if ($validator->fails()) {
-			return back()->withInput();
-		}
-
-		$project = auth()->user()->Projects()->create([
+		$project = auth()->user()->ownProjects()->create([
 			'name' => $request->input('name'),
 			'description' => $request->input('description')
 		]);
 
-		$project->addMember(auth()->user());
-
-		$domain = $project->domains()->create([
-			'name' => strtolower($project->name.'.'.env('PROJECT_DOMAIN')),
-			'verified_at' => now()
-		]);	
-
-		DomainManager::createRecord($domain);
-
-		$success = '🎉 You created '.$project->name.'!';
+		$success = '🎉 You created a new project!';
 		return redirect($project->name)->with('success', $success);
 	}
 
@@ -74,7 +60,9 @@ class ProjectController extends Controller
 	{
 		$this->authorize('view', $project);
 
-		return view('project/show', compact('project'));
+		$links = $project->links()->get();
+
+		return view('project/show', compact('project', 'links'));
 	}
 	
 	public function addMember(Request $request)
