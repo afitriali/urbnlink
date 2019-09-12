@@ -1,2 +1,2 @@
 <h2 class="text-xl font-bold">{{ $title }}</h2>
-<p class="text-sm text-gray-500 mb-8 pb-2 border-b-2">{{ isset($sub_title) ? $sub_title : '' }}</p>
+<p class="text-sm text-gray-500 mb-8 pb-2 border-b-2 truncate">{{ isset($sub_title) ? $sub_title : '' }}</p>

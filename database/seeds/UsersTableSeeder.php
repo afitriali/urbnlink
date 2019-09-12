@@ -13,14 +13,14 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Free User',
+            'name' => 'FreeUser',
             'email' => 'user_free@mail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('password')
         ]);
 
         User::create([
-            'name' => 'Pro User',
+            'name' => 'ProUser',
             'email' => 'user_pro@mail.com',
             'is_pro' => true,
             'email_verified_at' => now(),

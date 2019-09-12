@@ -11,7 +11,7 @@
     </head>
 
     <body class="text-gray-900 break-words">
-        <div class="max-w-sm mx-auto px-4">
+        <div class="max-w-lg mx-auto px-4">
             <div class="flex mt-4 mb-8">
                 <div class="flex-auto mt-1 leading-relaxed">
                     @yield('navigation')

@@ -7,7 +7,7 @@
 @section('content')
 @component('components.header')
 @slot('title')
-Hello, {{ substr(Auth::user()->name, 0, strpos(Auth::user()->name, ' ')) }}.
+Hello, {{ explode(" ", Auth::user()->name)[0] }}.
 @endslot
 @slot('sub_title')
 @isset($projects[0])
@@ -46,7 +46,8 @@ You don't have any projects yet.
     @endcan
 </div>
 @else
-<div class="my-8">
+<div class="my-8 text-center">
+    <img src="{{ url('/img/first-project.png') }}" class="mx-auto max-h-64 -mt-12 -mb-6" />
     @can('create', App\Project::class)
     <a href="{{ url('project/create') }}" class="btn">Start a Project</a>
     @endcan

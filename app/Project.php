@@ -10,16 +10,14 @@ class Project extends Model
 
 	public function addMember(User $user)
 	{
-		$this->ProjectMembers()->create([
-			'user_id' => $user->id
-		]);
+		$this->members()->attach($user);
 
 		return $this;
 	}
 
 	public function removeMember(User $user) {
 		if ($this->admin() != $user) {
-			return $this->ProjectMembers()->delete($user);
+			return $this->members()->detach($user);
 		}
 
 		return $this;

@@ -20,7 +20,7 @@ class ProjectTest extends TestCase
     {
 		$admin = factory(\App\User::class)->create();
 
-		$admin->projects()->create([
+		$admin->ownProjects()->create([
             'name' => 'Project One',
             'description' => 'Project One'
         ]);
@@ -55,7 +55,7 @@ class ProjectTest extends TestCase
     {
 		$admin = factory(\App\User::class)->create();
 
-		$project = $admin->projects()->create([
+		$project = $admin->ownProjects()->create([
             'name' => 'Project One',
             'description' => 'Project One'
         ]);
@@ -76,7 +76,7 @@ class ProjectTest extends TestCase
     {
 		$admin = factory(\App\User::class)->create();
 
-        $project = $admin->projects()->create([
+        $project = $admin->ownProjects()->create([
             'name' => 'Project One',
             'description' => 'Project One'
         ]);
@@ -98,7 +98,7 @@ class ProjectTest extends TestCase
     {
 		$admin = factory(\App\User::class)->create();
 
-        $project = $admin->projects()->create([
+        $project = $admin->ownProjects()->create([
             'name' => 'Project One',
             'description' => 'Project One'
         ]);
