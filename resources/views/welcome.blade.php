@@ -8,7 +8,7 @@
 
 
 <p class="font-light px-6 py-12 bg-blue-100 text-blue-900 leading-relaxed sm:rounded-lg">
-URBN helps you manage your websites, online forms and social media links. Use URBN to grow your audience and vice versa. Scroll down and see  how it works.
+URBN helps you manage your websites, online forms and social media links. Use URBN to grow and find your audience.
 <p>
 
 @endsection
