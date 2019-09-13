@@ -23,6 +23,18 @@ class ForwardController extends Controller
 		return $this->forward($domain->defaultLink()->domain, $domain->defaultLink()->name);
 	}
 
+	public function preview($domain, $name)
+	{
+		$link = Link::hasName($name)->hasDomain($domain)->isActive()->isNotBlocked()->first() ?? abort(404);
+
+		if ($link->is_conditional) {
+			$link = $this->checkAlternativeLinks($link);
+		}
+
+		$stats = $link->getStatistics(); 
+		return view('link/preview', compact('link', 'stats'));
+	}
+
 	/**
 	 * Forward short URL to original address
 	 * @param string
@@ -33,7 +45,7 @@ class ForwardController extends Controller
 		$link = Link::hasName($name)->hasDomain($domain)->isActive()->isNotBlocked()->first() ?? abort(404);
 
 		if ($link->is_conditional) {
-			return $this->checkAlternativeLinks($link);
+			$link = $this->checkAlternativeLinks($link);
 		}
 
 		$link->registerHit(request());
@@ -44,14 +56,13 @@ class ForwardController extends Controller
 	{
 		foreach ($link->alternativeLinks as $alternative_link) {
 			if ($this->checkConditions($alternative_link)) {
-				$link->url = $alternative_link->url ?? $link->url;
-				$link->link_type_id = $alternative_link->link_type_id ?? $link->link_type_id;
+				$link->url = $alternative_link->url;
+				$link->link_type_id = $alternative_link->link_type_id;
 				break;
 			}
 		}
 
-		$link->registerHit(request());
-		return $this->{$link->linkType->function}($link->url);
+		return $link;
 	}
 
 	private function checkConditions(AlternativeLink $alternative_link)
@@ -61,7 +72,6 @@ class ForwardController extends Controller
 				return false;
 			}
 		}
-
 		return true;
 	}
 

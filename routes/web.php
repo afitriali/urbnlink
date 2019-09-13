@@ -83,6 +83,6 @@ Route::domain(env('API_DOMAIN', 'api.urbn.link'))->middleware(['auth', 'verified
 
 Route::domain('{domain}')->group(function () {
 	Route::get('/', 'ForwardController@index');
-	Route::get('{name}+', 'ForwardController@summary');
+	Route::get('{name}+', 'ForwardController@preview');
 	Route::get('{name}', 'ForwardController@forward');
 });

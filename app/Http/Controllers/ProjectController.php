@@ -58,7 +58,7 @@ class ProjectController extends Controller
 
 	public function show(Project $project)
 	{
-		$this->authorize('view', $project);
+		$this->authorize('workOn', $project);
 
 		$links = $project->links()->get();
 
@@ -67,6 +67,8 @@ class ProjectController extends Controller
 	
 	public function addMember(Request $request)
 	{
+		$this->authorize('manage', $project);
+
 		$project = Project::find($request->input('project'));
 		$user = User::where('email', $request->input('email'))->first();
 

@@ -13,10 +13,7 @@ class LinkController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'store']]);
-		\View::share('site_parameters', [
-			'parent_url' => url()->previous()
-		]);
+        $this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'summary']]);
     }
 
 	/**
@@ -60,7 +57,9 @@ class LinkController extends Controller
 		return response()->json(['available' => true]);
 	}
 
-	public function create(Project $project) {
+	public function create(Project $project)
+	{
+		$this->authorize('workOn', $project);
 		$domains = $project->domains()->get();
 
 		return view('link/create', compact('project', 'domains'));
@@ -68,7 +67,8 @@ class LinkController extends Controller
 
 	public function store(Project $project, Request $request)
 	{
-		// Validate and check permission for domain
+		$this->authorize('workOn', $project);
+
 		$domain = $request->input('domain');
 		if ($domain !== null) {
 			$d = Domain::hasName($domain)->isVerified()->first();
@@ -107,13 +107,9 @@ class LinkController extends Controller
 
 	public function show(Project $project, $domain, Link $link)
 	{
-		$this->authorize('view', $project);
+		$this->authorize('workOn', $project);
+		$stats = $link->getStatistics(); 
 
-		return view('link/show', compact('link', 'project'));
-	}
-	
-	public function getStatistics($domain, $name)
-	{
-		return Link::hasName($name)->hasDomain($domain)->first()->getStatistics(); 
+		return view('link/show', compact('link', 'project', 'stats'));
 	}
 }

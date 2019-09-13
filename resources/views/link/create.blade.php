@@ -4,7 +4,7 @@
 
 @section('navigation')
 @component('components.breadcrumbs')
-<a href="{{ url($project->name) }}" class="inline-block bg-blue-100 px-2 rounded">{{ $project->name }}</a> → Link
+<a href="{{ url($project->name) }}" class="border-b-2 border-dotted">{{ $project->name }}</a> → Link
 @endcomponent
 @endsection
 

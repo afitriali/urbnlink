@@ -18,7 +18,7 @@ Project
 
 @isset($links[0])
 <div class="my-8 text-right">
-<a href="{{ url()->current() }}/link/create" class="btn">Make a New Link</a>
+<a href="{{ url()->current() }}/link/create" class="btn">New Link</a>
 </div>
 <ul>
     @foreach ($links as $link)

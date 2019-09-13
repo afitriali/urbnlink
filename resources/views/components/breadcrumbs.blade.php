@@ -1,3 +1,3 @@
-<div class="text-sm text-blue-400 uppercase tracking-wide">
+<div class="text-sm text-blue-400">
     <a href="{{ url('/') }}">🏠</a> → {{ $slot }}
 </div>

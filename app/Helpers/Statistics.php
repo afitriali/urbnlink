@@ -42,14 +42,22 @@ class Statistics
 			->take(10)
 			->get();
 
+		$pages = DB::table('hits')
+			->select(DB::raw('count(*) as count, page'))
+			->where('link_id', $link_id)
+			->groupBy('page')
+			->orderBy('count', 'desc')
+			->take(10)
+			->get();
+
+		foreach ($hits as $day) {
+			$days[$day->created] = $day->count;
+		}
+
 		$day = Carbon::now()->subDay(29);
 		while ($day <= Carbon::now()) {
 			$stats['hits'][$day->format('jS F Y')] = $days[$day->format('Y-m-d')] ?? 0;
 			$day->addDay();
-		}
-
-		foreach ($hits as $day) {
-			$days[$day->created] = $day->count;
 		}
 
 		foreach ($referrers as $referrer) {
@@ -58,6 +66,10 @@ class Statistics
 
 		foreach ($countries as $country) {
 			$stats['country'][$country->country] = $country->count;
+		}
+
+		foreach ($pages as $page) {
+			$stats['page'][$page->page] = $page->count;
 		}
 
 		return $stats;

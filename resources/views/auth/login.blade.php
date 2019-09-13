@@ -13,7 +13,7 @@
 
         <div class="w-full mb-6">
             <label for="email" class="input-label">{{ __('E-Mail Address') }}</label>
-            <input class="input-text @error('name') border-red-400 @else border-indigo-100 @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <input class="input-text @error('name') input-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
             @error('email')
             <span class="input-error" role="alert">{{ $message }}</span>
             @enderror
@@ -21,7 +21,7 @@
 
         <div class="w-full mb-6">
             <label for="password" class="input-label">{{ __('Password') }}</label>
-            <input id="password" type="password" class="input-text @error('password') border-red-400 @else border-indigo-100 @enderror" name="password" required autocomplete="current-password">
+            <input id="password" type="password" class="input-text @error('password') input-invalid @enderror" name="password" required autocomplete="current-password">
             @error('password')
             <span class="input-error" role="alert">{{ $message }}</span>
             @enderror

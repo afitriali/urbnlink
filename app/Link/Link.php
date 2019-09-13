@@ -48,6 +48,7 @@ class Link extends Model
 	public function getStatistics()
 	{
 		$stats = Statistics::link($this->id);
+		
 		$stats['total'] = $this->hits->count();
 
 		return $stats;

@@ -10,7 +10,7 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
     
-    public function view(User $user, Project $project)
+    public function workOn(User $user, Project $project)
     {
         return $project->members()->where('user_id', $user->id)->exists();
     }
@@ -20,7 +20,7 @@ class ProjectPolicy
         return ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
     }
 
-    public function update(User $user, Project $project)
+    public function manage(User $user, Project $project)
     {
         return $project->admin_id === $user->id && 
             ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
