@@ -18,7 +18,7 @@ Project
 
 @isset($links[0])
 <div class="my-8 text-right">
-<a href="{{ url()->current() }}/link/create" class="btn">Create a New Link</a>
+<a href="{{ url()->current() }}/link/create" class="btn">Make a New Link</a>
 </div>
 <ul>
     @foreach ($links as $link)
@@ -37,9 +37,12 @@ Project
     @endforeach
 </ul>
 @else
-<div class="my-8 text-center">
+<div class="text-center mb-12">
     <img src="{{ url('/img/first-link.png') }}" class="mx-auto max-h-64 -mt-12 -mb-6" />
-    <a href="{{ url()->current() }}/link/create" class="btn mb-8">Let's Create Your First Link</a>
+    <a href="{{ url()->current() }}/link/create" class="btn">Let's Make Your First Link</a>
 </div>
 @endisset
+<div class="mt-8 text-sm">
+    <a href="{{ url('/') }}" class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
+</div>
 @endsection

@@ -4,49 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <script src="{{ asset('js/app.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
-    <body>
-        <div class="max-w-md mx-auto px-4 bg-teal-100">
-            {{ Auth::user()->name }}</br>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
+    <body class="text-gray-900 break-words">
+        <div class="max-w-lg mx-auto">
+            <div class="flex mt-4 mb-8 mx-6">
+                <div class="flex-auto mt-1 leading-relaxed relative">
+                    <a href="{{ config('app.url') }}"><h1 class="inline text-lg font-semibold tracking-wider">{{ config('app.name') }}</h1>
+                        <span class="inline-block bg-blue-100 text-blue-400 text-xs px-1 rounded">beta</span>
+                    </a>
+                </div>
+                <div class="flex-none">
+                    @auth
+                    <a href="{{ env('DASHBOARD_URL') }}" class="inline-block mt-3">Dashboard</a>
+                    @else
+                    <a href="{{ route('login') }}" class="mr-4">Log In</a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-
-            <h1>{{ config('app.name', 'Laravel') }}</h1>
-
-            @if ($site_parameters['parent_url'])
-            <a href="{{ $site_parameters['parent_url'] }}">←</a>
-            @endif
-
-            @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-            @if (session('message'))
-            <div class="alert alert-info">{{ session('message') }}</div>
-            @endif
-            @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
+                    @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="btn">Sign Up</a>
+                    @endif
+                    @endauth
+                </div>
             </div>
-            @endif
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
 
             @yield('content')
         </div>
