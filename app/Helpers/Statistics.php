@@ -56,7 +56,7 @@ class Statistics
 
 		$day = Carbon::now()->subDay(29);
 		while ($day <= Carbon::now()) {
-			$stats['hits'][$day->format('jS F Y')] = $days[$day->format('Y-m-d')] ?? 0;
+			$stats['hits']['"'.$day->format('jS F Y').'"'] = $days[$day->format('Y-m-d')] ?? 0;
 			$day->addDay();
 		}
 

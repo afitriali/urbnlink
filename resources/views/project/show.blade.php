@@ -18,22 +18,19 @@ Project
 
 @isset($links[0])
 <div class="my-8 text-right">
-<a href="{{ url()->current() }}/link/create" class="btn">New Link</a>
+    <a href="{{ url()->current() }}/link/create" class="btn">New Link</a>
 </div>
 <ul>
     @foreach ($links as $link)
-    @component('components.card')
-    @slot('url')
-    {{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}
-    @endslot
-    @slot('name')
-    {{ $link->domain.'/'.$link->name }}
-    @endslot
-    @slot('description')
-    {{ $link->url }}
-    @endslot
-    {{ $link->hits()->count() }} hits
-    @endcomponent
+    <a href="{{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}">
+        <li class="mb-4">
+            <h3 class="text-lg font-semibold text-blue-700">{{ $link->domain.'/'.$link->name }}</h3>
+            <p class="text-sm text-gray-500 font-light truncate">{{ $link->url }}</p>
+            <div class="flex items-center text-xs text-gray-500 capitalize">
+                <i data-feather="bar-chart-2" class="h-4 w-4"></i><span class="ml-2">{{ $link->hits()->count() }}</span>
+            </div>
+        </li>
+    </a>
     @endforeach
 </ul>
 @else

@@ -2,7 +2,7 @@
 
 @section('navigation')
 @component('components.breadcrumbs')
-<a href="{{ url($project->name) }}" class="border-b-2 border-dotted">{{ $project->name }}</a> → Link
+<a href="{{ url($project->name) }}" class="text-blue-400">{{ $project->name }}</a><span class="mx-2">→</span>Link
 @endcomponent
 @endsection
 
@@ -19,18 +19,18 @@
 @if ($stats['total'] > 0)
 <canvas id="chart" height="100"></canvas>
 <div class="mt-6 leading-loose">
-    <h3 class="text-gray-500 uppercase text-xs tracking-wide mb-4">Top Referrers</h3>
+    <h3 class="text-gray-500 uppercase text-xs tracking-wide mb-2">Top Referrers</h3>
     @foreach ($stats['referrers'] as $referrer=>$value)
-    <div class="flex font-light text-sm pb-2">
+    <div class="flex items-center font-light text-sm">
         <div class="flex-none inline-block bg-blue-100 text-blue-400 text-xs px-2 py-0 rounded">{{ $value }}</div>
         <div class="flex-auto inline-block truncate ml-2">{{ $referrer }}</div>
     </div>
     @endforeach
 </div>
 <div class="mt-6 leading-loose">
-    <h3 class="text-gray-500 uppercase text-xs tracking-wide mb-4">Top Pages Visited</h3>
+    <h3 class="text-gray-500 uppercase text-xs tracking-wide mb-2">Top Pages Visited</h3>
     @foreach ($stats['page'] as $page=>$value)
-    <div class="flex font-light text-sm pb-2">
+    <div class="flex items-center font-light text-sm">
         <div class="flex-none inline-block bg-blue-100 text-blue-400 text-xs px-2 py-0 rounded">{{ $value }}</div>
         <div class="flex-auto inline-block truncate ml-2">{{ $page }}</div>
     </div>
@@ -45,18 +45,10 @@ var chart = new Chart(ctx, {
 
     // The data for our dataset
     data: {
-        labels: [
-            @foreach ($stats['hits'] as $key=>$value)
-            '{{ $key }}',
-            @endforeach
-        ],
+        labels: [{!! implode(', ', array_keys($stats['hits'])) !!}],
         datasets: [{
             backgroundColor: '#feb2b2',
-            data: [
-                @foreach ($stats['hits'] as $key=>$value)
-                '{{ $value }}',
-                @endforeach
-            ]
+            data: [{{ implode(', ', $stats['hits']) }}]
         }]
     },
 

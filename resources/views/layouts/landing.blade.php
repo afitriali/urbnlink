@@ -7,6 +7,7 @@
         <title>{{ config('app.name') }}</title>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -32,6 +33,10 @@
             </div>
 
             @yield('content')
+            @yield('scripts')
+            <script>
+                feather.replace()
+            </script> 
         </div>
     </body>
 </html>
