@@ -14,16 +14,20 @@
 
     <body class="text-gray-900 break-words">
         <div class="max-w-lg mx-auto px-6 mb-8">
-            <div class="flex mt-4 mb-8">
-                <div class="flex-auto mt-1 leading-relaxed">
+            <div class="flex items-center mt-4 mb-8">
+                <div class="flex-auto leading-relaxed">
                     @yield('navigation')
+                </div>
+                <div class="flex-none mx-4">
+                    @yield('create_button')
                 </div>
                 <div class="flex-none">
                     @auth
-                    <div class="flex-none rounded-full overflow-hidden w-8 h-8 mr-0 shadow" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <img src="{{ Auth::user()->gravatar }}?d=identicon" />
-                    </div>
+                    <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="px-2 py-1 border-2 rounded"><i data-feather="menu" class="inline-block"></i></button>
                     <div class="hidden">
+                        <div class="rounded-full overflow-hidden w-8 h-8 shadow" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <img src="{{ Auth::user()->gravatar }}?d=identicon" />
+                        </div>
                         Hi, {{ Auth::user()->name }}</br>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
@@ -47,7 +51,7 @@
             @yield('content')
             @yield('scripts')
             <script>
-                feather.replace()
+feather.replace()
             </script> 
         </div>
     </body>

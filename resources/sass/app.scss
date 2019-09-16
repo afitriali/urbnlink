@@ -3,7 +3,11 @@
 @tailwind components;
 
 .btn {
-    @apply inline-block bg-gray-900 text-white rounded px-4 py-2;
+    @apply inline-block bg-gray-900 text-white rounded px-4 py-1;
+}
+
+.btn-secondary {
+    @apply inline-block border-2 border-gray-900 rounded px-4 py-1;
 }
 
 .input-label {

@@ -15,7 +15,7 @@ class CreateDomainsTable extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->char('name', 40)->unique();
+			$table->char('name', 50)->unique();
 			$table->unsignedBigInteger('project_id')->nullable();
 			$table->unsignedBigInteger('default_link_id')->nullable();
 			$table->string('verification_token')->nullable();

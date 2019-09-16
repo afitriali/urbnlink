@@ -6,6 +6,12 @@
 </a>
 @endsection
 
+@section('create_button')
+@can('create', App\Project::class)
+<a href="{{ url('project/create') }}" class="btn-secondary">New Project</a>
+@endcan
+@endsection
+
 @section('content')
 @component('components.header')
 @slot('title')
@@ -41,11 +47,9 @@ You don't have any projects yet.
     @endforeach
 </ul>
 <div class="mt-8">
-    @can('create', App\Project::class)
-    <a href="{{ url('project/create') }}" class="btn">Add Another Project</a>
-    @else
+    @cannot('create', App\Project::class)
     <p class="text-gray-500"><span class="font-semibold block">You can't add anymore projects.</span><a href="#" class="text-blue-400 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing project.</p>
-    @endcan
+    @endcannot
 </div>
 @else
 <div class="text-center">

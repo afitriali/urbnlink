@@ -6,6 +6,12 @@
 @endcomponent
 @endsection
 
+@section('create_button')
+@can('create', App\Project::class)
+<a href="{{ url('/').'/'.$project->name.'/link/create' }}" class="btn">Create Link</a>
+@endcan
+@endsection
+
 @section('content')
 @component('components.header')
 @slot('title')

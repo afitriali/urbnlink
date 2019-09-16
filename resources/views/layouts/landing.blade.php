@@ -13,15 +13,15 @@
 
     <body class="text-gray-900 break-words">
         <div class="max-w-lg mx-auto">
-            <div class="flex mt-4 mb-8 mx-6">
-                <div class="flex-auto mt-1 leading-relaxed relative">
-                    <a href="{{ config('app.url') }}"><h1 class="inline text-lg font-semibold tracking-wider">{{ config('app.name') }}</h1>
+            <div class="flex items-center mt-4 mb-8 mx-6">
+                <div class="flex-auto leading-relaxed relative">
+                    <a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
                         <span class="inline-block bg-blue-100 text-blue-400 text-xs px-1 rounded">beta</span>
                     </a>
                 </div>
                 <div class="flex-none">
                     @auth
-                    <a href="{{ env('DASHBOARD_URL') }}" class="inline-block mt-3">Dashboard</a>
+                    <a href="{{ env('DASHBOARD_URL') }}" class="inline-block">Dashboard</a>
                     @else
                     <a href="{{ route('login') }}" class="mr-4">Log In</a>
 

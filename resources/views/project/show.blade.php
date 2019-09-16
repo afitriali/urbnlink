@@ -6,6 +6,12 @@ Project
 @endcomponent
 @endsection
 
+@section('create_button')
+@can('create', App\Project::class)
+<a href="{{ url()->current().'/link/create' }}" class="btn-secondary">Create Link</a>
+@endcan
+@endsection
+
 @section('content')
 @component('components.header')
 @slot('title')
@@ -18,7 +24,6 @@ Project
 
 @isset($links[0])
 <div class="my-8 text-right">
-    <a href="{{ url()->current() }}/link/create" class="btn">New Link</a>
 </div>
 <ul>
     @foreach ($links as $link)
