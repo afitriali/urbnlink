@@ -22,7 +22,7 @@
 
 <ul class=" flex border-b mb-8">
     <li class="-mb-px"><a class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t text-blue-400 text-sm">Statistics</a></li>
-    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Alternatives</a></li>
+    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Rules</a></li>
 </ul>
 
 @if ($stats['total'] > 0)

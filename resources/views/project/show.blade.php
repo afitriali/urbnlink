@@ -22,7 +22,8 @@ Project
 
 <ul class=" flex border-b mb-8">
     <li class="-mb-px"><a class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t text-blue-400 text-sm">Links</a></li>
-    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Sites</a></li>
+    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Pages</a></li>
+    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Settings</a></li>
 </ul>
 
 @isset($links[0])
@@ -31,7 +32,7 @@ Project
 <ul>
     @foreach ($links as $link)
     <a href="{{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}">
-        <li class="border-b p-2 hover:bg-gray-100">
+        <li class="border-b p-2 hover:bg-blue-100">
             <h3 class="text-lg text-blue-400">{{ $link->domain.'/'.$link->name }}</h3>
             <p class="text-sm text-gray-500 font-light truncate">{{ $link->url }}</p>
             <div class="flex items-center text-xs text-gray-500 capitalize">

@@ -52,7 +52,7 @@
         </div>
 
         <div class="max-w-lg mx-auto mt-12">
-            <p class="font-light px-6 py-12 bg-gray-100 leading-relaxed sm:rounded-lg">
+            <p class="font-light px-6 py-12 bg-blue-100 leading-relaxed sm:rounded-lg">
             URBN helps you manage your websites, online forms and social media links. Use URBN to grow and find your audience.
             <p>
         </div>
