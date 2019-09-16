@@ -6,30 +6,36 @@ use Exception;
 
 class Generate
 {
-    private static function sprinkleRandomChar(string $str)
-    {
-        if (strlen($str) >= 2) {
-            return Str::random(2) . substr($str, 0, -1) . Str::random(1) . substr($str, -1);
-        }
+	private static function sprinkleRandomChar(string $str)
+	{
+		$chars = str_split($str);
+		$generated = '';
+		foreach ($chars as $key=>$char) {
+			if ($key % 2 == 0) {
+				$generated .= Str::random(1) . $char;
+			} else {
+				$generated .= $char;
+			}
+		}
 
-        return $str;
-    }
+		return $generated . Str::random(1);
+	}
 
-    private static function decimalToBase(Int $int)
-    {
-        $character_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	private static function decimalToBase(Int $int)
+	{
+		$character_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		$base = strlen($character_set);
 		$result = '';
 
-        # while there are still positive integers to divide
-        while ($int) {
-            $current = $int % $base;
-            $result = $character_set[$current] . $result;
-            $int = floor($int / $base);
-        }
+		# while there are still positive integers to divide
+		while ($int) {
+			$current = $int % $base;
+			$result = $character_set[$current] . $result;
+			$int = floor($int / $base);
+		}
 
-        return $result;
-    }
+		return $result;
+	}
 
 	public static function slug(Int $int)
 	{
@@ -38,7 +44,7 @@ class Generate
 
 	public static function verificationToken(int $pw_length = 16)
 	{
-        $character_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=';
+		$character_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=';
 		$charset_length = strlen($character_set);
 		$token = '';
 
