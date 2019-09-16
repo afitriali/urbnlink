@@ -38,7 +38,7 @@ class ConditionalForwardingTest extends TestCase
 
         $alternative_link->conditions()->create([
             'condition_type_id' => 110,
-            'amount' => 2
+            'values' => ['amount' => 2]
         ]);
 
         $response = $this->get('https://'.$link->domain.'/'.$link->name);

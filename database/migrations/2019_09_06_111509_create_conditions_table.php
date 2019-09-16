@@ -17,10 +17,7 @@ class CreateConditionsTable extends Migration
             $table->bigIncrements('id');
 			$table->unsignedBigInteger('alternative_link_id');
 			$table->unsignedBigInteger('condition_type_id');
-			$table->integer('amount')->nullable();
-			$table->integer('days')->nullable();
-			$table->timeTz('time')->nullable();
-			$table->dateTimeTz('date')->nullable();
+			$table->json('values');
             $table->timestamps();
 
 			$table->foreign('alternative_link_id')->references('id')->on('alternative_links')->onDelete('cascade');

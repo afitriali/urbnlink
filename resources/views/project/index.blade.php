@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('navigation')
-<a href="{{ config('app.url') }}"><h1 class="inline text-lg font-semibold tracking-wider">{{ config('app.name') }}</h1>
+<a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
     <span class="inline-block bg-blue-100 text-blue-400 text-xs px-1 rounded">beta</span>
 </a>
 @endsection

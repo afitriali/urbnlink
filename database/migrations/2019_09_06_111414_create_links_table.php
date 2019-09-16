@@ -18,6 +18,7 @@ class CreateLinksTable extends Migration
 			$table->char('slug', 40)->nullable();
 			$table->char('name', 40)->nullable();
 			$table->char('domain', 40)->default(env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))->nullable();
+			$table->char('description', 160)->nullable();
 			$table->string('url');
 			$table->boolean('is_blocked')->default(false);
 			$table->boolean('is_active')->default(true);

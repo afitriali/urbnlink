@@ -24,7 +24,7 @@ Project
     @foreach ($links as $link)
     <a href="{{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}">
         <li class="mb-4">
-            <h3 class="text-lg font-semibold text-blue-700">{{ $link->domain.'/'.$link->name }}</h3>
+            <h3 class="text-lg text-blue-400">{{ $link->domain.'/'.$link->name }}</h3>
             <p class="text-sm text-gray-500 font-light truncate">{{ $link->url }}</p>
             <div class="flex items-center text-xs text-gray-500 capitalize">
                 <i data-feather="bar-chart-2" class="h-4 w-4"></i><span class="ml-2">{{ $link->hits()->count() }}</span>

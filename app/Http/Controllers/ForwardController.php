@@ -79,7 +79,7 @@ class ForwardController extends Controller
 
 	private function isBelowVisitorLimit(Condition $condition)
 	{
-		return $condition->alternativeLink->link->hits->count() < $condition->amount;
+		return $condition->alternativeLink->link->hits->count() < $condition->values['amount'];
 	}
 
 	// LinkType functions

@@ -8,6 +8,8 @@ class Condition extends Model
 {
 	protected $guarded = [];
 
+	protected $casts = ['values' => 'array'];
+
 	public function alternativeLink()
 	{
 		return $this->belongsTo(AlternativeLink::class);
