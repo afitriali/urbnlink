@@ -16,12 +16,12 @@
             <div class="flex items-center mt-4 mb-8 mx-6">
                 <div class="flex-auto leading-relaxed relative">
                     <a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
-                        <span class="inline-block bg-blue-100 text-blue-400 text-xs px-1 rounded">beta</span>
+                        <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">beta</span>
                     </a>
                 </div>
                 <div class="flex-none">
                     @auth
-                    <a href="{{ env('DASHBOARD_URL') }}" class="inline-block">Dashboard</a>
+                    <a href="{{ env('DASHBOARD_URL') }}" class="btn-secondary">Dashboard</a>
                     @else
                     <a href="{{ route('login') }}" class="mr-4">Log In</a>
 

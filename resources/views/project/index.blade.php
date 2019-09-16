@@ -2,7 +2,7 @@
 
 @section('navigation')
 <a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
-    <span class="inline-block bg-blue-100 text-blue-400 text-xs px-1 rounded">beta</span>
+    <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">beta</span>
 </a>
 @endsection
 
@@ -46,9 +46,9 @@ You don't have any projects yet.
     @endcomponent
     @endforeach
 </ul>
-<div class="mt-8">
+<div class="mt-12">
     @cannot('create', App\Project::class)
-    <p class="text-gray-500"><span class="font-semibold block">You can't add anymore projects.</span><a href="#" class="text-blue-400 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing project.</p>
+    <p class="text-gray-500 text-sm"><span class="font-semibold block">You can't add anymore projects.</span><a href="#" class="text-blue-400 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing project.</p>
     @endcannot
 </div>
 @else

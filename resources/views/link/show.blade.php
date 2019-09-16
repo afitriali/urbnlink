@@ -7,9 +7,7 @@
 @endsection
 
 @section('create_button')
-@can('create', App\Project::class)
-<a href="{{ url('/').'/'.$project->name.'/link/create' }}" class="btn">Create Link</a>
-@endcan
+<a href="{{ url('/').'/'.$project->name.'/link/create' }}" class="btn-secondary">Create Link</a>
 @endsection
 
 @section('content')
@@ -21,6 +19,11 @@
 {{ $link->url }}
 @endslot
 @endcomponent
+
+<ul class=" flex border-b mb-8">
+    <li class="-mb-px"><a class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t text-blue-400 text-sm">Statistics</a></li>
+    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Alternatives</a></li>
+</ul>
 
 @if ($stats['total'] > 0)
 <canvas id="chart" height="100"></canvas>
@@ -42,7 +45,19 @@
     </div>
     @endforeach
 </div>
+@else
+<div class="text-center">
+    <img src="{{ url('/img/empty-statistics.png') }}" class="mx-auto max-h-64 -mt-12 -mb-6" />
+    <p class="text-lg text-gray-500 font-light">Hold on, no statistics yet.</p>
+</div>
+@endif
 
+<div class="mt-12 text-sm">
+    <a href="{{ url('/'.$project->name) }}" class="text-blue-400 border-b-2 border-dotted">See your other links.</a>
+</div>
+@endsection
+
+@section('scripts')
 <script>
     var ctx = document.getElementById('chart').getContext('2d');
 var chart = new Chart(ctx, {
@@ -53,7 +68,7 @@ var chart = new Chart(ctx, {
     data: {
         labels: [{!! implode(', ', array_keys($stats['hits'])) !!}],
         datasets: [{
-            backgroundColor: '#feb2b2',
+            backgroundColor: '#bee3f8',
             data: [{{ implode(', ', $stats['hits']) }}]
         }]
     },
@@ -82,14 +97,4 @@ var chart = new Chart(ctx, {
     }
 });
 </script>
-@else
-<div class="text-center">
-    <img src="{{ url('/img/empty-statistics.png') }}" class="mx-auto max-h-64 -mt-12 -mb-6" />
-    <p class="text-lg text-gray-500 font-light">Hold on, no statistics yet.</p>
-</div>
-@endif
-
-<div class="mt-8 text-sm">
-    <a href="{{ url('/'.$project->name) }}" class="text-blue-400 border-b-2 border-dotted">See your other links.</a>
-</div>
 @endsection

@@ -7,9 +7,7 @@ Project
 @endsection
 
 @section('create_button')
-@can('create', App\Project::class)
 <a href="{{ url()->current().'/link/create' }}" class="btn-secondary">Create Link</a>
-@endcan
 @endsection
 
 @section('content')
@@ -22,13 +20,18 @@ Project
 @endslot
 @endcomponent
 
+<ul class=" flex border-b mb-8">
+    <li class="-mb-px"><a class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t text-blue-400 text-sm">Links</a></li>
+    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Sites</a></li>
+</ul>
+
 @isset($links[0])
 <div class="my-8 text-right">
 </div>
 <ul>
     @foreach ($links as $link)
     <a href="{{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}">
-        <li class="mb-4">
+        <li class="border-b p-2 hover:bg-gray-100">
             <h3 class="text-lg text-blue-400">{{ $link->domain.'/'.$link->name }}</h3>
             <p class="text-sm text-gray-500 font-light truncate">{{ $link->url }}</p>
             <div class="flex items-center text-xs text-gray-500 capitalize">
@@ -44,7 +47,7 @@ Project
     <a href="{{ url()->current() }}/link/create" class="btn">Let's Make Your First Link</a>
 </div>
 @endisset
-<div class="mt-8 text-sm">
+<div class="mt-12 text-sm">
     <a href="{{ url('/') }}" class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
 </div>
 @endsection

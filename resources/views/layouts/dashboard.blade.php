@@ -23,7 +23,7 @@
                 </div>
                 <div class="flex-none">
                     @auth
-                    <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="px-2 py-1 border-2 rounded"><i data-feather="menu" class="inline-block"></i></button>
+                    <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="px-2 py-1"><i data-feather="menu" class="inline-block text-gray-500"></i></button>
                     <div class="hidden">
                         <div class="rounded-full overflow-hidden w-8 h-8 shadow" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <img src="{{ Auth::user()->gravatar }}?d=identicon" />
@@ -49,10 +49,17 @@
             @endif
 
             @yield('content')
-            @yield('scripts')
-            <script>
-feather.replace()
-            </script> 
         </div>
+
+        <div class="max-w-lg mx-auto mt-12">
+            <p class="font-light px-6 py-12 bg-gray-100 leading-relaxed sm:rounded-lg">
+            URBN helps you manage your websites, online forms and social media links. Use URBN to grow and find your audience.
+            <p>
+        </div>
+
+        @yield('scripts')
+        <script>
+feather.replace()
+        </script> 
     </body>
 </html>

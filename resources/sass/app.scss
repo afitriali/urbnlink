@@ -7,7 +7,7 @@
 }
 
 .btn-secondary {
-    @apply inline-block border-2 border-gray-900 rounded px-4 py-1;
+    @apply inline-block rounded px-4 py-1 text-sm text-blue-400 bg-blue-100;
 }
 
 .input-label {
