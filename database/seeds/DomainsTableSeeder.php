@@ -7,14 +7,21 @@ class DomainsTableSeeder extends Seeder
 {
     public function run()
     {
-        Domain::create([
-            'name' => env('DEFAULT_SHORT_DOMAIN'),
-            'verified_at' => now()
-        ]);
+        $domains = [
+            [
+                'id' => 1,
+                'name' => env('DEFAULT_SHORT_DOMAIN'),
+                'verified_at' => now()
+            ],
+            [
+                'id' => 2,
+                'name' => env('PROJECT_DOMAIN'),
+                'verified_at' => now()
+            ]
+        ];
 
-        Domain::create([
-            'name' => env('PROJECT_DOMAIN'),
-            'verified_at' => now()
-        ]);
+        foreach ($domains as $domain) {
+            Domain::updateOrCreate(['id' => $domain['id']], $domain);
+        }
     }
 }
