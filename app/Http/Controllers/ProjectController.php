@@ -69,7 +69,7 @@ class ProjectController extends Controller
 				'required',
 				'max:40',
 				'alpha_dash',
-				'unique:projects,name'
+				'unique:projects,name,'.$project->id.',id',
 			],
 			'description' => [
 				'max:160',
@@ -83,7 +83,7 @@ class ProjectController extends Controller
 
 		$success = 'Project Updated';
 
-		return view('project.settings', compact('project'))->with('success', $success);
+		return redirect($project->name.'/settings')->with('success', $success);
 	}
 
 	public function addMember(Request $request)

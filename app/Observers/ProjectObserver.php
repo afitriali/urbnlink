@@ -22,7 +22,7 @@ class ProjectObserver
             'verified_at' => now()
         ]);	
 
-        $domain->record_id = DomainManager::createRecord($domain->name);
+        $domain->record_id = DomainManager::createRecord($project->name);
         $domain->save();
 
         return true;
@@ -44,7 +44,7 @@ class ProjectObserver
         $domain->name = strtolower($project->name.'.'.env('PROJECT_DOMAIN'));
         $domain->save();
 
-        DomainManager::updateRecord($domain->record_id, $domain->name);
+        DomainManager::updateRecord($domain->record_id, $project->name);
 
         return true;
     }
