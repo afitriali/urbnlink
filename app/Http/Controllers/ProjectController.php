@@ -84,9 +84,18 @@ class ProjectController extends Controller
 			'description' => $request->input('description')
 		]);
 
-		$success = 'Project Updated';
-
+		$success = $project->name.' project updated';
 		return redirect($project->name.'/settings')->with('success', $success);
+	}
+
+	public function delete(Project $project, Request $request)
+	{
+		$this->authorize('manage', $project);
+
+		$project->delete();
+
+		$success = $project->name.' project deleted';
+		return redirect('/')->with('success', $success);
 	}
 
 	public function addMember(Request $request)

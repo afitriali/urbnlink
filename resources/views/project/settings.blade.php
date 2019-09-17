@@ -59,7 +59,42 @@ Project
     @endforeach
 </div>
 
+<div class="mt-8 pt-8 border-t relative">
+    <div class="relative z-10">
+        <button class="btn bg-red-600" id="show-delete">Delete Project</button>
+    </div>
+    <div class="hidden absolute z-50 shadow m-4 p-4 top-0 bg-white rounded" id="delete">
+        <span class="input-label">Warning</span>
+        <div>
+            You're about to delete <span class="font-semibold">{{ $project->name }}</span> project, do you want to proceed?
+            <div class="mt-8">
+                <form action="{{ url($project->name) }}" method="POST" class="w-full max-w-lg">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn bg-red-600">Proceed</button><button class="ml-4" id="hide-delete">cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="mt-12 text-sm">
     <a href="{{ url('/') }}" class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    var modal = document.getElementById("delete");
+var btn = document.getElementById("show-delete");
+var span = document.getElementById("hide-delete");
+
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+</script>
 @endsection
