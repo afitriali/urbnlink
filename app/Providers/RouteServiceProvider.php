@@ -30,6 +30,10 @@ class RouteServiceProvider extends ServiceProvider
 		Route::bind('project', function ($project) {
 			return \App\Project::where('name', $project)->first() ?? abort(404);
 		});
+
+		Route::bind('domain_name', function ($domain) {
+			return \App\Domain::where('name', $domain)->first() ?? abort(404);
+		});
 		
 		Route::bind('link', function ($name, $route) {
 			$domain = $route->parameter('domain');

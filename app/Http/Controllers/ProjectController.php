@@ -57,7 +57,10 @@ class ProjectController extends Controller
 	{
 		$this->authorize('workOn', $project);
 
-		return view('project.settings', compact('project'));
+		$domains = $project->domains()->get();
+		$links = $project->links()->get();
+
+		return view('project.settings', compact('project', 'domains', 'links'));
 	}
 
 	public function update(Project $project, Request $request)

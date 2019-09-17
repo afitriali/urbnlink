@@ -8,12 +8,8 @@ Project
 
 @section('content')
 @component('components.header')
-@slot('title')
-{{ $project->name }}
-@endslot
-@slot('sub_title')
-{{ $project->description }}
-@endslot
+@slot('title', $project->name)
+@slot('sub_title', $project->description)
 @endcomponent
 
 <ul class=" flex border-b mb-8">
@@ -26,8 +22,6 @@ Project
 @slot('action', url($project->name))
 @slot('method', 'PUT')
 @slot('button', 'Update')
-@endslot
-
 <div class="w-full mb-6">
     <label for="name" class="input-label">Name</label>
     <input class="input-text @error('name') input-invalid @enderror" id="name" type="text" name="name" max="40" placeholder="Project Name" value ="{{ $project->name }}">
@@ -44,6 +38,26 @@ Project
     @enderror
 </div>
 @endcomponent
+
+<div class="mt-8 pt-8 border-t">
+    @foreach ($domains as $domain)
+    <form action="{{ url($project->name).'/domains/'.$domain->name.'/default' }}" method="POST" class="w-full max-w-lg">
+        @csrf
+        <label class="input-label">{{ $domain->name }} default link</label>
+        <div class="relative">
+            <select class="input-text pr-8" name="link" onchange="this.form.submit()">
+                <option value="" default></option>
+                @foreach ($links as $link)
+                <option value="{{ $link->id }}" <?= $domain->default_link_id === $link->id ? 'selected="selected"' : '' ?>>{{ $link->domain.'/'.$link->name }}</option>
+                @endforeach
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+        </div>
+    </form>
+    @endforeach
+</div>
 
 <div class="mt-12 text-sm">
     <a href="{{ url('/') }}" class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
