@@ -2,7 +2,7 @@
 
 @section('navigation')
 <a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
-    <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">beta</span>
+    <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">alpha</span>
 </a>
 @endsection
 

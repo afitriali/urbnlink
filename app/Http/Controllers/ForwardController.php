@@ -20,7 +20,9 @@ class ForwardController extends Controller
 			return redirect()->away(env('APP_URL'));
 		}
 
-		return $this->forward($domain->defaultLink()->domain, $domain->defaultLink()->name);
+		$link = $domain->defaultLink()->first();
+
+		return $this->forward($link->domain, $link->name);
 	}
 
 	public function preview($domain, $name)

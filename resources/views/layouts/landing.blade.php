@@ -16,7 +16,7 @@
             <div class="flex items-center mt-4 mb-8 mx-6">
                 <div class="flex-auto leading-relaxed relative">
                     <a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
-                        <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">beta</span>
+                        <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">alpha</span>
                     </a>
                 </div>
                 <div class="flex-none">

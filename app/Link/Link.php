@@ -15,8 +15,6 @@ class Link extends Model
 
 	protected $fillable = ['name', 'domain', 'url', 'is_active', 'is_conditional', 'link_type_id'];
 
-	protected $hidden = ['id'];
-
 	protected $touches = ['project'];
 
 	public function toggleActive()
