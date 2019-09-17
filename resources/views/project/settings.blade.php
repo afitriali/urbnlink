@@ -71,7 +71,7 @@ Project
                 <form action="{{ url($project->name) }}" method="POST" class="w-full max-w-lg">
                     @method('DELETE')
                     @csrf
-                    <button type="submit" class="btn bg-red-600">Proceed</button><button class="ml-4" id="hide-delete">cancel</button>
+                    <button type="submit" class="btn bg-red-600">Proceed</button><a class="ml-4" id="hide-delete">cancel</a>
                 </form>
             </div>
         </div>
