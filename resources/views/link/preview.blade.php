@@ -33,8 +33,8 @@ type: 'bar',
     data: {
 labels: [{!! implode(', ', array_keys($stats['hits'])) !!}],
     datasets: [{
-backgroundColor: '#feb2b2',
-        data: [{{ implode(', ', $stats['hits']) }}]
+backgroundColor: '#bee3f8',
+    data: [{{ implode(', ', $stats['hits']) }}]
 }]
 },
 

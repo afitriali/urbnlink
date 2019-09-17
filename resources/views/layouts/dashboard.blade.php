@@ -7,8 +7,8 @@
         <title>{{ config('app.name') }}</title>
 
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+        <script src="{{ asset('js/Chart.min.js') }}"></script>
+        <script src="{{ asset('js/feather.min.js') }}"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -25,9 +25,6 @@
                     @auth
                     <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="px-2 py-1"><i data-feather="menu" class="inline-block text-gray-500"></i></button>
                     <div class="hidden">
-                        <div class="rounded-full overflow-hidden w-8 h-8 shadow" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <img src="{{ Auth::user()->gravatar }}?d=identicon" />
-                        </div>
                         Hi, {{ Auth::user()->name }}</br>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}

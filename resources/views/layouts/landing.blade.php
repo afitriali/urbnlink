@@ -6,8 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+        <script src="{{ asset('js/Chart.min.js') }}"></script>
+        <script src="{{ asset('js/feather.min.js') }}"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
