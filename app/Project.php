@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\DomainManager;
 
 class Project extends Model
 {
@@ -46,11 +47,23 @@ class Project extends Model
 		return $this;
 	}
 
+	public function delete()
+	{
+		$domain = $this
+			->domains()
+			->where('name', 'like', '%'.env('PROJECT_DOMAIN'))
+			->first();
+
+		DomainManager::deleteRecord($domain->record_id);
+
+		return parent::delete();
+	}
+
 	public function admin()
 	{
 		return $this->belongsTo(User::class);
 	}
-	
+
 	public function links()
 	{
 		return $this->hasMany(Link\Link::class);
@@ -70,6 +83,7 @@ class Project extends Model
 	{
 		return $this->hasMany(Domain::class);
 	}
+
 
 	public function pages()
 	{

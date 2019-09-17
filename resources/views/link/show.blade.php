@@ -7,7 +7,7 @@
 @endsection
 
 @section('create_button')
-<a href="{{ url('/').'/'.$project->name.'/link/create' }}" class="btn-secondary">Create Link</a>
+<a href="{{ url('/').'/'.$project->name.'/links/create' }}" class="btn-secondary">Create Link</a>
 @endsection
 
 @section('content')
@@ -21,8 +21,8 @@
 @endcomponent
 
 <ul class=" flex border-b mb-8">
-    <li class="-mb-px"><a class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t text-blue-400 text-sm">Statistics</a></li>
-    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Rules</a></li>
+    <li class="-mb-px"><span class="bg-white inline-block px-4 py-2 text-gray-500 text-sm border-l border-r border-t rounded-t">Statistics</span></li>
+    <li class=""><a href="{{ url()->current().'/rules' }}" class="inline-block px-4 py-2 text-blue-400 text-sm">Rules</a></li>
 </ul>
 
 @if ($stats['total'] > 0)
@@ -53,7 +53,7 @@
 @endif
 
 <div class="mt-12 text-sm">
-    <a href="{{ url('/'.$project->name) }}" class="text-blue-400 border-b-2 border-dotted">See your other links.</a>
+    <a href="{{ url($project->name) }}" class="text-blue-400 border-b-2 border-dotted">See your other links.</a>
 </div>
 @endsection
 

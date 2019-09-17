@@ -7,7 +7,7 @@ Project
 @endsection
 
 @section('create_button')
-<a href="{{ url()->current().'/link/create' }}" class="btn-secondary">Create Link</a>
+<a href="{{ url()->current().'/links/create' }}" class="btn-secondary">Create Link</a>
 @endsection
 
 @section('content')
@@ -21,9 +21,11 @@ Project
 @endcomponent
 
 <ul class=" flex border-b mb-8">
-    <li class="-mb-px"><a class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t text-blue-400 text-sm">Links</a></li>
-    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Pages</a></li>
-    <li class=""><a class="inline-block px-4 py-2 text-gray-500 text-sm">Settings</a></li>
+    <li class="-mb-px"><span class="bg-white inline-block px-4 py-2 text-gray-500 text-sm border-l border-r border-t rounded-t">Links</span></li>
+    <li class=""><a href="{{ url($project->name, 'pages') }}" class="inline-block px-4 py-2 text-blue-400 text-sm">Pages</a></li>
+    @can('manage', $project)
+    <li class=""><a href="{{ url($project->name, 'settings') }}" class="inline-block px-4 py-2 text-blue-400 text-sm">Settings</a></li>
+    @endcan
 </ul>
 
 @isset($links[0])
@@ -31,7 +33,7 @@ Project
 </div>
 <ul>
     @foreach ($links as $link)
-    <a href="{{ url($project->name.'/link/'.$link->domain.'/'.$link->name) }}">
+    <a href="{{ url($project->name, 'links/'.$link->domain.'/'.$link->name) }}">
         <li class="border-b p-2 hover:bg-blue-100">
             <h3 class="text-lg text-blue-400">{{ $link->domain.'/'.$link->name }}</h3>
             <p class="text-sm text-gray-500 font-light truncate">{{ $link->url }}</p>
@@ -45,7 +47,7 @@ Project
 @else
 <div class="text-center mb-12">
     <img src="{{ url('/img/first-link.png') }}" class="mx-auto max-h-64 -mt-12 -mb-6" />
-    <a href="{{ url()->current() }}/link/create" class="btn">Let's Make Your First Link</a>
+    <a href="{{ url()->current().'/links/create' }}" class="btn">Let's Make Your First Link</a>
 </div>
 @endisset
 <div class="mt-12 text-sm">

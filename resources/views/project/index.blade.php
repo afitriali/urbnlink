@@ -8,7 +8,7 @@
 
 @section('create_button')
 @can('create', App\Project::class)
-<a href="{{ url('project/create') }}" class="btn-secondary">New Project</a>
+<a href="{{ url('projects/create') }}" class="btn-secondary">New Project</a>
 @endcan
 @endsection
 
@@ -55,7 +55,7 @@ You don't have any projects yet.
 <div class="text-center">
     <img src="{{ url('/img/first-project.png') }}" class="mx-auto max-h-64 -mt-12 -mb-6" />
     @can('create', App\Project::class)
-    <a href="{{ url('project/create') }}" class="btn">Start a Project</a>
+    <a href="{{ url('projects/create') }}" class="btn">Start a Project</a>
     @endcan
 </div>
 @endisset

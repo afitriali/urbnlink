@@ -12,23 +12,20 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-		\View::share('site_parameters', [
-			'parent_url' => url('/')
-		]);
     }
 
 	public function index()
 	{
 		$projects = auth()->user()->projects()->get();
 
-		return view('project/index', compact('projects'));
+		return view('project.index', compact('projects'));
 	}
 
 	public function create()
 	{
 		$this->authorize('create', new Project);
 
-		return view('project/create');
+		return view('project.create');
 	}
 
 	public function store(Request $request)
@@ -55,16 +52,40 @@ class ProjectController extends Controller
 		$success = '🎉 You created a new project!';
 		return redirect($project->name)->with('success', $success);
 	}
-
-	public function show(Project $project)
+	
+	public function settings(Project $project)
 	{
 		$this->authorize('workOn', $project);
 
-		$links = $project->links()->get();
-
-		return view('project/show', compact('project', 'links'));
+		return view('project.settings', compact('project'));
 	}
-	
+
+	public function update(Project $project, Request $request)
+	{
+		$this->authorize('manage', $project);
+
+		$request->validate([
+			'name' => [
+				'required',
+				'max:40',
+				'alpha_dash',
+				'unique:projects,name'
+			],
+			'description' => [
+				'max:160',
+			]
+		]);
+		
+		$project->update([
+			'name' => $request->input('name'),
+			'description' => $request->input('description')
+		]);
+
+		$success = 'Project Updated';
+
+		return view('project.settings', compact('project'))->with('success', $success);
+	}
+
 	public function addMember(Request $request)
 	{
 		$this->authorize('manage', $project);

@@ -57,12 +57,21 @@ class LinkController extends Controller
 		return response()->json(['available' => true]);
 	}
 
+	public function index(Project $project)
+	{
+		$this->authorize('workOn', $project);
+
+		$links = $project->links()->get();
+
+		return view('link.index', compact('project', 'links'));
+	}
+	
 	public function create(Project $project)
 	{
 		$this->authorize('workOn', $project);
 		$domains = $project->domains()->get();
 
-		return view('link/create', compact('project', 'domains'));
+		return view('link.create', compact('project', 'domains'));
 	}
 
 	public function store(Project $project, Request $request)
@@ -102,7 +111,7 @@ class LinkController extends Controller
 		]);
 
 		$success = '👍 You created a nice link!';
-		return redirect($project->name.'/link/'.$link->domain.'/'.$link->name)->with('success', $success);
+		return redirect($project->name.'/links/'.$link->domain.'/'.$link->name)->with('success', $success);
 	}
 
 	public function show(Project $project, $domain, Link $link)
@@ -110,6 +119,13 @@ class LinkController extends Controller
 		$this->authorize('workOn', $project);
 		$stats = $link->getStatistics(); 
 
-		return view('link/show', compact('link', 'project', 'stats'));
+		return view('link.show', compact('link', 'project', 'stats'));
+	}
+
+	public function rules(Project $project, $domain, Link $link)
+	{
+		$this->authorize('workOn', $project);
+
+		return view('link.rules', compact('link', 'project'));
 	}
 }

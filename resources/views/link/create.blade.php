@@ -16,7 +16,7 @@ Create a New Link
 
 @component('components.form')
 @slot('action')
-{{ url($project->name.'/link') }}
+{{ url($project->name, 'links') }}
 @endslot
 @slot('method')
 POST

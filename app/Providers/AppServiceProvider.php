@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Providers;
+use App\Domain;
 use App\Link\Link;
 use App\Project;
+use App\Observers\DomainObserver;
 use App\Observers\LinkObserver;
 use App\Observers\ProjectObserver;
 
@@ -31,5 +33,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Link::observe(LinkObserver::class);
         Project::observe(ProjectObserver::class);
+        Domain::observe(DomainObserver::class);
     }
 }

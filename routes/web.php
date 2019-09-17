@@ -22,34 +22,34 @@ Route::domain(env('DASHBOARD_DOMAIN', 'api.urbn.link'))->group(function () {
 	Auth::routes(['verify' => true]);
 	// PROJECTS
 	Route::get('/', 'ProjectController@index')->name('home');
-	Route::get('/project/create', 'ProjectController@create');
-	Route::post('/project', 'ProjectController@store');
-	Route::get('/{project}', 'ProjectController@show');
-	Route::get('/{project}/edit', 'ProjectController@edit');
+	Route::get('/projects/create', 'ProjectController@create');
+	Route::post('/projects', 'ProjectController@store');
+	Route::get('/{project}/settings', 'ProjectController@settings');
 	Route::put('/{project}', 'ProjectController@update');
 	Route::delete('/{project}', 'ProjectController@delete');
 	// LINKS
-	Route::get('/{project}/links', 'LinkController@index');
-	Route::get('/{project}/link/create', 'LinkController@create');
-	Route::post('/{project}/link', 'LinkController@store');
-	Route::get('/{project}/link/{domain}/{link}', 'LinkController@show');
-	Route::delete('/{project}/link/{domain}/{link}', 'LinkController@delete');
+	Route::get('/{project}', 'LinkController@index');
+	Route::get('/{project}/links/create', 'LinkController@create');
+	Route::post('/{project}/links', 'LinkController@store');
+	Route::get('/{project}/links/{domain}/{link}', 'LinkController@show');
+	Route::delete('/{project}/links/{domain}/{link}', 'LinkController@delete');
+	Route::get('/{project}/links/{domain}/{link}/rules', 'LinkController@rules');
 	// Domain
 	Route::get('/{project}/domains', 'DomainController@index');
-	Route::get('/{project}/domain/add', 'DomainController@create');
-	Route::post('/{project}/domain', 'DomainController@store');
-	Route::get('/{project}/domain/{domain}', 'DomainController@show');
-	Route::get('/{project}/domain/{domain}/edit', 'DomainController@edit');
-	Route::put('/{project}/domain/{domain}', 'DomainController@update');
-	Route::delete('/{project}/domain/{domain}', 'DomainController@delete');
+	Route::get('/{project}/domains/add', 'DomainController@create');
+	Route::post('/{project}/domains', 'DomainController@store');
+	Route::get('/{project}/domains/{domain}', 'DomainController@show');
+	Route::get('/{project}/domains/{domain}/edit', 'DomainController@edit');
+	Route::put('/{project}/domains/{domain}', 'DomainController@update');
+	Route::delete('/{project}/domains/{domain}', 'DomainController@delete');
 	// PAGES
 	Route::get('/{project}/pages', 'PageController@index');
-	Route::get('/{project}/page/create', 'PageController@create');
-	Route::post('/{project}/page', 'PageController@store');
-	Route::get('/{project}/page/{page}', 'PageController@show');
-	Route::get('/{project}/page/{page}/edit', 'PageController@edit');
-	Route::put('/{project}/page/{page}', 'PageController@update');
-	Route::delete('/{project}/page/{page}', 'PageController@delete');
+	Route::get('/{project}/pages/create', 'PageController@create');
+	Route::post('/{project}/pages', 'PageController@store');
+	Route::get('/{project}/pages/{page}', 'PageController@show');
+	Route::get('/{project}/pages/{page}/edit', 'PageController@edit');
+	Route::put('/{project}/pages/{page}', 'PageController@update');
+	Route::delete('/{project}/pages/{page}', 'PageController@delete');
 
 });
 

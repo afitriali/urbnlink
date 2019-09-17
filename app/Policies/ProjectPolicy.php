@@ -22,7 +22,6 @@ class ProjectPolicy
 
     public function manage(User $user, Project $project)
     {
-        return $project->admin_id === $user->id && 
-            ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
+        return $project->admin_id === $user->id;
     }
 }

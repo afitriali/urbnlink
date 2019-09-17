@@ -22,7 +22,10 @@ class ProjectObserver
             'verified_at' => now()
         ]);	
 
-        DomainManager::createRecord($domain);
+        $domain->record_id = DomainManager::createRecord($domain->name);
+        $domain->save();
+
+        return true;
     }
 
     /**
@@ -33,39 +36,16 @@ class ProjectObserver
      */
     public function updated(Project $project)
     {
-        //
-    }
+        $domain = $project
+            ->domains()
+            ->where('name', 'like', '%'.env('PROJECT_DOMAIN'))
+            ->first();
 
-    /**
-     * Handle the project "deleted" event.
-     *
-     * @param  \App\Project  $project
-     * @return void
-     */
-    public function deleted(Project $project)
-    {
-        //
-    }
+        $domain->name = strtolower($project->name.'.'.env('PROJECT_DOMAIN'));
+        $domain->save();
 
-    /**
-     * Handle the project "restored" event.
-     *
-     * @param  \App\Project  $project
-     * @return void
-     */
-    public function restored(Project $project)
-    {
-        //
-    }
+        DomainManager::updateRecord($domain->record_id, $domain->name);
 
-    /**
-     * Handle the project "force deleted" event.
-     *
-     * @param  \App\Project  $project
-     * @return void
-     */
-    public function forceDeleted(Project $project)
-    {
-        //
+        return true;
     }
 }
