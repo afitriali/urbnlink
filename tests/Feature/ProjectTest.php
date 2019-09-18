@@ -21,19 +21,19 @@ class ProjectTest extends TestCase
 		$admin = factory(\App\User::class)->create();
 
 		$admin->ownProjects()->create([
-            'name' => 'Project One',
+            'name' => 'Project-One',
             'description' => 'Project One'
         ]);
 
         $this->assertDatabaseHas('projects', [
-            'name' => 'Project One',
+            'name' => 'Project-One',
             'description' => 'Project One'
         ]);
     }
 
     public function testCreateProjectRoute()
     {
-        $response = $this->json('POST', env('DASHBOARD_URL').'/project', [
+        $response = $this->json('POST', env('DASHBOARD_URL').'/projects', [
             'name' => 'Anyonymous',
         ]);
 		
@@ -41,7 +41,7 @@ class ProjectTest extends TestCase
 
 		$user = factory(\App\User::class)->create();
 
-        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL').'/project', [
+        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL').'/projects', [
             'name' => 'Anonymous',
         ]);
 
@@ -56,7 +56,7 @@ class ProjectTest extends TestCase
 		$admin = factory(\App\User::class)->create();
 
 		$project = $admin->ownProjects()->create([
-            'name' => 'Project One',
+            'name' => 'Project',
             'description' => 'Project One'
         ]);
 
@@ -77,7 +77,7 @@ class ProjectTest extends TestCase
 		$admin = factory(\App\User::class)->create();
 
         $project = $admin->ownProjects()->create([
-            'name' => 'Project One',
+            'name' => 'Project-Two',
             'description' => 'Project One'
         ]);
 
@@ -99,7 +99,7 @@ class ProjectTest extends TestCase
 		$admin = factory(\App\User::class)->create();
 
         $project = $admin->ownProjects()->create([
-            'name' => 'Project One',
+            'name' => 'Project-Three',
             'description' => 'Project One'
         ]);
 

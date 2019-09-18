@@ -26,7 +26,7 @@ class CreateProjectTest extends TestCase
 	$user = factory(\App\User::class)->create();
 	$project = factory(\App\Project::class)->make();
 
-        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL', 'https://dashboard.urbn.link').'/project', [
+        $response = $this->actingAs($user)->json('POST', env('DASHBOARD_URL', 'https://dashboard.urbn.link').'/projects', [
             'name' => $project->name,
             'description' => $project->description
         ]);
