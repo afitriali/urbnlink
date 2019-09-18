@@ -15,10 +15,10 @@ class CreateLinksTable extends Migration
 	{
 		Schema::create('links', function (Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->char('slug', 40)->nullable();
-			$table->char('name', 40)->nullable();
-			$table->char('domain', 40)->default(env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))->nullable();
-			$table->char('description', 160)->nullable();
+			$table->string('slug', 40)->nullable();
+			$table->string('name', 40)->nullable();
+			$table->string('domain')->default(env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))->nullable();
+			$table->string('description')->nullable();
 			$table->string('url');
 			$table->boolean('is_blocked')->default(false);
 			$table->boolean('is_active')->default(true);
@@ -26,13 +26,12 @@ class CreateLinksTable extends Migration
 			$table->unsignedBigInteger('link_type_id')->default(10)->nullable();
 			$table->unsignedBigInteger('project_id')->nullable();
 			$table->timestamps();
-			$table->softDeletes();
 
 			$table->collation = 'utf8mb4_0900_as_cs';
 			$table->unique(['domain', 'name']);
 
 			$table->foreign('link_type_id')->references('id')->on('link_types')->onDelete('set null');
-			$table->foreign('project_id')->references('id')->on('projects')->onDelete('set null');
+			$table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 		});
 
 		if (app()->environment() !== 'testing') {

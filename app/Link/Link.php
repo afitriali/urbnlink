@@ -3,14 +3,11 @@
 namespace App\Link;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\Traffic;
 use App\Helpers\Statistics;
 
 class Link extends Model
 {
-	use SoftDeletes;
-
 	protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 	protected $fillable = ['name', 'domain', 'url', 'is_active', 'is_conditional', 'link_type_id'];
@@ -37,7 +34,7 @@ class Link extends Model
 	{
 		$this->hits()->create([
 			'country' => Traffic::LocationCountry($request->ip()),
-			'agent' => substr($request->server('HTTP_USER_AGENT'), 0, 100),
+			'agent' => substr($request->server('HTTP_USER_AGENT'), 0, 500),
 			'referrer' => $request->server('HTTP_REFERER') ?? 'http://' . $this->domain . '/',
 			'page' => $this->url
 		]);

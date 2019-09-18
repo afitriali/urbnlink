@@ -15,9 +15,9 @@ class CreateConditionTypesTable extends Migration
     {
         Schema::create('condition_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->char('name', 40);
-			$table->char('function', 40);
-			$table->char('description', 160)->nullable();
+			$table->string('name', 40);
+			$table->string('function', 40);
+			$table->string('description')->nullable();
             $table->timestamps();
         });
     }

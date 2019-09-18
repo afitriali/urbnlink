@@ -15,8 +15,9 @@ class CreateTemplatesTable extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->char('name', 40);
-			$table->char('stylesheet', 40);
+			$table->string('name', 40);
+			$table->string('description');
+			$table->string('stylesheet');
 			$table->boolean('is_pro')->default(false);
             $table->timestamps();
         });

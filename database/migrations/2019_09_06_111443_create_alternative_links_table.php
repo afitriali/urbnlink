@@ -19,6 +19,7 @@ class CreateAlternativeLinksTable extends Migration
 			$table->unsignedBigInteger('link_id');
 			$table->unsignedBigInteger('link_type_id')->default(10)->nullable();
 			$table->integer('priority');
+			$table->string('description')->nullable();
             $table->timestamps();
 
 			$table->foreign('link_id')->references('id')->on('links')->onDelete('cascade');

@@ -15,11 +15,12 @@ class CreateDomainsTable extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->bigIncrements('id');
-			$table->char('name', 50)->unique();
+			$table->string('name')->unique();
 			$table->unsignedBigInteger('project_id')->nullable();
 			$table->unsignedBigInteger('default_link_id')->nullable();
+            $table->unsignedBigInteger('record_id')->nullable();
 			$table->string('verification_token')->nullable();
-			$table->string('verified_at')->nullable();
+			$table->timestamp('verified_at')->nullable();
             $table->timestamps();
 
 			$table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
