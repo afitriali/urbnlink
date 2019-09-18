@@ -7,7 +7,7 @@
 </div>
 
 
-<p class="font-light px-6 py-12 bg-blue-100 text-blue-900 leading-relaxed sm:rounded-lg">
+<p class="font-light px-6 py-12 bg-teal-300 text-teal-900 leading-relaxed sm:rounded-lg">
 URBN helps you manage your websites, online forms and social media links. Use URBN to grow and find your audience.
 <p>
 

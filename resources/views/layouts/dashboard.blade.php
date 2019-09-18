@@ -13,7 +13,7 @@
     </head>
 
     <body class="text-gray-900 break-words">
-        <div class="max-w-lg mx-auto px-6 mb-8">
+        <div class="max-w-lg mx-auto px-6 mb-8 relative">
             <div class="flex items-center mt-4 mb-8">
                 <div class="flex-auto leading-relaxed">
                     <a href="{{ url('/') }}" class="flex items-center"><h1 class="inline font-light">{{ config('app.name') }}</h1>
@@ -24,21 +24,26 @@
                     @yield('create_button')
                 </div>
                 <div class="flex-none">
-                    @auth
-                    <button onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="px-2 py-1"><i data-feather="menu" class="inline-block text-gray-500"></i></button>
-                    <div class="hidden">
-                        Hi, {{ Auth::user()->name }}</br>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
+                    <button class="px-2 py-1" id="show-menu"><i data-feather="menu" class="inline-block text-gray-500"></i></button>
                 </div>
             </div>
-            @endauth
+            <div class="absolute z-50 shadow top-0 right-0 mx-4 p-4 bg-white rounded modal hidden" id="menu" onclick="toggleActive(this)">
+                <span class="input-label">Logged in as</span>
+                <span class="block font-bold">{{ Auth::user()->name }}</span>
+                <span class="block text-sm border-b pb-4">{{ Auth::user()->email }}</span>
+                <span class="block text-sm border-b pb-4 mt-4">
+                    <a class="block mt-4 flex text-sm items-center text-gray-500">
+                        <i data-feather="settings" class="inline h-4 w-4"></i><span class="ml-2">{{ __('Settings') }}</span>
+                    </a>
+                </span>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block mt-4 flex text-sm items-center">
+                    <i data-feather="log-out" class="inline h-4 w-4"></i><span class="ml-2">{{ __('Logout') }}</span>
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
 
             @if (session('success'))
             <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('success') }}</div>
@@ -59,6 +64,17 @@
         @yield('scripts')
         <script>
 feather.replace()
+
+var menu = document.getElementById("menu");
+var burger = document.getElementById("show-menu");
+
+burger.onclick = function() {
+menu.style.display = "block";
+}
+
+menu.onclick = function() {
+menu.style.display = "none";
+}
         </script> 
     </body>
 </html>

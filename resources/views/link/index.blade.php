@@ -7,7 +7,7 @@ Project
 @endsection
 
 @section('create_button')
-<a href='{{ url("/projects/create") }}' class="btn-secondary items-center flex shadow-md hover:shadow hover:bg-indigo-700"><i data-feather="plus" class="inline h-4 w-4 -ml-1"></i><span class="ml-1">Link</span></a>
+<a href='{{ url("/projects/create") }}' class="btn items-center flex"><i data-feather="plus" class="inline h-4 w-4 -ml-1"></i><span class="ml-1">Link</span></a>
 @endsection
 
 @section('content')
