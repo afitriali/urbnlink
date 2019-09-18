@@ -13,8 +13,8 @@ Project
 @endcomponent
 
 <ul class=" flex border-b mb-8">
-    <li class=""><a href="{{ url($project->name) }}" class="inline-block px-4 py-2 text-blue-400 text-sm">Links</a></li>
-    <li class=""><a href="{{ url($project->name, 'pages') }}" class="inline-block px-4 py-2 text-blue-400 text-sm">Pages</a></li>
+    <li class=""><a href='{{ url($project->name) }}' class="inline-block px-4 py-2 text-blue-400 text-sm">Links</a></li>
+    <li class=""><a href='{{ url("/{$project->name}/pages") }}' class="inline-block px-4 py-2 text-blue-400 text-sm">Pages</a></li>
     <li class="-mb-px"><span class=" bg-white inline-block px-4 py-2 text-gray-500 text-sm border-l border-r border-t rounded-t">Settings</span></li>
 </ul>
 
@@ -41,7 +41,7 @@ Project
 
 <div class="mt-8 pt-8 border-t">
     @foreach ($domains as $domain)
-    <form action="{{ url($project->name).'/domains/'.$domain->name.'/default' }}" method="POST" class="w-full max-w-lg">
+    <form action='{{ url("/{$project->name}/domains/{$domain->name}/default") }}' method="POST" class="w-full max-w-lg">
         @csrf
         <label class="input-label">{{ $domain->name }} default link</label>
         <div class="relative">
@@ -68,7 +68,7 @@ Project
         <div>
             You're about to delete <span class="font-semibold">{{ $project->name }}</span> project, do you want to proceed?
             <div class="mt-8">
-                <form action="{{ url($project->name) }}" method="POST" class="w-full max-w-lg">
+                <form action='{{ url($project->name) }}' method="POST" class="w-full max-w-lg">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn bg-red-600">Proceed</button><a class="ml-4" id="hide-delete">cancel</a>
@@ -79,7 +79,7 @@ Project
 </div>
 
 <div class="mt-12 text-sm">
-    <a href="{{ url('/') }}" class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
+    <a href='{{ url("/") }}' class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
 </div>
 @endsection
 

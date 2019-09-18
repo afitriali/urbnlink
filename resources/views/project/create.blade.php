@@ -15,7 +15,7 @@ Create a New Project
 
 @component('components.form')
 @slot('action')
-{{ url('/projects')}}
+{{ url("/projects")}}
 @endslot
 @slot('method')
 POST
