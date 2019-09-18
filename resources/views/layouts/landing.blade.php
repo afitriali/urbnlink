@@ -15,15 +15,15 @@
         <div class="max-w-lg mx-auto">
             <div class="flex items-center mt-4 mb-8 mx-6">
                 <div class="flex-auto leading-relaxed relative">
-                    <a href="{{ config('app.url') }}"><h1 class="inline text-lg tracking-wider">{{ config('app.name') }}</h1>
-                        <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 rounded">alpha</span>
+                    <a href="{{ config('app.url') }}" class="flex items-center"><h1 class="inline font-light">{{ config('app.name') }}</h1>
+                        <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 ml-1 rounded">alpha</span>
                     </a>
                 </div>
                 <div class="flex-none">
                     @auth
-                    <a href="{{ env('DASHBOARD_URL') }}" class="btn-secondary">Dashboard</a>
+                    <a href="{{ env('DASHBOARD_URL') }}" class="btn">Dashboard</a>
                     @else
-                    <a href="{{ route('login') }}" class="mr-4">Log In</a>
+                    <a href="{{ route('login') }}" class="mr-4 py-1">Log In</a>
 
                     @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="btn">Sign Up</a>
@@ -35,7 +35,7 @@
             @yield('content')
             @yield('scripts')
             <script>
-                feather.replace()
+feather.replace()
             </script> 
         </div>
     </body>

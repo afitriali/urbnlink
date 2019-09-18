@@ -3,11 +3,15 @@
 @tailwind components;
 
 .btn {
-    @apply inline-block bg-gray-900 text-white rounded px-4 py-1;
+    @apply inline-block rounded  px-4 py-2 bg-gray-900 text-white;
 }
 
 .btn-secondary {
-    @apply inline-block rounded px-4 py-1 text-sm text-blue-400 bg-blue-100;
+    @apply inline-block rounded px-4 py-2 bg-indigo-600 text-white;
+}
+
+.btn-danger {
+    @apply inline-block rounded px-4 py-2 bg-red-500 text-red-900;
 }
 
 .input-label {
@@ -15,19 +19,34 @@
 }
 
 .input-error {
-    @apply text-red-400 text-xs italic mt-2;
+    @apply text-red-500 text-xs italic mt-2;
 }
 
 .input-text {
-    @apply appearance-none block w-full border border-blue-200 rounded py-2 px-3 leading-tight;
+    @apply appearance-none block w-full border border-gray-500 rounded py-2 px-3 leading-tight;
 }
 
 .input-invalid {
-    @apply border-red-400
+    @apply border-red-500
 }
 
 .input-text:focus {
     @apply outline-none border-gray-900;
+}
+
+@keyframes slidedown {
+    from {
+        margin-top: -25px;
+        opacity: 0;
+    }
+    to {
+        margin-top: 0;
+        opacity: 1;
+    }
+}
+
+.modal {
+    animation: slidedown 0.2s;
 }
 
 @tailwind utilities;

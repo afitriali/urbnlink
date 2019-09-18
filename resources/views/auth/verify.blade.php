@@ -3,7 +3,7 @@
 @section('content')
 @section('navigation')
 <a href="{{ config('app.url') }}"><h1 class="inline text-lg font-semibold tracking-wider">{{ config('app.name') }}</h1>
-    <span class="inline-block bg-blue-100 text-blue-400 text-xs px-1 rounded">beta</span>
+    <span class="inline-block bg-blue-100 text-indigo-600 text-xs px-1 rounded">beta</span>
 </a>
 @endsection
 
@@ -23,7 +23,7 @@
 {{ __('If you did not receive the email') }},
 <form class="inline" method="POST" action="{{ route('verification.resend') }}">
     @csrf
-    <button type="submit" class="text-blue-400 border-b-2 border-dotted">{{ __('click here to request another') }}</button>.
+    <button type="submit" class="text-indigo-600 border-b-2 border-dotted">{{ __('click here to request another') }}</button>.
 </form>
 </div>
 

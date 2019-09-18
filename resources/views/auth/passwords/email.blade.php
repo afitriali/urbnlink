@@ -9,7 +9,7 @@
     @endcomponent
 
     @if (session('status'))
-    <div class="bg-green-100 text-green-400 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">
+    <div class="bg-teal-200 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">
         {{ session('status') }}
     </div>
     @endif

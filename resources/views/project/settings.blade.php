@@ -13,9 +13,9 @@ Project
 @endcomponent
 
 <ul class=" flex border-b mb-8">
-    <li class=""><a href='{{ url($project->name) }}' class="inline-block px-4 py-2 text-blue-400 text-sm">Links</a></li>
-    <li class=""><a href='{{ url("/{$project->name}/pages") }}' class="inline-block px-4 py-2 text-blue-400 text-sm">Pages</a></li>
-    <li class="-mb-px"><span class=" bg-white inline-block px-4 py-2 text-gray-500 text-sm border-l border-r border-t rounded-t">Settings</span></li>
+    <li class=""><a href='{{ url($project->name) }}' class="inline-block px-4 py-2 text-indigo-600">Links</a></li>
+    <li class=""><a href='{{ url("/{$project->name}/pages") }}' class="inline-block px-4 py-2 text-indigo-600">Pages</a></li>
+    <li class="-mb-px"><span class=" bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t">Settings</span></li>
 </ul>
 
 @component('components.form')
@@ -39,11 +39,12 @@ Project
 </div>
 @endcomponent
 
-<div class="mt-8 pt-8 border-t">
+<div class="mt-12">
+<h3 class="text-lg font-semibold mb-6">Domains</h3>
     @foreach ($domains as $domain)
     <form action='{{ url("/{$project->name}/domains/{$domain->name}/default") }}' method="POST" class="w-full max-w-lg">
         @csrf
-        <label class="input-label">{{ $domain->name }} default link</label>
+        <label class="input-label"><span class="text-gray-900 font-semibold">{{ $domain->name }}</span> default link</label>
         <div class="relative">
             <select class="input-text pr-8" name="link" onchange="this.form.submit()">
                 <option value="" default></option>
@@ -59,11 +60,12 @@ Project
     @endforeach
 </div>
 
-<div class="mt-8 pt-8 border-t relative">
-    <div class="relative z-10">
-        <button class="btn bg-red-600" id="show-delete">Delete Project</button>
+<div class="mt-12 relative">
+<h3 class="text-lg font-semibold mb-6">Danger Zone</h3>
+    <div class="">
+        <button class="btn-danger" id="show-delete">Delete Project</button>
     </div>
-    <div class="hidden absolute z-50 shadow m-4 p-4 top-0 bg-white rounded" id="delete">
+    <div class="absolute z-50 shadow mx-4 p-4 top-0 bg-white rounded modal hidden" id="delete">
         <span class="input-label">Warning</span>
         <div>
             You're about to delete <span class="font-semibold">{{ $project->name }}</span> project, do you want to proceed?
@@ -71,7 +73,8 @@ Project
                 <form action='{{ url($project->name) }}' method="POST" class="w-full max-w-lg">
                     @method('DELETE')
                     @csrf
-                    <button type="submit" class="btn bg-red-600">Proceed</button><a class="ml-4" id="hide-delete">cancel</a>
+                    <button type="submit" class="btn-danger">Proceed</button>
+                    <span class="inline-block ml-4 py-1 cursor-pointer" id="hide-delete">cancel</span>
                 </form>
             </div>
         </div>
@@ -79,7 +82,7 @@ Project
 </div>
 
 <div class="mt-12 text-sm">
-    <a href='{{ url("/") }}' class="text-blue-400 border-b-2 border-dotted">See your other projects.</a>
+    <a href='{{ url("/") }}' class="text-indigo-600 border-b-2 border-dotted">See your other projects.</a>
 </div>
 @endsection
 

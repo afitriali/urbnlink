@@ -16,7 +16,9 @@
         <div class="max-w-lg mx-auto px-6 mb-8">
             <div class="flex items-center mt-4 mb-8">
                 <div class="flex-auto leading-relaxed">
-                    @yield('navigation')
+                    <a href="{{ url('/') }}" class="flex items-center"><h1 class="inline font-light">{{ config('app.name') }}</h1>
+                        <span class="inline-block bg-gray-200 text-gray-500 text-xs px-1 ml-1 rounded">alpha</span>
+                    </a>
                 </div>
                 <div class="flex-none mx-4">
                     @yield('create_button')
@@ -39,17 +41,17 @@
             @endauth
 
             @if (session('success'))
-            <div class="bg-green-100 text-green-400 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('success') }}</div>
+            <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('success') }}</div>
             @endif
             @if (session('message'))
-            <div class="bg-blue-100 text-blue-400 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('message') }}</div>
+            <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('message') }}</div>
             @endif
 
             @yield('content')
         </div>
 
         <div class="max-w-lg mx-auto mt-12">
-            <p class="font-light px-6 py-12 bg-blue-100 leading-relaxed sm:rounded-lg">
+            <p class="font-light px-6 py-12 bg-teal-300 text-teal-800 leading-relaxed sm:rounded-lg">
             URBN helps you manage your websites, online forms and social media links. Use URBN to grow and find your audience.
             <p>
         </div>
