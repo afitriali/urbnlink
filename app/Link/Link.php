@@ -36,7 +36,7 @@ class Link extends Model
 	public function registerHit($request)
 	{
 		$this->hits()->create([
-			'country' => Traffic::LocationCountry($request->ip()),
+			'country' => substr(Traffic::LocationCountry($request->ip()), 0, 100),
 			'agent' => $request->server('HTTP_USER_AGENT'),
 			'referrer' => $request->server('HTTP_REFERER') ?? 'http://' . $this->domain . '/',
 			'page' => $this->url
