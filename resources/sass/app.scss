@@ -49,4 +49,12 @@
     animation: slidedown 0.2s;
 }
 
+.feather {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
 @tailwind utilities;

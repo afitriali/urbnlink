@@ -38,7 +38,9 @@ Project
             <h3 class="text-xl text-indigo-600">{{ $link->domain.'/'.$link->name }}</h3>
             <p class="font-light truncate">{{ $link->url }}</p>
             <div class="flex items-center text-xs text-gray-500 mt-2 capitalize">
-                <span class="mr-4">{{ \Carbon\Carbon::parse($link->created_at)->diffForHumans() }}</span><i data-feather="bar-chart-2" class="h-4 w-4"></i><span class="ml-2">{{ $link->hits()->count() }}</span>
+                <span class="mr-4">{{ \Carbon\Carbon::parse($link->created_at)->diffForHumans() }}</span>
+                <svg class="feather h-4 w-4"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#bar-chart-2"/></svg>
+                <span class="ml-1">{{ $link->hits()->count() }}</span>
             </div>
         </li>
     </a>

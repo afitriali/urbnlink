@@ -25,10 +25,22 @@ You don't have any projects yet.
     @slot('url', url("/{$project->name}"))
     @slot('name', $project->name)
     @slot('description', $project->description)
-    <div class="inline-block bg-gray-200 py-1 px-2 rounded flex items-center"><i data-feather="link" class="inline h-3 w-3"></i><span class="ml-1">{{ $project->links()->count() }}</span></div>
-    <div class="inline-block bg-gray-200 py-1 px-2 ml-2 rounded flex items-center"><i data-feather="layout" class="inline h-3 w-3"></i><span class="ml-1">{{ $project->pages()->count() }}</span></div>
-    <div class="inline-block bg-gray-200 py-1 px-2 ml-2 rounded flex items-center"><i data-feather="globe" class="inline h-3 w-3"></i><span class="ml-1">{{ $project->domains()->count() }}</span></div>
-    <div class="inline-block bg-gray-200 py-1 px-2 ml-2 rounded flex items-center"><i data-feather="users" class="inline h-3 w-3"></i><span class="ml-1">{{ $project->members()->count() }}</span></div>
+    <div class="inline-block bg-gray-200 py-1 px-2 rounded flex items-center">
+        <svg class="feather h-3 w-3"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#link"/></svg>
+        <span class="ml-1">{{ $project->links()->count() }}</span>
+    </div>
+    <div class="inline-block bg-gray-200 py-1 px-2 ml-2 rounded flex items-center">
+        <svg class="feather h-3 w-3"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#layout"/></svg>
+        <span class="ml-1">{{ $project->pages()->count() }}</span>
+    </div>
+    <div class="inline-block bg-gray-200 py-1 px-2 ml-2 rounded flex items-center">
+        <svg class="feather h-3 w-3"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#globe"/></svg>
+        <span class="ml-1">{{ $project->domains()->count() }}</span>
+    </div>
+    <div class="inline-block bg-gray-200 py-1 px-2 ml-2 rounded flex items-center">
+        <svg class="feather h-3 w-3"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#users"/></svg>
+        <span class="ml-1">{{ $project->members()->count() }}</span>
+    </div>
     @endcomponent
     @endforeach
 </ul>

@@ -7,7 +7,6 @@
         <title>{{ config('app.name') }}</title>
 
         <script src="{{ asset('js/Chart.min.js') }}" defer></script>
-        <script src="{{ asset('js/feather.min.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -34,11 +33,7 @@
 
             @yield('content')
             <script>
-window.onload = function () {
-    feather.replace();
-};
-
-    (function(f, a, t, h, o, m){
+(function(f, a, t, h, o, m){
     a[h]=a[h]||function(){
     (a[h].q=a[h].q||[]).push(arguments)
 };

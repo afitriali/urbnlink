@@ -7,7 +7,6 @@
         <title>{{ config('app.name') }}</title>
 
         <script src="{{ asset('js/Chart.min.js') }}" defer></script>
-        <script src="{{ asset('js/feather.min.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -57,7 +56,7 @@
         <div class="max-w-lg mx-auto mt-12 p-6 bg-teal-300 text-teal-800 leading-relaxed sm:rounded-lg">
             <div class="flex items-center"> 
                 <span class="font-light mr-1">Built with</span>
-                <i data-feather="heart" class="inline h-4 w-4"></i>
+                <svg class="feather h-4 w-4"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#heart"/></svg>
                 <span class="font-light ml-1">by <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/afitriali" class="border-b-2 border-dotted border-teal-900 font-semibold">@afitriali</a>.</span>
             </div>
             <span class="inline-block font-light mt-1">Illustrations by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" class="border-b-2 border-dotted border-teal-900">Icons 8</a>.</span>
@@ -87,10 +86,6 @@ m.parentNode.insertBefore(o,m)
 })(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
 fathom('set', 'siteId', 'ZMCRYJTW');
 fathom('trackPageview');
-
-window.onload = function () {
-feather.replace()
-};
         </script> 
         @yield('scripts')
     </body>
