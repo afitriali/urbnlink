@@ -22,7 +22,7 @@
     <p class="text-lg font-light">Coming Soon</p>
 </div>
 
-<div class="mt-12 text-sm">
+<div class="mt-12">
     <a href='{{ url($project->name) }}' class="text-indigo-600 border-b-2 border-dotted">See your other links.</a>
 </div>
 @endsection

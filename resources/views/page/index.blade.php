@@ -42,7 +42,7 @@ Project
     <p class="text-lg font-light">Coming Soon</p>
 </div>
 @endisset
-<div class="mt-12 text-sm">
+<div class="mt-12">
     <a href='{{ url("/") }}' class="text-indigo-600 border-b-2 border-dotted">See your other projects.</a>
 </div>
 @endsection

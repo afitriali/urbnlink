@@ -50,7 +50,7 @@
 </div>
 @endif
 
-<div class="mt-12 text-sm">
+<div class="mt-12">
     <a href='{{ url($project->name) }}' class="text-indigo-600 border-b-2 border-dotted">See your other links.</a>
 </div>
 @endsection

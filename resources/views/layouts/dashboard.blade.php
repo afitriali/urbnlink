@@ -59,9 +59,9 @@
             <div class="flex items-center"> 
                 <span class="font-light mr-1">Built with</span>
                 <i data-feather="heart" class="inline h-4 w-4"></i>
-                <span class="font-light ml-1">by <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/afitriali" class="border-b-2 border-dotted border-teal-900">@afitriali</a>.</span>
+                <span class="font-light ml-1">by <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/afitriali" class="border-b-2 border-dotted border-teal-900 font-semibold">@afitriali</a>.</span>
             </div>
-            <span class="inline-block font-light mt-2">Illustrations by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" class="border-b-2 border-dotted border-teal-900">Icons 8</a>.</span>
+            <span class="inline-block font-light mt-1">Illustrations by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" class="border-b-2 border-dotted border-teal-900">Icons 8</a>.</span>
         </div>
 
         @yield('scripts')
@@ -77,7 +77,7 @@ burger.onclick = function() {
 
 menu.onclick = function() {
     menu.style.display = "none";
-};
+}
 
 (function(f, a, t, h, o, m){
     a[h]=a[h]||function(){

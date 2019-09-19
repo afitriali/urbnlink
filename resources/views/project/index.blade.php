@@ -34,7 +34,7 @@ You don't have any projects yet.
 </ul>
 <div class="mt-12">
     @cannot('create', App\Project::class)
-    <p class="text-gray-500 text-sm"><span class="font-semibold block">You can't add anymore projects.</span><a href="#" class="text-indigo-600 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing project.</p>
+    <p><span class="font-semibold block">You can't add anymore projects.</span><a href="#" class="text-indigo-600 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing project.</p>
     @endcannot
 </div>
 @else
