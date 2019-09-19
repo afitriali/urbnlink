@@ -6,8 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
 
-        <script src="{{ asset('js/Chart.min.js') }}"></script>
-        <script src="{{ asset('js/feather.min.js') }}"></script>
+        <script src="{{ asset('js/Chart.min.js') }}" defer></script>
+        <script src="{{ asset('js/feather.min.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -33,22 +33,24 @@
             </div>
 
             @yield('content')
-            @yield('scripts')
             <script>
-feather.replace();
+window.onload = function () {
+    feather.replace();
+};
 
-(function(f, a, t, h, o, m){
+    (function(f, a, t, h, o, m){
     a[h]=a[h]||function(){
-        (a[h].q=a[h].q||[]).push(arguments)
-    };
+    (a[h].q=a[h].q||[]).push(arguments)
+};
     o=f.createElement('script'),
         m=f.getElementsByTagName('script')[0];
     o.async=1; o.src=t; o.id='fathom-script';
     m.parentNode.insertBefore(o,m)
 })(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
-fathom('set', 'siteId', 'ZMCRYJTW');
-fathom('trackPageview');
+    fathom('set', 'siteId', 'ZMCRYJTW');
+    fathom('trackPageview');
             </script> 
+            @yield('scripts')
         </div>
     </body>
 </html>

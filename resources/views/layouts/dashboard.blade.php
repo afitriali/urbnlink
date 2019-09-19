@@ -6,9 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="{{ asset('js/Chart.min.js') }}"></script>
-        <script src="{{ asset('js/feather.min.js') }}"></script>
+        <script src="{{ asset('js/Chart.min.js') }}" defer></script>
+        <script src="{{ asset('js/feather.min.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -64,32 +63,35 @@
             <span class="inline-block font-light mt-1">Illustrations by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" class="border-b-2 border-dotted border-teal-900">Icons 8</a>.</span>
         </div>
 
-        @yield('scripts')
         <script>
-            feather.replace()
-
 var menu = document.getElementById("menu");
 var burger = document.getElementById("show-menu");
 
 burger.onclick = function() {
-    menu.style.display = "block";
+menu.style.display = "block";
 };
 
 menu.onclick = function() {
-    menu.style.display = "none";
-}
+menu.style.display = "none";
+};
 
 (function(f, a, t, h, o, m){
-    a[h]=a[h]||function(){
-        (a[h].q=a[h].q||[]).push(arguments)
-    };
-    o=f.createElement('script'),
-        m=f.getElementsByTagName('script')[0];
-    o.async=1; o.src=t; o.id='fathom-script';
-    m.parentNode.insertBefore(o,m)
+a[h]=a[h]||function(){
+(a[h].q=a[h].q||[]).push(arguments)
+};
+
+o=f.createElement('script'),
+    m=f.getElementsByTagName('script')[0];
+o.async=1; o.src=t; o.id='fathom-script';
+m.parentNode.insertBefore(o,m)
 })(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
 fathom('set', 'siteId', 'ZMCRYJTW');
 fathom('trackPageview');
+
+window.onload = function () {
+feather.replace()
+};
         </script> 
+        @yield('scripts')
     </body>
 </html>

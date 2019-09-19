@@ -57,42 +57,44 @@
 
 @section('scripts')
 <script>
+window.onload = function () {
     var ctx = document.getElementById('chart').getContext('2d');
-var chart = new Chart(ctx, {
+    var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'bar',
 
-    // The data for our dataset
-    data: {
-        labels: [{!! implode(', ', array_keys($stats['hits'])) !!}],
+        // The data for our dataset
+        data: {
+    labels: [{!! implode(', ', array_keys($stats['hits'])) !!}],
         datasets: [{
-            backgroundColor: '#a3bffa',
-            data: [{{ implode(', ', $stats['hits']) }}]
-        }]
-    },
+    backgroundColor: '#a3bffa',
+        data: [{{ implode(', ', $stats['hits']) }}]
+}]
+},
 
-    // Configuration options go here
-    options: {
-        legend: {
-            display: false
-        },
+        // Configuration options go here
+        options: {
+    legend: {
+    display: false
+},
         scales: {
-            xAxes: [{
-                ticks: {
-                    display: false    
-                },
-                gridLines: {
-                    display: false
-                }
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    precision: 0
-                }
-            }]
-        }
-    }
+    xAxes: [{
+    ticks: {
+    display: false    
+},
+        gridLines: {
+    display: false
+}
+}],
+        yAxes: [{
+    ticks: {
+    beginAtZero: true,
+        precision: 0
+}
+}]
+}
+}
 });
+};
 </script>
 @endsection
