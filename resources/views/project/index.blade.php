@@ -2,7 +2,10 @@
 
 @section('create_button')
 @can('create', App\Project::class)
-<a href='{{ url("/projects/create") }}' class="btn items-center flex"><i data-feather="plus" class="inline h-4 w-4 -ml-1"></i><span class="ml-1">Project</span></a>
+<a href='{{ url("/projects/create") }}' class="btn items-center flex">
+    <svg class="feather h-4 w-4 -ml-1"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#plus"/></svg>
+    <span class="ml-1">Project</span>
+</a>
 @endcan
 @endsection
 

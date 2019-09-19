@@ -22,7 +22,9 @@
                     @yield('create_button')
                 </div>
                 <div class="flex-none">
-                    <button class="px-2 py-1" id="show-menu"><i data-feather="menu" class="inline-block text-gray-500"></i></button>
+                    <button class="px-2 py-1" id="show-menu">
+                        <svg class="feather h-6 w-6 text-gray-500"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#menu"/></svg>
+                    </button>
                 </div>
             </div>
             <div class="absolute z-50 shadow top-0 right-0 mx-4 p-4 bg-white rounded modal hidden" id="menu" onclick="toggleActive(this)">
@@ -31,11 +33,13 @@
                 <span class="block text-sm border-b pb-4">{{ Auth::user()->email }}</span>
                 <span class="block text-sm border-b pb-4 mt-4">
                     <a class="block mt-4 flex text-sm items-center text-gray-500">
-                        <i data-feather="settings" class="inline h-4 w-4"></i><span class="ml-2">{{ __('Settings') }}</span>
+                        <svg class="feather h-4 w-4 text-gray-500"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#settings"/></svg>
+                        <span class="ml-2">{{ __('Settings') }}</span>
                     </a>
                 </span>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block mt-4 flex text-sm items-center">
-                    <i data-feather="log-out" class="inline h-4 w-4"></i><span class="ml-2">{{ __('Logout') }}</span>
+                    <svg class="feather h-4 w-4"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#log-out"/></svg>
+                    </i><span class="ml-2">{{ __('Logout') }}</span>
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
