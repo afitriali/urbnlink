@@ -55,10 +55,13 @@
             @yield('content')
         </div>
 
-        <div class="max-w-lg mx-auto mt-12">
-            <p class="font-light px-6 py-12 bg-teal-300 text-teal-800 leading-relaxed sm:rounded-lg">
-            URBN helps you manage your websites, online forms and social media links. Use URBN to grow and find your audience.
-            <p>
+        <div class="max-w-lg mx-auto mt-12 p-6 bg-teal-300 text-teal-800 leading-relaxed sm:rounded-lg">
+            <div class="flex items-center"> 
+            <span class="font-light mr-1">Built with</span>
+            <i data-feather="heart" class="inline h-4 w-4"></i>
+            <span class="font-light ml-1">by <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/afitriali" class="border-b-2 border-dotted border-teal-900">@afitriali</a>.</span>
+            </div>
+            <span class="font-light">Illustrations by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com" class="border-b-2 border-dotted border-teal-900">Icons 8</a>.</span>
         </div>
 
         @yield('scripts')
