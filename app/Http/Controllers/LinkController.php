@@ -5,73 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Link\Link;
+use App\Link\LinkType;
 use App\Domain;
 use App\Project;
 use App\Rules\WebsiteExists;
 
 class LinkController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'summary']]);
-    }
+	protected $domain_list = ['ur.bn', 'whats.app.bn'];
 
-	/**
-	 * Forward error message to view
-	 *
-	 * @param string $action
-	 * @param array $errors
-	 * @return Response
-	 */
-	public function respondWithError($action, $errors)
+	public function __construct()
 	{
-		return response()->json([
-			$action => false,
-			'errors' => $errors->toArray()
-		]);
-	}
-
-	public function checkName(Request $request)
-	{
-		$validator = Validator::make($request->all(), [
-			'name' => ['required', 'min:3', 'max:40', 'alpha_num', 'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))],
-		]);
-
-		if ($validator->fails()) {
-			return $this->respondWithError('available', $validator->errors());
-		}
-
-		return response()->json(['available' => true]);
-	}
-
-	public function checkUrl(Request $request)
-	{
-		$validator = Validator::make($request->all(), [
-			'url' => ['required', 'regex:/^(http|https):\/\//', new WebsiteExists]
-		]);
-
-		if ($validator->fails()) {
-			return $this->respondWithError('available', $validator->errors());
-		}
-
-		return response()->json(['available' => true]);
+		$this->middleware(['auth', 'verified'], ['except' => ['respondWithError', 'checkName', 'checkUrl', 'summary']]);
 	}
 
 	public function index(Project $project)
 	{
 		$this->authorize('workOn', $project);
-
 		$links = $project->links()->get();
-
 		return view('link.index', compact('project', 'links'));
 	}
-	
+
 	public function create(Project $project)
 	{
 		$this->authorize('workOn', $project);
-		$domains = $project->domains()->get();
-
-		return view('link.create', compact('project', 'domains'));
+		$domains = array_merge($this->domain_list, $project->domains()->pluck('name')->toArray());
+		$link_types = LinkType::whereNotIn('id', [20])->get();
+		return view('link.create', compact('project', 'domains', 'link_types'));
 	}
 
 	public function store(Project $project, Request $request)
@@ -79,7 +39,7 @@ class LinkController extends Controller
 		$this->authorize('workOn', $project);
 
 		$domain = $request->input('domain');
-		if ($domain !== null) {
+		if (!in_array($domain, $this->domain_list)) {
 			$d = Domain::hasName($domain)->isVerified()->first();
 			if ($d) {
 				$this->authorize('useDomain', $d);
@@ -88,7 +48,11 @@ class LinkController extends Controller
 			}
 		}
 
-		$request->validate([
+		if ($request->input('domain') === 'whats.app.bn') {
+			$request->merge(['link_type_id' => 30]);
+		}
+
+		$validator = Validator::make($request->all(), [
 			'name' => [
 				'nullable',
 				'min:3',
@@ -96,18 +60,37 @@ class LinkController extends Controller
 				'alpha_num',
 				'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))
 			],
-			'url' => [
-				'required',
-				'regex:/^(http|https):\/\//',
-				new WebsiteExists
-			]
+			'link_type_id' => 'required'
+		], [
+			'numeric' => 'The phone number should include only the country code and phone number without plus (+) or any other special characters. whats.app.bn is reserved for whatsApp numbers.'
 		]);
+
+		$validator->sometimes('url', [
+			'required',
+			'regex:/^(http|https):\/\//',
+			new WebsiteExists
+		], function ($input) {
+			return $input->link_type_id == 10; 
+		});
+
+		$validator->sometimes('url', [
+			'required',
+			'numeric'
+		], function ($input) {
+			return $input->link_type_id == 30; 
+		});
+
+		if ($validator->fails()) {
+			return redirect("/{$project->name}/links/create")
+				->withErrors($validator)
+				->withInput();
+		}
 
 		$link = $project->links()->create([
 			'name' => $request->input('name'),
 			'domain' => $request->input('domain'),
 			'url' => $request->input('url'),
-			'link_type_id' => $request->input('link_type_id') ?? 10
+			'link_type_id' => $request->input('link_type_id')
 		]);
 
 		$success = '👍 You created a nice link!';
@@ -137,15 +120,32 @@ class LinkController extends Controller
 	public function update(Project $project, $domain, Link $link, Request $request)
 	{
 		$this->authorize('workOn', $project);
-
-		$request->validate([
-			'url' => [
-				'required',
-				'regex:/^(http|https):\/\//',
-				new WebsiteExists
-			]
+		$request->request->add(['link_type_id' => $link->link_type_id]);
+		$validator = Validator::make($request->all(), [], [
+			'numeric' => 'The phone number should include only the country code and phone number without plus (+) or any other special characters. whats.app.bn is reserved for whatsApp numbers.'
 		]);
-		
+
+		$validator->sometimes('url', [
+			'required',
+			'regex:/^(http|https):\/\//',
+			new WebsiteExists
+		], function ($input) {
+			return $input->link_type_id === 10; 
+		});
+
+		$validator->sometimes('url', [
+			'required',
+			'numeric'
+		], function ($input) {
+			return $input->link_type_id === 30; 
+		});
+
+		if ($validator->fails()) {
+			return redirect()->back()
+				->withErrors($validator)
+				->withInput();
+		}
+
 		$link->update([
 			'url' => $request->input('url'),
 			'link_type_id' => $request->input('link_type_id') ?? 10

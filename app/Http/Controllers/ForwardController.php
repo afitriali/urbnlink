@@ -98,6 +98,6 @@ class ForwardController extends Controller
 
 	private function forwardToWhatsapp($url)
 	{
-		return redirect()->away('https://api.whatsapp.com/' . $url);
+		return redirect()->away('https://api.whatsapp.com/send?phone=' . $url);
 	}
 }

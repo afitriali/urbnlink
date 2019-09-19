@@ -23,9 +23,8 @@
     <label for="domain" class="input-label">Domain</label>
     <div class="relative">
         <select class="input-text pr-8" name="domain">
-            <option value="" default>{{ env('DEFAULT_SHORT_DOMAIN') }}</option>
             @foreach ($domains as $domain)
-            <option value="{{ $domain->name }}" <?= old('domain') === $domain->name ? 'selected="selected"' : '' ?>>{{ $domain->name }}</option>
+            <option value="{{ $domain }}" <?= old('domain') === $domain ? 'selected="selected"' : '' ?>>{{ $domain }}</option>
             @endforeach
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
@@ -34,18 +33,31 @@
     </div>
 </div>
 
+<div class="w-full mb-2">
+    <span class="input-label">Forward to</span>
+    <div class="flex">
+        @foreach ($link_types as $link_type)
+        <div class="mr-6">
+            <label>
+                <input type="radio" name="link_type_id" value="{{ $link_type->id }}"  <?= old('link_type_id') == $link_type->id || (old('link_type_id') === null && $link_type->id === 10) ? 'checked' : '' ?>>
+                <span class="ml-1">{{ $link_type->name }}</span>
+            </label>
+        </div>
+        @endforeach
+    </div>
+</div>
+
 <div class="w-full mb-6">
-    <label for="name" class="input-label">Short Name</label>
-    <input class="input-text @error('name') input-invalid @enderror" id="name" type="text" name="name" max="40" placeholder="Short name for your URL" value ="{{ old('name') }}">
-    @error('name')
+    <input class="input-text @error('url') input-invalid @enderror" id="url" type="text" name="url" placeholder="Paste your original URL here" value ="{{ old('url') }}">
+    @error('url')
     <span class="input-error" role="alert">{{ $message }}</span>
     @enderror
 </div>
 
 <div class="w-full mb-6">
-    <label for="url" class="input-label">URL</label>
-    <input class="input-text @error('url') input-invalid @enderror" id="url" type="text" name="url" placeholder="Paste your original URL here" value ="{{ old('url') }}">
-    @error('url')
+    <label for="name" class="input-label">Short Name (Optional)</label>
+    <input class="input-text @error('name') input-invalid @enderror" id="name" type="text" name="name" max="40" placeholder="Short name for your URL" value ="{{ old('name') }}">
+    @error('name')
     <span class="input-error" role="alert">{{ $message }}</span>
     @enderror
 </div>

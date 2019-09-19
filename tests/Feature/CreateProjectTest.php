@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreateProjectTest extends TestCase
+class CreateProjectTest // extends TestCase
 {
     use RefreshDatabase;
 

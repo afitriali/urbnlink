@@ -15,7 +15,7 @@ class LinkTypesTableSeeder extends Seeder
 		$link_types = [
 			[
 				'id' => 10,
-				'name' => 'Regular URL',
+				'name' => 'URL',
 				'function' => 'forwardToUrl',
 				'description' => 'Forward to a regular URL'
 			],
@@ -27,7 +27,7 @@ class LinkTypesTableSeeder extends Seeder
 			],
 			[
 			'id' => 30,
-			'name' => 'WhatsApp Number',
+			'name' => 'WhatsApp',
 			'function' => 'forwardToWhatsapp',
 			'description' => 'Forward to WhatsApp number'
 			]
