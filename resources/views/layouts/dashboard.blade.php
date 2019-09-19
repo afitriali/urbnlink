@@ -28,12 +28,18 @@
                 </div>
             </div>
             <div class="absolute z-50 shadow top-0 right-0 mx-4 p-4 bg-white rounded modal hidden" id="menu" onclick="toggleActive(this)">
-                <span class="input-label">Logged in as</span>
+                <span class="input-label">Logged in</span>
                 <span class="block font-bold">{{ Auth::user()->name }}</span>
                 <span class="block text-sm border-b pb-4">{{ Auth::user()->email }}</span>
-                <span class="block text-sm border-b pb-4 mt-4">
-                    <a class="block mt-4 flex text-sm items-center text-gray-500">
-                        <svg class="feather h-4 w-4 text-gray-500"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#settings"/></svg>
+                <span class="block text-sm mt-4">
+                    <a href='{{ url("/") }}' class="block mt-4 flex text-sm items-center">
+                        <svg class="feather h-4 w-4"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#grid"/></svg>
+                        <span class="ml-2">{{ __('View all projects') }}</span>
+                    </a>
+                </span>
+                <span class="block text-sm border-b pb-4">
+                    <a href='{{ url("/user/settings") }}' class="block mt-4 flex text-sm items-center">
+                        <svg class="feather h-4 w-4"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#settings"/></svg>
                         <span class="ml-2">{{ __('Settings') }}</span>
                     </a>
                 </span>

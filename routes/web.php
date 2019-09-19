@@ -20,6 +20,9 @@ Route::domain(env('HOME_DOMAIN', 'urbn.link'))->group(function () {
 
 Route::domain(env('DASHBOARD_DOMAIN', 'api.urbn.link'))->group(function () {
 	Auth::routes(['verify' => true]);
+	Route::get('/user/settings', 'UserController@settings');
+	Route::put('/user/settings', 'UserController@update');
+	Route::delete('/user/goodbye', 'UserController@delete');
 	// PROJECTS
 	Route::get('/', 'ProjectController@index')->name('home');
 	Route::get('/projects/create', 'ProjectController@create');
