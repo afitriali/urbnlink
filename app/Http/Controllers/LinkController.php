@@ -107,7 +107,7 @@ class LinkController extends Controller
 			'name' => $request->input('name'),
 			'domain' => $request->input('domain'),
 			'url' => $request->input('url'),
-			'link_type_id' => $request->input('link_type_id')
+			'link_type_id' => $request->input('link_type_id') ?? 10
 		]);
 
 		$success = '👍 You created a nice link!';
@@ -118,14 +118,50 @@ class LinkController extends Controller
 	{
 		$this->authorize('workOn', $project);
 		$stats = $link->getStatistics(); 
-
 		return view('link.show', compact('link', 'project', 'stats'));
 	}
 
 	public function rules(Project $project, $domain, Link $link)
 	{
 		$this->authorize('workOn', $project);
-
 		return view('link.rules', compact('link', 'project'));
+	}
+
+	public function edit(Project $project, $domain, Link $link)
+	{
+		$this->authorize('workOn', $project);
+		$domains = $project->domains()->get();
+		return view('link.edit', compact('link', 'project', 'domains'));
+	}
+
+	public function update(Project $project, $domain, Link $link, Request $request)
+	{
+		$this->authorize('workOn', $project);
+
+		$request->validate([
+			'url' => [
+				'required',
+				'regex:/^(http|https):\/\//',
+				new WebsiteExists
+			]
+		]);
+		
+		$link->update([
+			'url' => $request->input('url'),
+			'link_type_id' => $request->input('link_type_id') ?? 10
+		]);
+
+		$success = 'Link updated';
+		return redirect($project->name.'/links/'.$link->domain.'/'.$link->name)->with('success', $success);
+	}
+
+	public function delete(Project $project, $domain, Link $link, Request $request)
+	{
+		$this->authorize('manage', $project);
+
+		$link->delete();
+
+		$success = $link->domain.'/'.$link->name.' deleted';
+		return redirect($project->name)->with('success', $success);
 	}
 }

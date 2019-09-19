@@ -32,6 +32,8 @@ Route::domain(env('DASHBOARD_DOMAIN', 'api.urbn.link'))->group(function () {
 	Route::get('/{project}/links/create', 'LinkController@create');
 	Route::post('/{project}/links', 'LinkController@store');
 	Route::get('/{project}/links/{domain}/{link}', 'LinkController@show');
+	Route::get('/{project}/links/{domain}/{link}/edit', 'LinkController@edit');
+	Route::put('/{project}/links/{domain}/{link}', 'LinkController@update');
 	Route::delete('/{project}/links/{domain}/{link}', 'LinkController@delete');
 	Route::get('/{project}/links/{domain}/{link}/rules', 'LinkController@rules');
 	// Domain

@@ -20,6 +20,7 @@
 <ul class=" flex border-b mb-8">
     <li class="-mb-px"><span class="bg-white inline-block px-4 py-2 border-l border-r border-t rounded-t">Statistics</span></li>
     <li class=""><a href='{{ url()->current()."/rules" }}' class="inline-block px-4 py-2 text-indigo-600">Rules</a></li>
+    <li class=""><a href='{{ url()->current()."/edit" }}' class="inline-block px-4 py-2 text-indigo-600">Edit</a></li>
 </ul>
 
 @if ($stats['total'] > 0)

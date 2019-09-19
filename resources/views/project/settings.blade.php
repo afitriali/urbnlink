@@ -40,7 +40,7 @@ Project
 @endcomponent
 
 <div class="mt-12">
-<h3 class="text-lg font-semibold mb-6">Domains</h3>
+    <h3 class="text-lg font-semibold mb-6">Domains</h3>
     @foreach ($domains as $domain)
     <form action='{{ url("/{$project->name}/domains/{$domain->name}/default") }}' method="POST" class="w-full max-w-lg">
         @csrf
@@ -61,10 +61,8 @@ Project
 </div>
 
 <div class="mt-12 relative">
-<h3 class="text-lg font-semibold mb-6">Danger Zone</h3>
-    <div class="">
-        <button class="btn-danger" id="show-delete">Delete Project</button>
-    </div>
+    <h3 class="text-lg font-semibold mb-6">Delete Project</h3>
+    This action is permanent and cannot be reversed. All links within this project will be deleted. <a class="text-indigo-600 cursor-pointer" id="show-delete">Click here to delete project</a>.
     <div class="absolute z-50 shadow mx-4 p-4 top-0 bg-white rounded modal hidden" id="delete">
         <span class="input-label">Warning</span>
         <div>
@@ -88,16 +86,16 @@ Project
 
 @section('scripts')
 <script>
-    var modal = document.getElementById("delete");
+var modal = document.getElementById("delete");
 var btn = document.getElementById("show-delete");
 var span = document.getElementById("hide-delete");
 
 btn.onclick = function() {
-    modal.style.display = "block";
+modal.style.display = "block";
 }
 
 span.onclick = function() {
-    modal.style.display = "none";
+modal.style.display = "none";
 }
 </script>
 @endsection

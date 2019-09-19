@@ -9,18 +9,15 @@
 @endsection
 
 @component('components.header')
-@slot('title')
-Create a New Link
+@slot('title', 'Create a New Link')
+@slot('sub_title')
+<span class="block mt-2 text-gray-500">in <a href='{{ url($project->name) }}' class="text-indigo-600 border-b-2 border-dotted">{{ $project->name }}</a></span>
 @endslot
 @endcomponent
 
 @component('components.form')
-@slot('action')
-{{ url("/{$project->name}/links") }}
-@endslot
-@slot('method')
-POST
-@endslot
+@slot('action', url("/{$project->name}/links"))
+@slot('method', 'POST')
 
 <div class="w-full mb-6">
     <label for="domain" class="input-label">Domain</label>
