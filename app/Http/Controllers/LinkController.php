@@ -60,9 +60,12 @@ class LinkController extends Controller
 				'alpha_num',
 				'unique:links,name,NULL,links,domain,'.($request->input('domain') ?? env('DEFAULT_SHORT_DOMAIN', 'ur.bn'))
 			],
-			'link_type_id' => 'required'
+			'link_type_id' => [
+				'required',
+				'numeric'
+			]
 		], [
-			'numeric' => 'The phone number should include only the country code and phone number without plus (+) or any other special characters. whats.app.bn is reserved for whatsApp numbers.'
+			'integer' => 'The phone number should include only the country code and phone number without plus (+) or any other special characters. whats.app.bn is reserved for whatsApp numbers.'
 		]);
 
 		$validator->sometimes('url', [
@@ -75,7 +78,7 @@ class LinkController extends Controller
 
 		$validator->sometimes('url', [
 			'required',
-			'numeric'
+			'integer'
 		], function ($input) {
 			return $input->link_type_id == 30; 
 		});
@@ -122,7 +125,7 @@ class LinkController extends Controller
 		$this->authorize('workOn', $project);
 		$request->request->add(['link_type_id' => $link->link_type_id]);
 		$validator = Validator::make($request->all(), [], [
-			'numeric' => 'The phone number should include only the country code and phone number without plus (+) or any other special characters. whats.app.bn is reserved for whatsApp numbers.'
+			'integer' => 'The phone number should include only the country code and phone number without plus (+) or any other special characters. whats.app.bn is reserved for whatsApp numbers.'
 		]);
 
 		$validator->sometimes('url', [
@@ -135,7 +138,7 @@ class LinkController extends Controller
 
 		$validator->sometimes('url', [
 			'required',
-			'numeric'
+			'integer'
 		], function ($input) {
 			return $input->link_type_id === 30; 
 		});
