@@ -2,9 +2,7 @@
 
 @section('content')
 @component('components.header')
-@slot('title')
-{{ $link->domain.'/'.$link->name }}
-@endslot
+@slot('title', $link->domain.'/'.$link->name)
 @slot('sub_title')
 {{ $link->url }}
 <span class="block mt-2 text-gray-500">in <a href='{{ url($project->name) }}' class="text-indigo-600 border-b-2 border-dotted">{{ $project->name }}</a></span>

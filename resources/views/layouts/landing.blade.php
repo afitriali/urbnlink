@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name') }}</title>
+        <title>{{ config('app.name') }} - Dynamic URL Shortener</title>
+        <meta name="description" content="Make a memorable link, add logics and turn it dynamic.">
 
         <script src="{{ asset('js/Chart.min.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">

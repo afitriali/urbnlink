@@ -1,11 +1,5 @@
 @extends('layouts.dashboard')
 
-@section('navigation')
-@component('components.breadcrumbs')
-Project
-@endcomponent
-@endsection
-
 @section('content')
 @component('components.header')
 @slot('title', $project->name)

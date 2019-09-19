@@ -1,19 +1,9 @@
 @extends('layouts.dashboard')
 
-@section('navigation')
-@component('components.breadcrumbs')
-Project
-@endcomponent
-@endsection
-
 @section('content')
 @component('components.header')
-@slot('title')
-{{ $project->name }}
-@endslot
-@slot('sub_title')
-{{ $project->description }}
-@endslot
+@slot('title', $project->name)
+@slot('sub_title', $project->description)
 @endcomponent
 
 <ul class=" flex border-b mb-8">

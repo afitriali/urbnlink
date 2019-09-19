@@ -1,13 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
-@section('navigation')
-@component('components.breadcrumbs')
-<a href="{{ url($project->name) }}" class="text-blue-400">{{ $project->name }}</a><span class="mx-2">→</span>Link
-@endcomponent
-@endsection
-
 @component('components.header')
 @slot('title', 'Create a New Link')
 @slot('sub_title')

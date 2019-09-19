@@ -3,12 +3,8 @@
 @section('content')
 <div class="mx-6 mb-8">
     @component('components.header')
-    @slot('title')
-    {{ $link->domain.'/'.$link->name }}
-    @endslot
-    @slot('sub_title')
-    {{ $link->url }}
-    @endslot
+    @slot('title', $link->domain.'/'.$link->name)
+    @slot('sub_title', $link->url)
     @endcomponent
 
     @if ($stats['total'] > 0)

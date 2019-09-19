@@ -1,25 +1,18 @@
 @extends('layouts.dashboard')
 
-@section('navigation')
-@component('components.breadcrumbs')
-Project
-@endcomponent
-@endsection
-
 @section('create_button')
+@can('createLinkFor', $project)
 <a href='{{ url("/{$project->name}/links/create") }}' class="btn items-center flex">
     <svg class="feather h-4 w-4 -ml-1"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#plus"/></svg>
-    <span class="ml-1">Link</span></a>
+    <span class="ml-1">Link</span>
+</a>
+@endcan
 @endsection
 
 @section('content')
 @component('components.header')
-@slot('title')
-{{ $project->name }}
-@endslot
-@slot('sub_title')
-{{ $project->description }}
-@endslot
+@slot('title', $project->name)
+@slot('sub_title', $project->description)
 @endcomponent
 
 <ul class=" flex border-b mb-8">
@@ -31,8 +24,6 @@ Project
 </ul>
 
 @isset($links[0])
-<div class="my-8 text-right">
-</div>
 <ul>
     @foreach ($links as $link)
     <a href='{{ url("/{$project->name}/links/{$link->domain}/{$link->name}") }}'>
@@ -48,6 +39,11 @@ Project
     </a>
     @endforeach
 </ul>
+<div class="mt-12">
+    @cannot('createLinkFor', $project)
+    <p><span class="font-semibold block">You can't add anymore link.</span><a href="#" class="text-indigo-600 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing link.</p>
+    @endcannot
+</div>
 @else
 <div class="text-right">
     <img src='{{ url("/img/first-link.png") }}' class="mx-auto max-h-64 -mb-4" />

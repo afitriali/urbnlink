@@ -28,7 +28,7 @@ class LinkController extends Controller
 
 	public function create(Project $project)
 	{
-		$this->authorize('workOn', $project);
+		$this->authorize('createLinkFor', $project);
 		$domains = array_merge($this->domain_list, $project->domains()->pluck('name')->toArray());
 		$link_types = LinkType::whereNotIn('id', [20])->get();
 		return view('link.create', compact('project', 'domains', 'link_types'));
@@ -36,7 +36,7 @@ class LinkController extends Controller
 
 	public function store(Project $project, Request $request)
 	{
-		$this->authorize('workOn', $project);
+		$this->authorize('createLinkFor', $project);
 
 		$domain = $request->input('domain');
 		if (!in_array($domain, $this->domain_list)) {

@@ -1,16 +1,17 @@
 @extends('layouts.dashboard')
 
-@section('navigation')
-@component('components.breadcrumbs')
-<a href='{{ url($project->name) }}' class="text-indigo-600">{{ $project->name }}</a><span class="mx-2">→</span>Link
-@endcomponent
+@section('create_button')
+@can('createLinkFor', $project)
+<a href='{{ url("/{$project->name}/links/create") }}' class="btn items-center flex">
+    <svg class="feather h-4 w-4 -ml-1"><use xlink:href="{{ url('/img') }}/feather-sprite.svg#plus"/></svg>
+    <span class="ml-1">Link</span>
+</a>
+@endcan
 @endsection
 
 @section('content')
 @component('components.header')
-@slot('title')
-{{ $link->domain.'/'.$link->name }}
-@endslot
+@slot('title', $link->domain.'/'.$link->name)
 @slot('sub_title')
 {{ $link->url }}
 <span class="block mt-2 text-gray-500">in <a href='{{ url($project->name) }}' class="text-indigo-600 border-b-2 border-dotted">{{ $project->name }}</a></span>

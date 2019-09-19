@@ -1,26 +1,13 @@
 @extends('layouts.dashboard')
 
-@section('navigation')
-@component('components.breadcrumbs')
-Project
-@endcomponent
-@endsection
-
 @section('content')
 @component('components.header')
-@slot('title')
-Create a New Project
-@endslot
+@slot('title', 'Create a New Project')
 @endcomponent
 
 @component('components.form')
-@slot('action')
-{{ url("/projects")}}
-@endslot
-@slot('method')
-POST
-@endslot
-
+@slot('action', url("/projects"))
+@slot('method', 'POST')
 <div class="w-full mb-6">
     <label for="name" class="input-label">Name</label>
     <input class="input-text @error('name') input-invalid @enderror" id="name" type="text" name="name" max="40" placeholder="Project Name" value ="{{ old('name') }}">
