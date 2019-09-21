@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name') }}</title>
 
-        <script src="{{ asset('js/Chart.min.js') }}" defer></script>
+        @yield('script_head')
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -54,10 +54,10 @@
             </div>
 
             @if (session('success'))
-            <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('success') }}</div>
+                <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('success') }}</div>
             @endif
             @if (session('message'))
-            <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('message') }}</div>
+                <div class="bg-teal-100 text-teal-900 text-sm font-light rounded-lg mb-6 p-4 tracking-wide">{{ session('message') }}</div>
             @endif
 
             @yield('content')
@@ -73,30 +73,30 @@
         </div>
 
         <script>
-var menu = document.getElementById("menu");
-var burger = document.getElementById("show-menu");
+            var menu = document.getElementById("menu");
+            var burger = document.getElementById("show-menu");
 
-burger.onclick = function() {
-menu.style.display = "block";
-};
+            burger.onclick = function() {
+                menu.style.display = "block";
+            };
 
-menu.onclick = function() {
-menu.style.display = "none";
-};
+            menu.onclick = function() {
+                menu.style.display = "none";
+            };
 
-(function(f, a, t, h, o, m){
-a[h]=a[h]||function(){
-(a[h].q=a[h].q||[]).push(arguments)
-};
+            (function(f, a, t, h, o, m){
+                a[h]=a[h]||function(){
+                    (a[h].q=a[h].q||[]).push(arguments)
+                };
 
-o=f.createElement('script'),
-    m=f.getElementsByTagName('script')[0];
-o.async=1; o.src=t; o.id='fathom-script';
-m.parentNode.insertBefore(o,m)
-})(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
-fathom('set', 'siteId', 'ZMCRYJTW');
-fathom('trackPageview');
+                o=f.createElement('script'),
+                    m=f.getElementsByTagName('script')[0];
+                o.async=1; o.src=t; o.id='fathom-script';
+                m.parentNode.insertBefore(o,m)
+            })(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
+            fathom('set', 'siteId', 'ZMCRYJTW');
+            fathom('trackPageview');
         </script> 
-        @yield('scripts')
+        @yield('script_body')
     </body>
 </html>

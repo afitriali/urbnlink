@@ -21,4 +21,6 @@ mix.js('resources/js/app.js', 'public/js')
         processCssUrls: false,
         postCss: [ tailwindcss('tailwind.config.js') ],
     })
-    .purgeCss();
+    .purgeCss()
+    .browserSync('https://dashboard.urbnlink.test')
+

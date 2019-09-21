@@ -25,14 +25,14 @@ class WebsiteExists implements Rule
      */
     public function passes($attribute, $value)
     {
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $value);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-		curl_exec($curl);
-		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		curl_close($curl);
-		return (($http_code == "200") || ($http_code == "301") || ($http_code == "302"));
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $value);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+        curl_exec($curl);
+        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        return (($http_code == "200") || ($http_code == "301") || ($http_code == "302"));
     }
 
     /**

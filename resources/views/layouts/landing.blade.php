@@ -7,7 +7,7 @@
         <title>{{ config('app.name') }} - Dynamic URL Shortener</title>
         <meta name="description" content="Make a memorable link, add logics and turn it dynamic.">
 
-        <script src="{{ asset('js/Chart.min.js') }}" defer></script>
+        @yield('script_head')
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
 
@@ -21,32 +21,33 @@
                 </div>
                 <div class="flex-none">
                     @auth
-                    <a href="{{ env('DASHBOARD_URL') }}" class="btn">Dashboard</a>
+                        <a href="{{ env('DASHBOARD_URL') }}" class="btn">Dashboard</a>
                     @else
-                    <a href="{{ route('login') }}" class="mr-4 py-1">Log In</a>
+                        <a href="{{ route('login') }}" class="mr-4 py-1">Log In</a>
 
-                    @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="btn">Sign Up</a>
-                    @endif
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="btn">Sign Up</a>
+                        @endif
                     @endauth
                 </div>
             </div>
 
             @yield('content')
+
             <script>
-(function(f, a, t, h, o, m){
-    a[h]=a[h]||function(){
-    (a[h].q=a[h].q||[]).push(arguments)
-};
-    o=f.createElement('script'),
-        m=f.getElementsByTagName('script')[0];
-    o.async=1; o.src=t; o.id='fathom-script';
-    m.parentNode.insertBefore(o,m)
-})(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
-    fathom('set', 'siteId', 'ZMCRYJTW');
-    fathom('trackPageview');
+                (function(f, a, t, h, o, m){
+                    a[h]=a[h]||function(){
+                        (a[h].q=a[h].q||[]).push(arguments)
+                    };
+                    o=f.createElement('script'),
+                        m=f.getElementsByTagName('script')[0];
+                    o.async=1; o.src=t; o.id='fathom-script';
+                    m.parentNode.insertBefore(o,m)
+                })(document, window, '//cdn.usefathom.com/tracker.js', 'fathom');
+                fathom('set', 'siteId', 'ZMCRYJTW');
+                fathom('trackPageview');
             </script> 
-            @yield('scripts')
+            @yield('script_body')
         </div>
     </body>
 </html>

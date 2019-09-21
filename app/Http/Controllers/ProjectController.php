@@ -14,122 +14,113 @@ class ProjectController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-	public function index()
-	{
-		$projects = auth()->user()->projects()->get();
+    public function index()
+    {
+        $projects = auth()->user()->projects()->get();
+        return view('project.index', compact('projects'));
+    }
 
-		return view('project.index', compact('projects'));
-	}
+    public function create()
+    {
+        $this->authorize('create', new Project);
+        return view('project.create');
+    }
 
-	public function create()
-	{
-		$this->authorize('create', new Project);
+    public function store(Request $request)
+    {
+        $this->authorize('create', new Project);
+        $request->validate([
+            'name' => [
+                'required',
+                'max:40',
+                'alpha_dash',
+                'unique:projects,name'
+            ],
+            'description' => [
+                'max:160',
+            ]
+        ]);
 
-		return view('project.create');
-	}
+        $project = auth()->user()->ownProjects()->create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description')
+        ]);
 
-	public function store(Request $request)
-	{
-		$this->authorize('create', new Project);
+        $success = '🎉 You created a new project!';
+        return redirect($project->name)->with('success', $success);
+    }
 
-		$request->validate([
-			'name' => [
-				'required',
-				'max:40',
-				'alpha_dash',
-				'unique:projects,name'
-			],
-			'description' => [
-				'max:160',
-			]
-		]);
-		
-		$project = auth()->user()->ownProjects()->create([
-			'name' => $request->input('name'),
-			'description' => $request->input('description')
-		]);
+    public function settings(Project $project)
+    {
+        $this->authorize('workOn', $project);
+        $domains = $project->domains()->get();
+        $links = $project->links()->get();
+        return view('project.settings', compact('project', 'domains', 'links'));
+    }
 
-		$success = '🎉 You created a new project!';
-		return redirect($project->name)->with('success', $success);
-	}
-	
-	public function settings(Project $project)
-	{
-		$this->authorize('workOn', $project);
+    public function update(Project $project, Request $request)
+    {
+        $this->authorize('manage', $project);
+        $request->validate([
+            'name' => [
+                'required',
+                'max:40',
+                'alpha_dash',
+                'unique:projects,name,'.$project->id.',id',
+            ],
+            'description' => [
+                'max:160',
+            ]
+        ]);
 
-		$domains = $project->domains()->get();
-		$links = $project->links()->get();
+        $project->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description')
+        ]);
 
-		return view('project.settings', compact('project', 'domains', 'links'));
-	}
+        $success = $project->name.' project updated';
+        return redirect($project->name.'/settings')->with('success', $success);
+    }
 
-	public function update(Project $project, Request $request)
-	{
-		$this->authorize('manage', $project);
+    public function delete(Project $project, Request $request)
+    {
+        $this->authorize('manage', $project);
+        $project->delete();
+        $success = $project->name.' project deleted';
+        return redirect('/')->with('success', $success);
+    }
 
-		$request->validate([
-			'name' => [
-				'required',
-				'max:40',
-				'alpha_dash',
-				'unique:projects,name,'.$project->id.',id',
-			],
-			'description' => [
-				'max:160',
-			]
-		]);
-		
-		$project->update([
-			'name' => $request->input('name'),
-			'description' => $request->input('description')
-		]);
+    public function addMember(Request $request)
+    {
+        $this->authorize('manage', $project);
+        $project = Project::find($request->input('project'));
+        $user = User::where('email', $request->input('email'))->first();
 
-		$success = $project->name.' project updated';
-		return redirect($project->name.'/settings')->with('success', $success);
-	}
+        $validator = Validator::make($request->all(), [
+            'project' => [
+                'required',
+                'exists:projects,id',
+                'unique:project_members,project_id,NULL,project_members,user_id,'.($user == null ? null : $user->id)
+            ],
+            'email' => [
+                'required',
+                'email'
+            ]
+        ]);
 
-	public function delete(Project $project, Request $request)
-	{
-		$this->authorize('manage', $project);
+        if ($validator->fails()) {
+            return back()->withInput();
+        } else if ($user == null) {
+            // $project->createInvitation($request->input('email');
+        } else {
+            $this->authorize('update', $project);
+            $project->addMember($user);
+        }
 
-		$project->delete();
+        \Mail::to($user->email)->send(
+            new ProjectMemberAdded($project)
+        );
 
-		$success = $project->name.' project deleted';
-		return redirect('/')->with('success', $success);
-	}
-
-	public function addMember(Request $request)
-	{
-		$this->authorize('manage', $project);
-
-		$project = Project::find($request->input('project'));
-		$user = User::where('email', $request->input('email'))->first();
-
-		$validator = Validator::make($request->all(), [
-			'project' => [
-				'required',
-				'exists:projects,id',
-				'unique:project_members,project_id,NULL,project_members,user_id,'.($user == null ? null : $user->id)
-			],
-			'email' => [
-				'required',
-				'email'
-			]
-		]);
-		
-		if ($validator->fails()) {
-			return back()->withInput();
-		} else if ($user == null) {
-			// $project->createInvitation($request->input('email');
-		} else {
-			$this->authorize('update', $project);
-			$project->addMember($user);
-		}
-
-		\Mail::to($user->email)->send(
-			new ProjectMemberAdded($project)
-		);
-
-		return view('success', $data);
-	}
+        return view('success', $data);
+    }
 }

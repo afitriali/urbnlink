@@ -12,7 +12,6 @@ class DomainObserver
         if ($domain->record_id) {
             DomainManager::deleteRecord($domain->record_id);
         }
-
         return true;
     }
 }

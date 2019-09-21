@@ -12,12 +12,10 @@ class PageController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-	public function index(Project $project)
-	{
-		$this->authorize('workOn', $project);
-
-		$pages = $project->pages()->get();
-
-		return view('page.index', compact('project', 'pages'));
-	}
+    public function index(Project $project)
+    {
+        $this->authorize('workOn', $project);
+        $pages = $project->pages()->get();
+        return view('page.index', compact('project', 'pages'));
+    }
 }
