@@ -49,7 +49,11 @@
 </ul>
 <div class="mt-12">
     @cannot('create', App\Project::class)
+        @if(\Auth::user()->is_blocked)
+        <p><span class="font-semibold block">Your account is blocked.</span>We detected suspicious activities from your account. Please contact support.</p>
+        @else
         <p><span class="font-semibold block">You can't add anymore projects.</span><a href="#" class="text-indigo-600 border-b-2 border-dotted">Upgrade to Pro</a> or delete an existing project.</p>
+        @endif
     @endcannot
 </div>
 @else

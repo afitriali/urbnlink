@@ -12,12 +12,14 @@ class ProjectPolicy
     
     public function workOn(User $user, Project $project)
     {
-        return $project->members()->where('user_id', $user->id)->exists();
+        return $project->members()->where('user_id', $user->id)->exists()
+            && !$user->is_blocked;
     }
 
     public function create(User $user)
     {
-        return ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro);
+        return ($user->ownProjects()->count() + 1 <= env('PROJECT_LIMIT') || $user->is_pro)
+            && !$user->is_blocked;
     }
 
     public function createLinkFor(User $user, Project $project)

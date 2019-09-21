@@ -1,33 +1,36 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    @component('components.header')
-        @slot('title') User Settings @endslot
-    @endcomponent
+    @if(\Auth::user()->is_blocked)
+        <p><span class="font-semibold block">Your account is blocked.</span>We detected suspicious activities from your account. Please contact support.</p>
+    @else
+        @component('components.header')
+            @slot('title') User Settings @endslot
+        @endcomponent
 
-    @component('components.form')
-        @slot('action') {{ url("/user/settings") }} @endslot
-        @slot('method') PUT @endslot
-        @slot('button') Update @endslot
-        <div class="w-full mb-6">
-            <label for="name" class="input-label">{{ __('Name') }}</label>
-            <input id="name" type="text" class="input-text @error('name') input-invalid @enderror" name="name" value="{{ old('name') ?? Auth::user()->name }}" required autocomplete="name" autofocus>
-            @error('name')
-            <span class="input-error" role="alert">{{ $message }}</span>
-        @enderror
-        </div>
+        @component('components.form')
+            @slot('action') {{ url("/user/settings") }} @endslot
+            @slot('method') PUT @endslot
+            @slot('button') Update @endslot
+            <div class="w-full mb-6">
+                <label for="name" class="input-label">{{ __('Name') }}</label>
+                <input id="name" type="text" class="input-text @error('name') input-invalid @enderror" name="name" value="{{ old('name') ?? Auth::user()->name }}" required autocomplete="name" autofocus>
+                @error('name')
+                <span class="input-error" role="alert">{{ $message }}</span>
+            @enderror
+            </div>
 
-        <div class="w-full mb-6">
-            <label for="email" class="input-label">{{ __('E-Mail Address') }}</label>
-            <input class="input-text @error('name') input-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') ?? Auth::user()->email }}" required autocomplete="email">
-            @error('email')
-            <span class="input-error" role="alert">{{ $message }}</span>
-        @enderror
-        </div>
-    @endcomponent
-    <?php /*
-        <div class="w-full mb-6">
-        <label for="password" class="input-label">{{ __('Password') }}</label>
+            <div class="w-full mb-6">
+                <label for="email" class="input-label">{{ __('E-Mail Address') }}</label>
+                <input class="input-text @error('name') input-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') ?? Auth::user()->email }}" required autocomplete="email">
+                @error('email')
+                <span class="input-error" role="alert">{{ $message }}</span>
+            @enderror
+            </div>
+        @endcomponent
+        <?php /*
+            <div class="w-full mb-6">
+            <label for="password" class="input-label">{{ __('Password') }}</label>
         <input id="password" type="password" class="input-text @error('password') input-invalid @enderror" name="password" autocomplete="new-password">
 
         @error('password')
@@ -59,6 +62,7 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
 
 @section('scripts')

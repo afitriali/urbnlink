@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/.phpcd
 .env
 .env.backup
 .env.testing
