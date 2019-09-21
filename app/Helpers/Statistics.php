@@ -65,11 +65,11 @@ class Statistics
         }
 
         foreach ($countries as $country) {
-            $stats['country'][$country->country] = $country->count;
+            $stats['countries'][$country->country] = $country->count;
         }
 
         foreach ($pages as $page) {
-            $stats['page'][$page->page] = $page->count;
+            $stats['pages'][$page->page] = $page->count;
         }
 
         return $stats;

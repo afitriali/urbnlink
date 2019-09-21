@@ -41,7 +41,16 @@
         </div>
         <div class="mt-6 leading-loose">
             <h3 class="text-gray-500 uppercase text-xs tracking-wide mb-2">Top Pages Visited</h3>
-            @foreach ($stats['page'] as $page=>$value)
+            @foreach ($stats['countries'] as $country=>$value)
+                <div class="flex items-center font-light text-sm">
+                    <div class="flex-none inline-block bg-indigo-100 text-indigo-600 text-xs px-2 py-0 rounded">{{ $value }}</div>
+                    <div class="flex-auto inline-block truncate ml-2">{{ $country !== '' ? $country : 'Unknown' }}</div>
+                </div>
+            @endforeach
+        </div>
+        <div class="mt-6 leading-loose">
+            <h3 class="text-gray-500 uppercase text-xs tracking-wide mb-2">Top Pages Visited</h3>
+            @foreach ($stats['pages'] as $page=>$value)
                 <div class="flex items-center font-light text-sm">
                     <div class="flex-none inline-block bg-indigo-100 text-indigo-600 text-xs px-2 py-0 rounded">{{ $value }}</div>
                     <div class="flex-auto inline-block truncate ml-2">{{ $page }}</div>
